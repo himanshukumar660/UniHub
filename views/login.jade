@@ -1,0 +1,36 @@
+//- .myform
+//- 	form(action='/users/register', method='post')
+//- 		input(type='text', name='firstname', placeholder='Your name..')
+//- 		input(type='text', name='lastname', placeholder='Your last name..')
+//- 		input(type='text', name='email', placeholder='Choose Username')     
+//- 		input(type='text', name='email', placeholder='Email Address')
+//- 		input(name='password', placeholder='Passowrd')
+//- 		input(type='password', name='cnfpassword', placeholder='Confirm Password')
+//- 		input(type='submit', value='Register')
+//- 
+//- 	
+extends layout
+block content
+	section
+	.card(style='width: 28rem;margin:100px auto')
+		.card-body
+			// Header
+			.form-header
+				h3
+					span.glyphicon.glyphicon-log-in
+					|  Login
+			// Body
+			input(type='text', name="email", placeholder="Enter your mail")
+			input(type='password', name="password", placeholder="Enter your Password")
+			.form-header
+				button.btn.btn-default(style="background-color:#86C232;border:none;color:white;") Login
+		// Footer
+		.modal-footer
+			.options
+				p
+					| Not a member? 
+					a(href='/users/register' style="color:#86C232") Sign Up
+				p
+					| Forgot 
+					a(href='#' style="color:#86C232") Password?
+					extends layout

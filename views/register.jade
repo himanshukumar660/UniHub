@@ -1,0 +1,27 @@
+extends layout
+
+block content	
+	section
+	.card(style='width: 28rem;margin:50px auto')
+		.form-header
+			h3
+				span.glyphicon.glyphicon-user
+				|  Register
+		// Body
+		form(method='POST', action="/users/register" style="margin-top:20px !important")
+			input(id='name', type='text', placeholder="Your Name", name="name", value= '#{name}')
+			input(id='username', type='text', name='username', placeholder='Choose Username' value='#{username}')     
+			input(id='email', type='text', name='email', placeholder='Email Address' value='#{email}')
+			input(id='password', type='password', name='password', placeholder='Password')
+			input(id='cnfpassword', type='password', name='cnfpassword', placeholder='Confirm Password')
+			input(style="background-color:#86C232;border:none;font-size:20px;color:white !important;" value="Register" type="submit" name="submit")
+		if errors
+			for error,i in errors 
+				script.
+					document.getElementById("#{error.param}").style.backgroundColor = '#ffbcbc';
+					document.getElementById("#{error.param}").placeholder = "#{error.msg}";
+					document.getElementById("#{error.param}").value = "";
+					document.getElementById("#{error.param}").style.color = 'white';
+					document.getElementById('#{error.param}').style.border = "red";
+					
+	

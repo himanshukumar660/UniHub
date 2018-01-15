@@ -1,0 +1,127 @@
+/* Your custom styles */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body{
+	font-family: Quicksand !important;
+	background-color: #474b4F !important;
+	color: white !important;
+}
+
+.container{
+	align: center;
+}
+.container-fluid {
+	background-color: #222629 !important;
+	border: none !important;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form, .navbar, .navbar-toggle, .navbar-brand, .navbar-collapse .collapse .in{
+    border: none !important;
+		color: white !important;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    background-color: #474b4F !important;
+}
+
+form {
+	margin: 100px auto;
+	width:35% !important;
+	min-width: 280px;
+}
+
+input {
+	color: black !important;
+	width: 100% !important;
+	border-radius: 1rem;
+	border-width: 1px;
+	padding: 10px 10px 10px 10px !important;
+	margin: 1.4% 1.4% 1.4% 1.4% !important;
+}
+
+input[type='submit']{
+	color: white;
+	background-color: #86C232;
+	opacity: 1;
+	padding: 10px 10px 10px 10px !important;
+	border: none;
+}
+
+
+.myform{
+	background-color: white;
+	width: auto;
+}
+
+.form-header {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 10px 10px 10px 10px;
+}
+.errors{
+	list-style: none;
+	padding-left: 0px;
+	border-radius: 3rem;
+}
+
+footer {
+	text-align: center;
+	background-color: black;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: auto;
+	min-height: 30px;
+	padding: 1%;
+	margin-top: 5% !important;
+	overflow: hidden;
+}
+
+.fa {
+margin-top: 2% !important;
+margin-left: 5px !important;
+padding: 15px;
+margin: 0 auto;
+font-size: 20px !important;
+width: 50px;
+border-radius: 50%;
+text-decoration: none !important;
+display: inline-block;
+font: normal normal normal 14px/1 FontAwesome;
+font-size: inherit;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+margin-bottom: 0px !important;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3B5998 !important;
+  color: white !important;
+}
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.fa-google {
+  background: #dd4b39;
+  color: white;
+}
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.fa-github {
+  background: white;
+  color: black;
+}
