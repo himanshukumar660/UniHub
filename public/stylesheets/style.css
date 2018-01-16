@@ -25,13 +25,6 @@ body{
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
     background-color: #474b4F !important;
 }
-
-form {
-	margin: 100px auto;
-	width:35% !important;
-	min-width: 280px;
-}
-
 input {
 	color: black !important;
 	width: 100% !important;
@@ -47,12 +40,6 @@ input[type='submit']{
 	opacity: 1;
 	padding: 10px 10px 10px 10px !important;
 	border: none;
-}
-
-
-.myform{
-	background-color: white;
-	width: auto;
 }
 
 .form-header {
