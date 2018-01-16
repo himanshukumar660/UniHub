@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 
+mongoose.connect("mongodb://127.0.0.1:27017/nodeauth");
+
+var db = mongoose.connection;
+
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
@@ -27,6 +31,10 @@ var userSchema = new Schema({
   },
 });
 
-userSchema.plugin(uniqueValidator);
+userSchema.plugin(uniqueValidator, { message: '{PATH} already registered' });
 
-var User = models.exports = mongoose.model('User', userSchema);
+var User = module.exports = mongoose.model('User', userSchema);
+
+module.exports.createUser = function(newUser, callback){
+  newUser.save(callback);
+}

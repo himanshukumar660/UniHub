@@ -5,7 +5,7 @@ html {
 }
 body{
 	font-family: Quicksand !important;
-	background-color: #dae0e9 !important;
+	background-color: #f3f6f9 !important;
 	color: black !important;
 }
 
@@ -23,8 +23,8 @@ body{
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-    color: black !important;
-    background-color: #dae0e9 !important;
+    color: white !important;
+    background-color: #474b4F !important;
 }
 
 input {
