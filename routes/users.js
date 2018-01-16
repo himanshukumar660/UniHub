@@ -54,7 +54,7 @@ router.post('/register', function(req, res, next) {
     req.checkBody('email','Email is required').notEmpty();
     req.checkBody('email','Enter valid email').isEmail();
     req.checkBody('username','Username is required').notEmpty();
-    req.checkBody('password','Password is required').notEmpty();
+    req.checkBody('password','Password of min 5 characters required ').isLength({min:5});
     req.checkBody('cnfpassword',"Password doesn't match").equals(req.body.password);
 
     // Check for errors
