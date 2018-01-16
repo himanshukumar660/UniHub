@@ -25,6 +25,7 @@ body{
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
     background-color: #474b4F !important;
 }
+
 input {
 	color: black !important;
 	width: 100% !important;
