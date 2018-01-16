@@ -14,7 +14,8 @@ block content
 			input(id='email', type='text', name='email', placeholder='Email Address' value='#{email}')
 			input(id='password', type='password', name='password', placeholder='Password')
 			input(id='cnfpassword', type='password', name='cnfpassword', placeholder='Confirm Password')
-			input(style="background-color:#86C232;border:none;font-size:20px;color:white !important;" value="Register" type="submit" name="submit")
+			.form-header
+				input(style="background-color:#86C232;border:none;color:white!important;width:10rem!important;font-size:20px" value="Register" type="submit" name="submit")
 		if errors
 			for error,i in errors 
 				script.
