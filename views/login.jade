@@ -20,10 +20,12 @@ block content
 					span.glyphicon.glyphicon-log-in
 					|  Login
 			// Body
-			input(type='text', name="email", placeholder="Enter your mail")
-			input(type='password', name="password", placeholder="Enter your Password")
-			.form-header
-				button.btn.btn-default(style="background-color:#86C232;border:none;color:white;width:10rem!important;font-size:20px") Login
+			form(method='POST', action="/users/login" style="margin-top:20px !important")
+				input(type='text', name="username", placeholder="Username")
+				input(type='password', name="password", placeholder="Password")
+				.form-header
+					input(style="background-color:#86C232;border:none;color:white!important;width:10rem!important;font-size:20px" value="Login" type="submit" name="submit")
+			
 		// Footer
 		.modal-footer(style="border-top-color:#00000030 !important")
 			.options

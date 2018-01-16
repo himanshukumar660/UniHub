@@ -31,10 +31,30 @@ var userSchema = new Schema({
   },
 });
 
-userSchema.plugin(uniqueValidator, { message: '{PATH} already registered' });
+userSchema.plugin(uniqueValidator);
 
 var User = module.exports = mongoose.model('User', userSchema);
 
 module.exports.createUser = function(newUser, callback){
   newUser.save(callback);
+}
+
+module.exports.getUserByUsername = function(username, callback){
+  var query = {
+    username:username
+  }
+  User.findOne(query,callback);
+};
+
+
+module.exports.getUserByAccount = function(username, password, callback){
+  var query = {
+    username:username,
+    password:password
+  }
+  User.findOne(query,callback);
+};
+
+module.exports.getUserById = function(id, callback){
+  User.findById(callback);
 }
