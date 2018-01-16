@@ -22,6 +22,7 @@
     "express-session": "*",
     "express-messages": "*",
     "connect-flash": "*",
-    "multer": "*"
+    "multer": "*",
+    "mongoose-unique-validator": "*"
   }
 }

@@ -18,10 +18,11 @@ block content
 		if errors
 			for error,i in errors 
 				script.
-					document.getElementById("#{error.param}").style.backgroundColor = '#ffbcbc';
 					document.getElementById("#{error.param}").placeholder = "#{error.msg}";
 					document.getElementById("#{error.param}").value = "";
 					document.getElementById("#{error.param}").style.color = 'white';
-					document.getElementById('#{error.param}').style.border = "red";
-					
+					var css = document.createElement("style");
+					css.type = "text/css";
+					css.innerHTML = "input[id='#{error.param}']::placeholder { color: red;opacity: 0.7;}";
+					document.body.appendChild(css);
 	
