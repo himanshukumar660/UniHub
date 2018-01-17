@@ -7,6 +7,9 @@ body{
 	font-family: Quicksand !important;
 	background-color: #e9ebee !important;
 	color: black !important;
+  background-image: url('../images/footergraphic.png');
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
 
 .container{
@@ -37,20 +40,30 @@ body{
 
 input {
 	color: black !important;
-	width: 100% !important;
+	width: 97% !important;
 	border-radius: 1rem;
   border: none;
 	padding: 10px 10px 10px 10px !important;
 	margin: 1.4% 1.4% 1.4% 1.4% !important;
+  background-color: #e9ebee;
 }
 
 #submit:hover{
   background-color: #369a21 !important;
 }
 
+.card{
+      padding: 2rem;
+      padding-bottom: 0px !important;
+      padding-top: 0px !important;
+      background-color: white !important;
+      border-radius: 2rem;
+      width: 30rem;
+      margin:20px auto;
+}
+
 .form-header {
     text-align: center;
-    margin-bottom: 3rem;
     padding: 10px 10px 10px 10px;
 }
 .errors{
@@ -73,6 +86,11 @@ footer {
 	overflow: hidden;
 }
 
+#submit{
+  text-align: center !important;
+  width: auto;
+  margin: 0px auto;
+}
 .fa {
 margin-top: 2% !important;
 margin-left: 5px !important;

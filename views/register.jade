@@ -1,7 +1,7 @@
 extends layout
 
 block content	
-	.card(style='width: 30rem;margin:0px auto')
+	.card
 		.form-header
 			h3
 				span.glyphicon.glyphicon-user
@@ -19,7 +19,7 @@ block content
 			input(id='email', type='text', name='email', placeholder='Email Address' value='#{email}')
 			input(id='password', type='password', name='password', placeholder='Password')
 			input(id='cnfpassword', type='password', name='cnfpassword', placeholder='Confirm Password')
-			.form-header
+			div(style="text-align:center;padding:15px!important")
 				input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Register" type="submit" name="submit" id="submit")
 		if errors
 			for error,i in errors 
