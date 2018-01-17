@@ -26,25 +26,28 @@ html(lang='en')
             span.icon-bar
           a.navbar-brand(href='/') Node Authorisation
         #myNavbar.collapse.navbar-collapse
-        
-          ul.nav.navbar-nav
-            li(class = title === 'Home' ? 'active' : '')
-              a(href='/')
-                span.glyphicon.glyphicon-home
-                |   Home
-            li(class = title === 'Register' ? 'active' : '')
-              a(href='/users/register')
-                span.glyphicon.glyphicon-user
-                |   Register
-            li(class = title === 'Login' ? 'active' : '')
-              a(href='/users/login')
-                span.glyphicon.glyphicon-log-in
-                |  Login
-          ul.navbar-nav.nav.navbar-right
-              li(class = title === 'Logout' ? 'active' : '')
-                a(href='/users/logout')
-                  span.glyphicon.glyphicon-log-out
-                  |  Logout
+          if user
+            ul.nav.navbar-nav
+              li(class = title === 'Home' ? 'active' : '')
+                a(href='/')
+                  span.glyphicon.glyphicon-home
+                  |   Home
+          if !user
+            ul.nav.navbar-nav
+              li(class = title === 'Register' ? 'active' : '')
+                a(href='/users/register')
+                  span.glyphicon.glyphicon-user
+                  |   Register
+              li(class = title === 'Login' ? 'active' : '')
+                a(href='/users/login')
+                  span.glyphicon.glyphicon-log-in
+                  |  Login
+          if user
+            ul.navbar-nav.nav.navbar-right
+                li(class = title === 'Logout' ? 'active' : '')
+                  a(href='/users/logout')
+                    span.glyphicon.glyphicon-log-out
+                    |  Logout
 
     .container
       block content

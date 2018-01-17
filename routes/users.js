@@ -95,7 +95,7 @@ router.post('/register', function(req, res, next) {
 					title: "validationErrors",
 				});
 			} else {
-				console.log('Account Created Successfully');
+				req.flash('Account Created Successfully');
 				res.redirect('/users/login');
 			}
 		});
@@ -119,48 +119,33 @@ passport.deserializeUser(function(id, done) {
 	});
 });
 
-
+//.>>>>>>>>>>>>>>>>>>>>>>To CHECK<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
 passport.use(new LocalStrategy(
-	function(username, password, done) {
-		User.getUserByAccount(username, password, function(err, user) {
-			if (err) {
-				return done(err);
-			}
-			if (!user) {
-				console.log('Access Denied');
-				return done(null, false, {
-					message: 'Incorrect Username/password'
-				});
-			}
-			console.log('Access Granted');
-			return done(null, user);
-		});
-	}));
+    function(username, password, done){
+        User.getUserByUsername(username, function(err, user){
+            if(err) throw err;
+            if(!user){
+                console.log('Unknown User');
+                return done(null, false, {message: 'Unknown User'});
+            }
 
-	passport.use(new LocalStrategy(
-	    function(username, password, done){
-	        User.getUserByUsername(username, function(err, user){
-	            if(err) throw err;
-	            if(!user){
-	                console.log('Unknown User');
-	                return done(null, false, {message: 'Unknown User'});
-	            }
+            User.comparePassword(password, user.password, function(err, isMatch){
+                if(err) throw err;
+                if(isMatch){
+                    return done(null, user);
+                } else {
+                    console.log('Invalid Password');
+                    return done(null, false, {message: 'Invalid Password'});
+                }
+            });
+        });
+    }
+));
+//.>>>>>>>>>>>>>>>>>>>>>>To CHECK<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
 
-	            User.comparePassword(password, user.password, function(err, isMatch){
-	                if(err) throw err;
-	                if(isMatch){
-	                    return done(null, user);
-	                } else {
-	                    console.log('Invalid Password');
-	                    return done(null, false, {message: 'Invalid Password'});
-	                }
-	            });
-	        });
-	    }
-	));
-
-router.post('/login', function(req, res) {
+router.post('/login', passport.authenticate('local',{failureRedirect: '/users/login', failureFlash: 'Invalid username or password'}), function(req, res) {
 	console.log('Authentication Successful');
+	req.flash('Authentication Successful');
 	res.redirect('/');
 	console.log("Welcome! You are Logged in");
 });
@@ -168,6 +153,8 @@ router.post('/login', function(req, res) {
 //complete the logout functionality
 router.get('/logout', function(req, res, next) {
 	req.logout();
+	console.log('You have logged out');
+	req.flash('You have logged out');
 	res.redirect('/users/login');
 });
 

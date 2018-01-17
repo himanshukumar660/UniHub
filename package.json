@@ -23,6 +23,7 @@
     "express-messages": "*",
     "connect-flash": "*",
     "multer": "*",
-    "mongoose-unique-validator": "*"
+    "mongoose-unique-validator": "*",
+    "bcrypt": "*"
   }
 }
