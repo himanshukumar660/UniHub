@@ -4,21 +4,61 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 
+
+passport.serializeUser(function(user, done) {
+	done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+	User.getUserById(id, function(err, user) {
+		done(err, user);
+	});
+});
+
+//.>>>>>>>>>>>>>>>>>>>>>>To CHECK<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
+passport.use(new LocalStrategy(
+    function(username, password, done){
+        User.getUserByUsername(username, function(err, user){
+            if(err) throw err;
+            if(!user){
+                console.log('Unknown User');
+                return done(null, false, {message: 'Unknown User'});
+            }
+
+            User.comparePassword(password, user.password, function(err, isMatch){
+                if(err) throw err;
+                if(isMatch){
+                    return done(null, user);
+                } else {
+                    console.log('Invalid Password');
+                    return done(null, false, {message: 'Invalid Password'});
+                }
+            });
+        });
+    }
+));
+//.>>>>>>>>>>>>>>>>>>>>>>To CHECK<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
+
+
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/',function(req, res, next) {
 	res.send('respond with a resource');
 });
 
-router.get('/register', function(req, res, next) {
-	req.flash('info', 'Welcome');
-	res.render('register', {
-		name: "",
-		email: "",
-		username: "",
-		password: "",
-		cnfpassword: "",
-		title: 'Register'
-	});
+router.get('/register' ,ensureAuthentication, function(req, res, next) {
+	//if(typeof(req.session.passport)==='undefined')
+		res.render('register', {
+			name: "",
+			email: "",
+			username: "",
+			password: "",
+			cnfpassword: "",
+			title: 'Register'
+		});
+	// else{
+	// 	res.redirect('/');
+	// 	console.log();
+	// }
 });
 
 router.post('/register', function(req, res, next) {
@@ -103,45 +143,15 @@ router.post('/register', function(req, res, next) {
 	}
 });
 
-router.get('/login', function(req, res, next) {
-	res.render('login', {
-		title: 'Login'
-	});
+router.get('/login', ensureAuthentication, function(req, res, next) {
+	//if(typeof(req.session.passport)==='undefined')
+		res.render('login', {
+			title: 'Login'
+		});
+	//else{
+		//res.redirect('/');
+	//}
 });
-
-passport.serializeUser(function(user, done) {
-	done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-	User.getUserById(id, function(err, user) {
-		done(err, user);
-	});
-});
-
-//.>>>>>>>>>>>>>>>>>>>>>>To CHECK<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
-passport.use(new LocalStrategy(
-    function(username, password, done){
-        User.getUserByUsername(username, function(err, user){
-            if(err) throw err;
-            if(!user){
-                console.log('Unknown User');
-                return done(null, false, {message: 'Unknown User'});
-            }
-
-            User.comparePassword(password, user.password, function(err, isMatch){
-                if(err) throw err;
-                if(isMatch){
-                    return done(null, user);
-                } else {
-                    console.log('Invalid Password');
-                    return done(null, false, {message: 'Invalid Password'});
-                }
-            });
-        });
-    }
-));
-//.>>>>>>>>>>>>>>>>>>>>>>To CHECK<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
 
 router.post('/login', passport.authenticate('local',{failureRedirect: '/users/login', failureFlash: 'Invalid username or password'}), function(req, res) {
 	console.log('Authentication Successful');
@@ -152,10 +162,29 @@ router.post('/login', passport.authenticate('local',{failureRedirect: '/users/lo
 
 //complete the logout functionality
 router.get('/logout', function(req, res, next) {
-	req.logout();
-	console.log('You have logged out');
-	req.flash('You have logged out');
-	res.redirect('/users/login');
+	if (req.session) {
+	    // delete session object
+	    req.session.destroy(function(err) {
+	      if(err) {
+	        return next(err);
+	      } else {
+					console.log('Logged Out!');
+	        return res.redirect('/users/login');
+	      }
+	    });
+	  }
 });
 
+function ensureAuthentication(req, res, next){
+	if(!req.isAuthenticated())
+		{
+			console.log("User is NOT Authenticated!");
+			return next();
+		}
+	else
+	{
+			console.log("Authenticated User!");
+			res.redirect('/');
+	}
+}
 module.exports = router;

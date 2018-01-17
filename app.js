@@ -40,7 +40,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(session({
     secret:'secret',
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave: true
 }));
 
@@ -71,6 +71,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(flash());
+
+app.use(function(req, res, next) {
+  res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+  next();
+});
+
 app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
   next();

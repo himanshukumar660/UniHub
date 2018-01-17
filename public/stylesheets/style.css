@@ -7,9 +7,6 @@ body{
 	font-family: Quicksand !important;
 	background-color: #e9ebee !important;
 	color: black !important;
-  background-image: url('../images/footergraphic.png');
-  background-repeat: no-repeat;
-  background-position: bottom;
 }
 
 .container{
@@ -58,7 +55,7 @@ input {
       padding-top: 0px !important;
       background-color: white !important;
       border-radius: 2rem;
-      width: 30rem;
+      width: 33rem;
       margin:20px auto;
 }
 
