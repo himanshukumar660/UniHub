@@ -104,20 +104,10 @@ router.post('/register', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-	var errors;
-	if(!req.isAuthenticated())
-		errors="Invalid Username or Password";
-	else
-		errors = "";
-	console.log(errors);
-
-	var errorExistsorNot = (errors.length==0)?"":errors;
 	res.render('login', {
-		title: 'Login',
-		errors: errors
+		title: 'Login'
 	});
 });
-
 
 passport.serializeUser(function(user, done) {
 	done(null, user.id);

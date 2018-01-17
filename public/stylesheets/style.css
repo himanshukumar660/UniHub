@@ -5,7 +5,7 @@ html {
 }
 body{
 	font-family: Quicksand !important;
-	background-color: #d0e7ff !important;
+	background-color: #e9ebee !important;
 	color: black !important;
 }
 
@@ -31,7 +31,7 @@ body{
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
     color: black !important;
-    background-color: #d0e7ff !important;
+    background-color: #e9ebee !important;
     border:none !important;
 }
 
@@ -42,6 +42,10 @@ input {
   border: none;
 	padding: 10px 10px 10px 10px !important;
 	margin: 1.4% 1.4% 1.4% 1.4% !important;
+}
+
+#submit:hover{
+  background-color: #369a21 !important;
 }
 
 .form-header {
