@@ -12,7 +12,7 @@
 extends layout
 block content
 	section
-	.card(style='width: 30rem;margin:100px auto')
+	.card(style='width: 30rem;margin:0px auto')
 		.card-body
 			// Header
 			.form-header
@@ -20,7 +20,10 @@ block content
 					span.glyphicon.glyphicon-log-in
 					|  Login
 			// Body
-
+			if errors
+					.alert.alert-danger 
+						b(style="font-weight:800 !important;text-transform: capitalize;") #{errors}
+						
 			form(method='POST', action="/users/login" style="margin-top:20px !important")
 				input(type='text', name="username", placeholder="Username")
 				input(type='password', name="password", placeholder="Password")
