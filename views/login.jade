@@ -20,18 +20,19 @@ block content
 					span.glyphicon.glyphicon-log-in
 					|  Login
 			// Body
+
 			form(method='POST', action="/users/login" style="margin-top:20px !important")
 				input(type='text', name="username", placeholder="Username")
 				input(type='password', name="password", placeholder="Password")
 				.form-header
-					input(style="background-color:#86C232;border:none;color:white!important;width:10rem!important;font-size:20px" value="Login" type="submit" name="submit")
+					input(style="background-color:#00365f;border:none;color:white!important;width:10rem!important;font-size:20px" value="Login" type="submit" name="submit")
 			
 		// Footer
 		.modal-footer(style="border-top-color:#00000030 !important")
 			.options
 				p
 					| Not a member? 
-					a(href='/users/register' style="color:#86C232") Sign Up
+					a(href='/users/register' style="color:#00365f") Sign Up
 				p
 					| Forgot 
-					a(href='#' style="color:#86C232") Password?
+					a(href='#' style="color:#00365f") Password?

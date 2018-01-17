@@ -5,7 +5,7 @@ html {
 }
 body{
 	font-family: Quicksand !important;
-	background-color: #f3f6f9 !important;
+	background-color: #d0e7ff !important;
 	color: black !important;
 }
 
@@ -13,8 +13,15 @@ body{
 	align: center;
 }
 .container-fluid {
-	background-color: #222629 !important;
+	background-color: #00365f !important;
 	border: none !important;
+  color: white !important;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: white !important;
+}
+.navbar-inverse .navbar-toggle:hover {
+    background-color: transparent !important;
 }
 
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form, .navbar, .navbar-toggle, .navbar-brand, .navbar-collapse .collapse .in{
@@ -23,8 +30,9 @@ body{
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-    color: white !important;
-    background-color: #474b4F !important;
+    color: black !important;
+    background-color: #d0e7ff !important;
+    border:none !important;
 }
 
 input {

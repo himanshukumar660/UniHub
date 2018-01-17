@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/register', function(req, res, next) {
+	req.flash('info', 'Welcome');
 	res.render('register', {
 		name: "",
 		email: "",
