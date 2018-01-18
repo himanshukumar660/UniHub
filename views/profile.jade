@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	if user
+		h1 Welcome #{title}
+		if organisations 
+			for ech in organisations
+				h2 #{ech}
+		

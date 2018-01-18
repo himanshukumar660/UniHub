@@ -20,9 +20,11 @@ block content
 					span.glyphicon.glyphicon-log-in
 					|  Login
 			// Body
-			if errors
-					.alert.alert-danger 
-						b(style="font-weight:800 !important;text-transform: capitalize;") #{errors}
+			if error
+					.alert.alert-danger#err
+						b(style="font-weight:800 !important;text-transform: capitalize;") #{error}
+						.glyphicon.glyphicon-remove(style="float:right" id="close_error")
+							
 						
 			form(method='POST', action="/users/login" style="margin-top:20px !important")
 				input(type='text', name="username", placeholder="Username")
@@ -39,3 +41,9 @@ block content
 				p
 					| Forgot 
 					a(href='#' style="color:#5fa2da;text-decoration:none") Password?
+
+	script.
+		document.getElementById('close_error').addEventListener("click", function(){
+			//console.log("Ho");
+			$('#err').remove();
+		})

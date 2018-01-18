@@ -9,10 +9,12 @@ block content
 		// Body
 		if validatorError
 			for ech in validatorError
-				.alert.alert-danger 
+				.alert.alert-danger#err 
 					b(style="font-weight:800 !important;text-transform: capitalize;") #{ech} 
 					| already exists.
-
+					.glyphicon.glyphicon-remove(style="float:right" id="close_error")
+		
+					
 		form(method='POST', action="/users/register" style="margin-top:20px !important")
 			input(id='name', type='text', placeholder="Your Name", name="name", value= '#{name}')
 			input(id='username', type='text', name='username', placeholder='Choose Username' value='#{username}')     
@@ -21,6 +23,12 @@ block content
 			input(id='cnfpassword', type='password', name='cnfpassword', placeholder='Confirm Password')
 			div(style="text-align:center;padding:15px!important")
 				input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Register" type="submit" name="submit" id="submit")
+		script.
+			document.getElementById('close_error').addEventListener("click", function(){
+				//console.log("Ho");
+				$('#err').remove();
+			})
+
 		if errors
 			for error,i in errors 
 				script.
