@@ -24,14 +24,16 @@ body{
     background-color: transparent !important;
 }
 
-.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form, .navbar, .navbar-toggle, .navbar-brand, .navbar-collapse .collapse .in{
+.n.navbar-collapse, .navbar-inverse .navbar-form, .navbar, .navbar-toggle, .navbar-brand, .navbar-collapse .collapse .in{
+    min-height: 40px !important;
     border: none !important;
 		color: white !important;
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    min-height: 40px !important;
     color: black !important;
-    background-color: #e9ebee !important;
+    background-color: #aab2b9 !important;
     border:none !important;
 }
 
@@ -81,6 +83,10 @@ footer {
 	padding: 1%;
 	margin-top: 5% !important;
 	overflow: hidden;
+}
+
+a:hover{
+  text-decoration: none;
 }
 
 #submit{

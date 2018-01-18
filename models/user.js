@@ -47,7 +47,7 @@ module.exports.createUser = function(newUser, callback) {
     });
 }
 //.>>>>>>>>>>>>>>>>>>>>>>To CHECK<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
-
+``
 module.exports.getUserByUsername = function(username, callback) {
 	var query = {
 		username: username
