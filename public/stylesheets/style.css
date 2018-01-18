@@ -111,10 +111,18 @@ text-rendering: auto;
 margin-bottom: 0px !important;
 }
 
-.fa:hover {
-    opacity: 0.7;
+a:hover {
+    opacity: 0.8;
 }
 
+@media only screen and (max-width:565px){
+  #search{
+    float: center!important;
+  }
+  #control{
+    float: center !important;
+  }
+}
 .fa-facebook {
   background: #3B5998 !important;
   color: white !important;

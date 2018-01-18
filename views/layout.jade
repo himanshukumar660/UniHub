@@ -16,45 +16,38 @@ html(lang='en')
   script(type="text/javascript" src="http://twitter.github.io/bootstrap/assets/js/bootstrap-transition.js")
   script(type="text/javascript" src="http://twitter.github.io/bootstrap/assets/js/bootstrap-collapse.js")
   script(src='/javascripts/main.js')
+  
   body
-    nav.navbar.navbar-inverse
-      .container-fluid
-        .navbar-header
-          if user
-            div(style="display:inline-flex")
-              input(type='text', placeholder='Search for organisations..' style="float:left;padding:10px !important;height:34px !important;width:250px!important;margin-top:15px!important;margin-right:0px !important;border-radius:3px !important;border-top-right-radius:0px !important;border-bottom-right-radius:0px !important")
-              i.fa.fa-search(style="float:left;padding:10px !important;height:34px !important;border-radius:0px;margin-top:15px!important;margin-left:0px !important;color:grey;background-color:#e9ebeee8;opacity:1;")
-
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        #myNavbar.collapse.navbar-collapse
-          if !user
-            ul.nav.navbar-nav
-              li(class = title === 'Register' ? 'active' : '')
-                a(href='/users/register')
-                  span.glyphicon.glyphicon-user(style="font-size:30px;color:white")
-              li(class = title === 'Login' ? 'active' : '')
-                a(href='/users/login')
-                  span.glyphicon.glyphicon-log-in(style="font-size:30px;color:white")
-          if user
-          
-            ul.navbar-nav.nav.navbar-right
-                li
-                  a(href='/')
-                    span.glyphicon.glyphicon-home(style="font-size:30px;color:white")
-                li
-                  a(href='#')
-                    span.glyphicon.glyphicon-bell(style="font-size:30px;color:white")
-                li
-                  a(href='#')
-                    span.fa.fa-users(style="font-size:30px !important;margin:0px !important;padding:0px !important;width:30px !important;height:34px !important;opacity:1" id="network")
-                li
+    nav.navbar.navbar-default(style="max-height:100px;margin-bottom:5px!important;")
+      .container-fluid(style="max-height:inherit;")
+        if !user
+          .nav.navbar-nav(style="width:100%;margin:10.34px auto;text-align:center!important;float:center")
+            span(style="padding:10px")
+              a(href='/users/register')
+                span.glyphicon.glyphicon-user(style="font-size:20px;color:white")
+            span(style="padding:10px")
+              a(href='/users/login')
+                span.glyphicon.glyphicon-log-in(style="font-size:20px;color:white")
+        if user
+            .navbar-nav.nav(style="width:100%;text-align:center!important;float:right!important")
+              li(id="control" style="margin-top:10px!important;margin-right:2rem !important")
+                span(style="padding:10px;")
                   a(href='/users/logout')
-                    span.glyphicon.glyphicon-log-out(style="font-size:30px;color:white")
+                    span.glyphicon.glyphicon-log-out(style="font-size:20px;color:white")
+                span(style="padding:10px;margin:10px 10px 10px 10px;")
+                  a(href='/')
+                    span.glyphicon.glyphicon-home(style="font-size:20px;color:white")
+                span(style="padding:10px;")
+                  a(href='#')
+                    span.fa.fa-users(style="font-size:20px !important;margin:0px !important;padding:0px !important;width:30px !important;height:34px !important;color:white;" id="network")
+                span(style="padding:10px;")
+                  a(href='#')
+                    span.glyphicon.glyphicon-bell(style="font-size:20px;color:white")
                 
-
+              li(id="serach" style="margin-right:2rem!important;width:30rem;float:center")
+                span(style="padding:10px;")
+                  input(type='text', placeholder='Search for organisations..' style="width:96%")    
+              
     .container
       block content
     
