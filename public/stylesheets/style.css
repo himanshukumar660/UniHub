@@ -25,13 +25,11 @@ body{
 }
 
 .n.navbar-collapse, .navbar-inverse .navbar-form, .navbar, .navbar-toggle, .navbar-brand, .navbar-collapse .collapse .in{
-    min-height: 40px !important;
     border: none !important;
 		color: white !important;
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-    min-height: 40px !important;
     color: black !important;
     background-color: #aab2b9 !important;
     border:none !important;
@@ -94,35 +92,54 @@ a:hover{
   width: auto;
   margin: 0px auto;
 }
-.fa {
-margin-top: 2% !important;
-margin-left: 5px !important;
-padding: 15px;
-margin: 0 auto;
-font-size: 20px !important;
-width: 50px;
-border-radius: 50%;
-text-decoration: none !important;
-display: inline-block;
-font: normal normal normal 14px/1 FontAwesome;
-font-size: inherit;
-text-rendering: auto;
--webkit-font-smoothing: antialiased;
-margin-bottom: 0px !important;
-}
 
 a:hover {
     opacity: 0.8;
 }
 
-@media only screen and (max-width:565px){
-  #search{
-    float: center!important;
-  }
-  #control{
-    float: center !important;
+.form-control {
+  border-radius: 2rem !important;
+  background-image:url("../images/search.gif") !important;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: 7%;
+}
+
+@media (min-width: 992px)
+{
+  #myNavbar{
+    display: flex !important;
+    width: auto;
   }
 }
+#nav_search_form {
+    -webkit-box-flex: 0.4;
+    -ms-flex-positive: 0.4;
+    flex-grow: 0.4;
+}
+
+@media (min-width: 992px)
+application-a24…f62c32cb.css:6
+.my-lg-0 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+.mr-auto {
+    margin-right: auto !important;
+}
+.form-inline {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
 .fa-facebook {
   background: #3B5998 !important;
   color: white !important;
