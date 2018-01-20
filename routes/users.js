@@ -51,6 +51,7 @@ router.get('/register' ,ensureNotAuthenticated, function(req, res, next) {
 		res.render('register', {
 			name: "",
 			email: "",
+			moto: "",
 			username: "",
 			password: "",
 			cnfpassword: "",
@@ -63,7 +64,9 @@ router.get('/register' ,ensureNotAuthenticated, function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
+	console.log(req.body);
 	var name = req.body.name;
+	var moto = req.body.moto;
 	var email = req.body.email;
 	var username = req.body.username;
 	var password = req.body.password;
@@ -99,9 +102,11 @@ router.post('/register', function(req, res, next) {
 	var errors = req.validationErrors();
 	console.log(errors);
 	if (errors) {
+		console.log(moto);
 		res.render('register', {
 			errors: errors,
 			name: name,
+			moto: moto,
 			email: email,
 			username: username,
 			password: password,
@@ -111,6 +116,7 @@ router.post('/register', function(req, res, next) {
 	} else {
 		var newUser = new User({
 			name: name,
+			moto: moto,
 			email: email,
 			username: username,
 			password: password,
@@ -123,17 +129,18 @@ router.post('/register', function(req, res, next) {
 					errorUnique.push(ech)
 				};
 				existsorNotEmail = (errorUnique.indexOf("email") == -1) ? email : "",
-					existsorNotUsername = (errorUnique.indexOf("username") == -1) ? username : "",
+				existsorNotUsername = (errorUnique.indexOf("username") == -1) ? username : "",
 
-					console.log(errorUnique);
+				console.log(errorUnique);
 				res.render('register', {
 					validatorError: errorUnique,
 					name: name,
+					moto: moto,
 					email: existsorNotEmail,
 					username: existsorNotUsername,
 					password: password,
 					cnfpassword: cnfpassword,
-					title: "validationErrors",
+					title: "Register",
 				});
 			} else {
 				req.flash('Account Created Successfully');
@@ -156,8 +163,11 @@ router.get('/login', ensureNotAuthenticated, function(req, res, next) {
 				}
 			console.log(error);
 		}
+
 		res.render('login', {
 			title: 'Login',
+			username: "",
+			password: "",
 			error: error
 		});
 	//else{
@@ -168,7 +178,7 @@ router.get('/login', ensureNotAuthenticated, function(req, res, next) {
 router.post('/login', passport.authenticate('local',{failureRedirect: '/users/login', failureFlash: 'Invalid username or password'}), function(req, res) {
 	console.log('Authentication Successful');
 	req.flash('Authentication Successful');
-	res.redirect('/profile/'+req.user.username);
+	res.redirect('/');
 	console.log("Welcome! You are Logged in");
 });
 

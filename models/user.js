@@ -3,7 +3,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 
-mongoose.connect("mongodb://127.0.0.1:27017/nodeauth");
+mongoose.connect("mongodb://127.0.0.1:27017/node");
 
 var db = mongoose.connection;
 
@@ -12,6 +12,9 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
 	name: {
 		type: String
+	},
+	moto: {
+		type: String,
 	},
 	username: {
 		type: String,
@@ -24,30 +27,40 @@ var userSchema = new Schema({
 		unique: true,
 		uniqueCaseInsensitive: true
 	},
-	orgs: [{
-		type: String
-	}],
 	password: {
 		type: String,
 		required: true,
 	},
+	orgs: [{
+		type: String
+	}],
+	supporters: {
+		type: Number,
+		default: 0
+	},
+	issues: {
+		type: Number,
+		default: 0
+	},
+	applauses: {
+		type: Number,
+		default: 0
+	}
+
 });
 
 userSchema.plugin(uniqueValidator);
 
 var User = module.exports = mongoose.model('User', userSchema);
 
-//.>>>>>>>>>>>>>>>>>>>>>>To CHECK<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
 module.exports.createUser = function(newUser, callback) {
     bcrypt.hash(newUser.password, SALT_WORK_FACTOR, function(err, hash) {
       if (err) return err;
       // override the cleartext password with the hashed one
       newUser.password = hash;
-      	newUser.save(callback);
+      newUser.save(callback);
     });
 }
-//.>>>>>>>>>>>>>>>>>>>>>>To CHECK<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
-``
 module.exports.getUserByUsername = function(username, callback) {
 	var query = {
 		username: username

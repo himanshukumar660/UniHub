@@ -2,10 +2,18 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 
-/* GET all the tweets and all page. */
+/* Get the home page*/
 router.get('/', ensureAuthentication, function(req, res, next) {
-    console.log("Himanshu Kumar");
-    res.render('index', { title: 'Home' });
+    console.log("Welcome to your homepage!");
+    console.log(req.user);
+    var moto,num_of_issues,num_of_applause;
+    res.render('home', {
+      title: 'Home',
+      name: req.user.name,
+      moto: req.user.moto,
+      num_of_issues: req.user.issues,
+      num_of_applause: req.user.applauses
+    });
 });
 
 /* Get the prfile page */

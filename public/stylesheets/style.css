@@ -45,6 +45,16 @@ input {
   background-color: #e9ebee;
 }
 
+#moto{
+  color: black !important;
+	width: 97% !important;
+	border-radius: 1rem;
+  border: none;
+	padding: 10px 10px 10px 10px !important;
+	margin: 1.4% 1.4% 1.4% 1.4% !important;
+  background-color: #e9ebee;
+}
+
 #submit:hover{
   background-color: #369a21 !important;
 }
@@ -118,6 +128,7 @@ a:hover {
     flex-grow: 0.4;
 }
 
+
 @media (min-width: 992px)
 application-a24…f62c32cb.css:6
 .my-lg-0 {
@@ -139,7 +150,13 @@ application-a24…f62c32cb.css:6
     -ms-flex-align: center;
     align-items: center;
 }
-
+#pro_info, #issues{
+  list-style:none;
+  padding:10px;
+  margin-left:5px;
+  margin-right:10px;
+  margin-bottom:5px
+}
 .fa-facebook {
   background: #3B5998 !important;
   color: white !important;
@@ -162,4 +179,67 @@ application-a24…f62c32cb.css:6
 .fa-github {
   background: white;
   color: black;
+}
+
+.main {
+    background-color: white;
+    border-radius: 3px;
+    padding:15px;
+    width: 100%;
+    margin-bottom: 1%;
+}
+
+.gridcontainer {
+    width:100%;
+    display:inline;
+    height:100%;
+    position:absolute;
+    top:70px;
+}
+
+.gridwrapper {
+    overflow: hidden;
+}
+
+.gridbox {
+    margin: 1%;
+    float: left;
+}
+
+.gridmenu {
+    width: 23.481781376518218623481781376518%;
+    overflow: hidden;
+    background-color: white;
+    border-radius: 3px;
+    height: 85%;
+    text-align: center;
+    line-height: 1.8;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.gridmain {
+    width: 72.87854251012145748987854251012%;
+    overflow: scroll;
+    float: right;
+}
+
+@media only screen and (max-width: 500px) {
+    .gridmenu {
+        display:none;
+    }
+
+    .gridmain {
+        width: 100%;
+        float: center
+    }
+
+    .main {
+        padding: 1.0121457489878542510121457489879%;
+    }
+
+    .gridbox {
+        margin-right: 0;
+        float: left;
+    }
 }

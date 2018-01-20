@@ -24,6 +24,6 @@
     "connect-flash": "*",
     "multer": "*",
     "mongoose-unique-validator": "*",
-    "bcrypt": "*",
+    "bcrypt": "*"
   }
 }

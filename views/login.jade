@@ -11,39 +11,38 @@
 //- 	
 extends layout
 block content
-	section
-	.card
-		.card-body
-			// Header
-			.form-header
-				h3
-					span.glyphicon.glyphicon-log-in
-					|  Login
-			// Body
-			if error
-					.alert.alert-danger#err
-						b(style="font-weight:800 !important;text-transform: capitalize;") #{error}
-						.glyphicon.glyphicon-remove(style="float:right" id="close_error")
+		.card
+			.card-body
+				// Header
+				.form-header
+					h3
+						span.glyphicon.glyphicon-log-in
+						|  Login
+				// Body
+				if error
+						.alert.alert-danger#err
+							b(style="font-weight:800 !important;text-transform: capitalize;") #{error}
+							.glyphicon.glyphicon-remove(style="float:right" id="close_error")
+								
 							
-						
-			form(method='POST', action="/users/login" style="margin-top:20px !important")
-				input(type='text', name="username", placeholder="Username")
-				input(type='password', name="password", placeholder="Password")
-				div(style="text-align:center;padding:15px !important")
-					input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Login" type="submit" name="submit" id="submit")
-				
-		// Footer
-		.modal-footer(style="border-top-color:#00000030 !important")
-			.options
-				p
-					| Not a member? 
-					a(href='/users/register' style="color:#5fa2da;text-decoration:none") Sign Up
-				p
-					| Forgot 
-					a(href='#' style="color:#5fa2da;text-decoration:none") Password?
+				form(method='POST', action="/users/login" style="margin-top:20px !important")
+					input(type='text', name="username", placeholder="Username" value='#{username}')
+					input(type='password', name="password", placeholder="Password" value='#{password}')
+					div(style="text-align:center;padding:15px !important")
+						input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Login" type="submit" name="submit" id="submit")
+					
+			// Footer
+			.modal-footer(style="border-top-color:#00000030 !important")
+				.options
+					p
+						| Not a member? 
+						a(href='/users/register' style="color:#5fa2da;text-decoration:none") Sign Up
+					p
+						| Forgot 
+						a(href='#' style="color:#5fa2da;text-decoration:none") Password?
 
-	script.
-		document.getElementById('close_error').addEventListener("click", function(){
-			//console.log("Ho");
-			$('#err').remove();
-		})
+		script.
+			document.getElementById('close_error').addEventListener("click", function(){
+				//console.log("Ho");
+				$('#err').remove();
+			})
