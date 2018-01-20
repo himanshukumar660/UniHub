@@ -12,6 +12,7 @@ router.get('/', ensureAuthentication, function(req, res, next) {
       name: req.user.name,
       moto: req.user.moto,
       num_of_issues: req.user.issues,
+      supporters: req.user.supporters,
       num_of_applause: req.user.applauses
     });
 });

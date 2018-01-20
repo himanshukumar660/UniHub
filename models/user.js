@@ -46,7 +46,6 @@ var userSchema = new Schema({
 		type: Number,
 		default: 0
 	}
-
 });
 
 userSchema.plugin(uniqueValidator);

@@ -31,11 +31,11 @@ html(lang='en')
           #myNavbar.collapse.navbar-collapse
             if !user
               ul.nav.navbar-nav.navbar-right
-                li
+                li(class=(title == 'Register' ? 'active' : ''))
                   a(href='/users/register')
                     span.glyphicon.glyphicon-user
                     |  Sign Up
-                li
+                li(class=(title == 'Login' ? 'active' : ''))
                   a(href='/users/login')
                     span.glyphicon.glyphicon-log-in
                     |  Login
@@ -43,14 +43,13 @@ html(lang='en')
               form#nav_search_form.form-inline.my-2.my-lg-0.mr-auto( action='/search', accept-charset='UTF-8', method='get')
                 input.form-control(id="nav_search_input" type='search', name='q', placeholder='Search for organisations..')
               ul.nav.navbar-nav.navbar-right
-                li
+                li(class=(title == 'Organisations' ? 'active' : ''))
                   a(href='#')
                     | Organisations
-                li
+                li(class=(title == 'Logout' ? 'active' : ''))
                   a(href='/users/logout')
                     span.glyphicon.glyphicon-log-out
                     |  Logout        
-
     else
       nav.navbar.navbar-inverse(data-spy="affix" style="width:100%;z-index:10000")
         .container-fluid
@@ -63,11 +62,11 @@ html(lang='en')
           #myNavbar.collapse.navbar-collapse
             if !user
               ul.nav.navbar-nav.navbar-right
-                li
+                li(class=(title == 'Register' ? 'active' : ''))
                   a(href='/users/register')
                     span.glyphicon.glyphicon-user
                     |  Sign Up
-                li
+                li(class=(title == 'Login' ? 'active' : ''))
                   a(href='/users/login')
                     span.glyphicon.glyphicon-log-in
                     |  Login
@@ -75,10 +74,20 @@ html(lang='en')
               form#nav_search_form.form-inline.my-2.my-lg-0.mr-auto( action='/search', accept-charset='UTF-8', method='get')
                 input.form-control(id="nav_search_input" type='search', name='q', placeholder='Search for organisations..')
               ul.nav.navbar-nav.navbar-right
-                li
+                li(class=(title == 'Home' ? 'active' : ''))
+                  a(href='#')
+                    | Home
+                li(class=(title == 'Open Issues' ? 'active' : ''))
+                  a(href='#')
+                    | Open issues
+                li(class=(title == 'Closed Issues' ? 'active' : ''))
+                  a(href='/users/logout')
+                    span.glyphicon.glyphicon
+                    |  Closed issues
+                li(class=(title == 'My Organisations' ? 'active' : ''))
                   a(href='#')
                     | My Organisations
-                li
+                li(class=(title == 'Logout' ? 'active' : ''))
                   a(href='/users/logout')
                     span.glyphicon.glyphicon-log-out
                     |  Logout        

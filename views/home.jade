@@ -2,16 +2,28 @@ extends layout
 block content
 	.gridcontainer
 		.gridwrapper
-			.gridbox.gridmenu(data-spy="affix" )
-				ul(id="pro_info")
-					li
-					|	#{name} 
-					li(style="font-size:10")
-					| #{moto}
-					li
-					| #{num_of_issues} raised issues
-					li
-					| #{num_of_applause} Applauses
+			.gridbox.gridmenu(data-spy="affix" )		
+				#wrapper(class="pro_info")
+					section#main(style='background-color: unset !important;top:auto !important;max-width: 40em !important;')
+						div
+							span.avatar
+								img(src='/images/defpicman.png', alt='', width='50%' style="border-radius:50%")
+							h1(style="color:black;font-size: 34px;letter-spacing: 0px;margin-bottom: 0px !important;font-family: 'Quicksand', sans-serif;margin-bottom: 20px !important;font-weight: bold") #{name} 
+							p(style='font-size: 19px;line-height: 1.3em')
+								blockquote(style="color:#369a21;")
+									| #{moto}
+							ul(style="list-style:none;text-align:center;padding:0px")
+									p(style="padding:0px;margin:0px;") #{num_of_applause}
+									img(src='/images/clap.png' style="border-radius:50%;border:1px solid #474b4f" width='60px')
+								
+								li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
+									| Issues Raised
+									h3 #{num_of_issues}
+								li(style="display: inline-block;padding: 0 10px")
+									| Supporters
+									h3 #{supporters}
+
+
 
 			.gridbox.gridmain
 				ul(id="issues")
@@ -24,5 +36,27 @@ block content
 					li
 						.main
 							h1 The Walk
+							hr
 							p
 								| The walk to the Pulpit Rock will take you approximately two hours, give or take an hour depending on the weather conditions and your physical shape.
+					li
+						.main
+							h1 The Walk
+							hr
+							p
+								| The walk to the Pulpit Rock will take you approximately two hours, give or take an hour depending on the weather conditions and your physical shape.
+					li
+						.main
+							h1 The Walk
+							hr
+							p
+								| The walk to the Pulpit Rock will take you approximately two hours, give or take an hour depending on the weather conditions and your physical shape.
+
+			.gridbox.gridright(data-spy="affix")
+				.right
+					h2 What?
+					p The Pulpit Rock is a part of a mountain that looks like a pulpit.
+					h2 Where?
+					p The Pulpit Rock is in Norway
+					h2 Price?
+					p The walk is free!

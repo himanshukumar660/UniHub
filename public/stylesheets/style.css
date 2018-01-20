@@ -5,7 +5,7 @@ html {
 }
 body{
 	font-family: Quicksand !important;
-	background-color: #e9ebee !important;
+	background-color: white !important;
 	color: black !important;
 }
 
@@ -13,7 +13,7 @@ body{
 	align: center;
 }
 .container-fluid {
-	background-color: #00365f !important;
+	background-color: #2d283e !important;
 	border: none !important;
   color: white !important;
 }
@@ -30,8 +30,8 @@ body{
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-    color: black !important;
-    background-color: #aab2b9 !important;
+    color: white !important;
+    background-color: #42b72a !important;
     border:none !important;
 }
 
@@ -42,7 +42,7 @@ input {
   border: none;
 	padding: 10px 10px 10px 10px !important;
 	margin: 1.4% 1.4% 1.4% 1.4% !important;
-  background-color: #e9ebee;
+  background-color: white;
 }
 
 #moto{
@@ -52,7 +52,7 @@ input {
   border: none;
 	padding: 10px 10px 10px 10px !important;
 	margin: 1.4% 1.4% 1.4% 1.4% !important;
-  background-color: #e9ebee;
+  background-color: white;
 }
 
 #submit:hover{
@@ -63,7 +63,7 @@ input {
       padding: 2rem;
       padding-bottom: 0px !important;
       padding-top: 0px !important;
-      background-color: white !important;
+      background-color: #e9ebee !important;
       border-radius: 2rem;
       width: 33rem;
       margin:20px auto;
@@ -128,9 +128,6 @@ a:hover {
     flex-grow: 0.4;
 }
 
-
-@media (min-width: 992px)
-application-a24…f62c32cb.css:6
 .my-lg-0 {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
@@ -150,13 +147,35 @@ application-a24…f62c32cb.css:6
     -ms-flex-align: center;
     align-items: center;
 }
-#pro_info, #issues{
+#issues{
   list-style:none;
   padding:10px;
   margin-left:5px;
   margin-right:10px;
   margin-bottom:5px
 }
+
+#pro_info{
+  font-size: 20pt !important;
+  font-weight: bold!important;
+}
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
 .fa-facebook {
   background: #3B5998 !important;
   color: white !important;
@@ -182,8 +201,8 @@ application-a24…f62c32cb.css:6
 }
 
 .main {
-    background-color: white;
-    border-radius: 2rem;
+    background-color: #e9ebee;
+    border-radius: 3px;
     padding:15px;
     width: 100%;
     margin-bottom: 1%;
@@ -207,21 +226,45 @@ application-a24…f62c32cb.css:6
 }
 
 .gridmenu {
-    width: 23.481781376518218623481781376518%;
-    overflow: hidden;
-    background-color: white;
-    border-radius: 2rem;
+    width: 20.481781376518218623481781376518%;
+    overflow: scroll;
+    background-color: transparent;
     height: 85%;
     text-align: center;
     line-height: 1.8;
     padding: 10px;
     margin-top: 20px;
+    border-right: 1px solid lightgrey;
 }
 
 .gridmain {
-    width: 72.87854251012145748987854251012%;
+    width: 57.57854251012145748987854251012%;
     overflow: scroll;
-    float: right;
+    float: left;
+    position: absolute;
+    left: 20% !important;
+}
+
+
+.gridright {
+  width: 20.481781376518218623481781376518%;
+  overflow: scroll;
+  background-color: transparent;
+  height: 85%;
+  text-align: center;
+  line-height: 1.8;
+  padding: 10px;
+  float: right;
+  right:10px;
+  margin-top: 20px;
+  border-left: 1px solid lightgrey;
+}
+.right {
+    background-color: #e9ebee;
+    border-radius: 3px;
+    padding:15px;
+    width: 100%;
+    margin-bottom: 1%;
 }
 
 @media only screen and (max-width: 500px) {
@@ -229,9 +272,14 @@ application-a24…f62c32cb.css:6
         display:none;
     }
 
+    .gridright {
+        display:none;
+    }
+
     .gridmain {
         width: 100%;
-        float: center
+        float: center;
+        left: 0% !important;
     }
 
     .main {
@@ -241,5 +289,12 @@ application-a24…f62c32cb.css:6
     .gridbox {
         margin-right: 0;
         float: left;
+    }
+    .gridright {
+        width: 100%;
+    }
+
+    .right {
+        padding: 1.0121457489878542510121457489879%;
     }
 }
