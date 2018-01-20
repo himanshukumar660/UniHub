@@ -77,14 +77,16 @@ html(lang='en')
               ul.nav.navbar-nav.navbar-right
                 li
                   a(href='#')
-                    | Organisations
+                    | My Organisations
                 li
                   a(href='/users/logout')
                     span.glyphicon.glyphicon-log-out
                     |  Logout        
     div
       block content
-    
+    if user
+      button(type="button")
+        img(style="position:fixed;bottom:5%;right:5%;width:64px;height:64px" src="/images/add.png" )
 //    footer &copy; All copyright reserved
       //- br
       //- a.fa.fa-facebook(href='https://www.facebook.com/himanshueight', title='Facebook', data-toggle='tooltip', data-placement='bottom')

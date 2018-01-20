@@ -183,7 +183,7 @@ application-a24…f62c32cb.css:6
 
 .main {
     background-color: white;
-    border-radius: 3px;
+    border-radius: 2rem;
     padding:15px;
     width: 100%;
     margin-bottom: 1%;
@@ -210,7 +210,7 @@ application-a24…f62c32cb.css:6
     width: 23.481781376518218623481781376518%;
     overflow: hidden;
     background-color: white;
-    border-radius: 3px;
+    border-radius: 2rem;
     height: 85%;
     text-align: center;
     line-height: 1.8;

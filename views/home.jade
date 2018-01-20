@@ -1,0 +1,28 @@
+extends layout
+block content
+	.gridcontainer
+		.gridwrapper
+			.gridbox.gridmenu(data-spy="affix" )
+				ul(id="pro_info")
+					li
+					|	#{name} 
+					li(style="font-size:10")
+					| #{moto}
+					li
+					| #{num_of_issues} raised issues
+					li
+					| #{num_of_applause} Applauses
+
+			.gridbox.gridmain
+				ul(id="issues")
+					li
+						.main
+							h1 The Walk
+							hr
+							p
+								| The walk to the Pulpit Rock will take you approximately two hours, give or take an hour depending on the weather conditions and your physical shape.
+					li
+						.main
+							h1 The Walk
+							p
+								| The walk to the Pulpit Rock will take you approximately two hours, give or take an hour depending on the weather conditions and your physical shape.
