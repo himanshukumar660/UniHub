@@ -1,19 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var path = require('path');
 
 /* Get the home page*/
 router.get('/', ensureAuthentication, function(req, res, next) {
     console.log("Welcome to your homepage!");
     console.log(req.user);
     var moto,num_of_issues,num_of_applause;
+
     res.render('home', {
       title: 'Home',
       name: req.user.name,
       moto: req.user.moto,
       num_of_issues: req.user.issues,
       supporters: req.user.supporters,
-      num_of_applause: req.user.applauses
+      num_of_applause: req.user.applauses,
+      avatar: req.user.avatarPath
     });
 });
 

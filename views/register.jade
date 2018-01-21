@@ -15,13 +15,14 @@ block content
 					.glyphicon.glyphicon-remove(style="float:right" id="close_error")
 		
 					
-		form(method='POST', action="/users/register" style="margin-top:20px !important")
+		form(method='POST', action="/users/register" style="margin-top:20px !important" enctype="multipart/form-data")
 			input(id='name', type='text', placeholder="Your Name", name="name", value= '#{name}')
 			textarea#moto(rows='2', placeholder='What is your principle ?', name="moto") #{moto}
 			input(id='username', type='text', name='username', placeholder='Choose Username' value='#{username}')     
 			input(id='email', type='text', name='email', placeholder='Email Address' value='#{email}')
 			input(id='password', type='password', name='password', placeholder='Password')
 			input(id='cnfpassword', type='password', name='cnfpassword', placeholder='Confirm Password')
+			input(id='avatar', type='file', name='avatar', placeholder='Upload Profile Pic')
 			div(style="text-align:center;padding:15px!important")
 				input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Register" type="submit" name="submit" id="submit")
 		script.

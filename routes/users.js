@@ -1,10 +1,24 @@
 var express = require('express');
+var crypto = require('crypto');
 var url = require('url');
+var mime = require('mime');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/')
+  },
+  filename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      cb(null, raw.toString('hex') + Date.now() + '.' + mime.getExtension(file.mimetype));
+    });
+  }
+});
+var upload = multer({ storage: storage });
 
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
@@ -62,8 +76,7 @@ router.get('/register' ,ensureNotAuthenticated, function(req, res, next) {
 	// 	console.log();
 	// }
 });
-
-router.post('/register', function(req, res, next) {
+router.post('/register', upload.single('avatar'), function(req, res, next) {
 	console.log(req.body);
 	var name = req.body.name;
 	var moto = req.body.moto;
@@ -71,23 +84,11 @@ router.post('/register', function(req, res, next) {
 	var username = req.body.username;
 	var password = req.body.password;
 	var cnfpassword = req.body.cnfpassword;
-	// // Check for Image Field
-	// if(req.files.profileimage){
-	//     console.log('uploading File...');
-	//
-	//     // File Info
-	//     var profileImageOriginalName = req.files.profileimage.originalname;
-	//     var profileImageName = req.files.profileimage.name;
-	//
-	//     var profileImageMime = req.files.profileimage.mimetype;
-	//     var profileImagePath = req.files.profileimage.path;
-	//     var profileImageExt = req.files.profileimage.extension;
-	//     var profileImageSize = req.files.profileimage.size;
-	// } else {
-	//     // Set a Default Image
-	//     var profileImageName = 'noimage.png';
-	// }
-
+	// Check for Image Field
+	console.log(req.file);
+	if(req.file){
+	    var profileImagePath = req.file.path;
+	}
 	// Form Validation
 	req.checkBody('name', 'Name is required').notEmpty();
 	req.checkBody('email', 'Email is required').notEmpty();
@@ -120,6 +121,7 @@ router.post('/register', function(req, res, next) {
 			email: email,
 			username: username,
 			password: password,
+			avatarPath: profileImagePath
 		});
 		// Create User
 		User.createUser(newUser, function(err) {

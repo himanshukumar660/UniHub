@@ -45,6 +45,10 @@ var userSchema = new Schema({
 	applauses: {
 		type: Number,
 		default: 0
+	},
+	avatarPath: {
+		type: String,
+		default: "/uploads/defpicman.jpg"
 	}
 });
 
