@@ -201,13 +201,16 @@ blockquote:before {
 }
 
 .main {
-    background-color: #e9ebee;
-    border-radius: 3px;
+    background-color: unset;
     padding:15px;
     width: 100%;
     margin-bottom: 1%;
 }
-
+li.issuePart{
+  border-radius: 3px;
+  border:1px solid #d1d5da;
+  margin: 10px
+}
 .gridcontainer {
     width:100%;
     display:inline;

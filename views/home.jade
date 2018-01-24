@@ -6,8 +6,8 @@ block content
 				#wrapper(class="pro_info")
 					section#main(style='background-color: unset !important;top:auto !important;max-width: 40em !important;')
 						div
-							span.avatar #{avatar}
-								img(src= '/images/defpicman.png', alt='', width='50%' style="border-radius:50%")
+							span.avatar 
+								img(src='./uploads/'+'#{avatar}', alt='', width='50%' style="border-radius:50%")
 							h1(style="color:black;font-size: 34px;letter-spacing: 0px;margin-bottom: 0px !important;font-family: 'Quicksand', sans-serif;margin-bottom: 20px !important;font-weight: bold") #{name} 
 							p(style='font-size: 19px;line-height: 1.3em')
 								blockquote(style="color:#369a21;")
@@ -27,36 +27,67 @@ block content
 
 			.gridbox.gridmain
 				ul(id="issues")
-					li
-						.main
-							h1 The Walk
-							hr
-							p
-								| The walk to the Pulpit Rock will take you approximately two hours, give or take an hour depending on the weather conditions and your physical shape.
-					li
-						.main
-							h1 The Walk
-							hr
-							p
-								| The walk to the Pulpit Rock will take you approximately two hours, give or take an hour depending on the weather conditions and your physical shape.
-					li
-						.main
-							h1 The Walk
-							hr
-							p
-								| The walk to the Pulpit Rock will take you approximately two hours, give or take an hour depending on the weather conditions and your physical shape.
-					li
-						.main
-							h1 The Walk
-							hr
-							p
-								| The walk to the Pulpit Rock will take you approximately two hours, give or take an hour depending on the weather conditions and your physical shape.
+					li.issuePart.individual
+						div(style='background-color:#f6f8fa;padding:10px;padding-left:20px;')
+							span(style='font-weight:900') Himanshu
+							span(style='color:gray')  raised this issue on 27 Jun 2018 for XXX 
 
-			.gridbox.gridright(data-spy="affix")
-				.right
-					h2 What?
-					p The Pulpit Rock is a part of a mountain that looks like a pulpit.
-					h2 Where?
-					p The Pulpit Rock is in Norway
-					h2 Price?
-					p The walk is free!
+						.main(style="padding:10px")
+									span(style="font-weight:900;font-size:23px") Hi my name is Kumar
+									div Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+						div(style='background-color:#f6f8fa;padding:10px;padding-bottom:0px;padding-left:20px;display:inline-block;width:100%')
+							i.glyphicon.glyphicon-thumbs-up(aria-hidden='true' style="font-size:23px;margin-left:5px;color:gray;float:left")
+							form( style="float:right;" action='/search', accept-charset='UTF-8', method='get')
+								input.form-control(id="comment" type='textarea' name="comment" placeholder='Write comments here' style="max-width:28rem!important;width:auto")
+					
+					li.issuePart.anonymous
+						div(style='background-color:#f6f8fa;padding:10px;padding-left:20px;')
+							span(style='font-weight:900') Anonymous
+							span(style='color:gray')  raised this issue on 27 Jun 2018 for XXX 
+							button(style="float:right;background-color:unset;border-radius:3px;border-color:#d1d5da;color:lightgray" type='button') Report Spam
+						.main
+							div(style='display:inline-flex;width:100%;box-sizing:border-box')
+								#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid gray')
+									div(style="font-size:28px;margin:5px;padding:5px;margin-left:0px")
+										i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
+									div(style="font-size:28px;margin:5px;padding:5px;margin-left:0px")
+										i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
+										p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{num_of_applause}
+								#nextBtn(style="float:right;width:80%;overflow:none;")
+									div(style="font-size:24px;font-weight:800;padding:10px;border-bottom:1px solid lightgray;width:100%!important") Hi my name is Kumar
+									div(style="height: 1.2em;min-height:4rem;white-space: nowrap;overflow-y: hidden;text-overflow: ellipsis;font-size:13.5px;padding:10px;border-bottom:1px solid lightgray;") Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+					
+					li.issuePart
+						div(style='background-color:#f6f8fa;padding:10px;padding-left:20px;')
+							span(style='font-weight:900') Himanshu
+							span(style='color:gray')  raised this issue on 27 Jun 2018
+
+						.main
+							div(style='display:inline-flex;width:100%;box-sizing:border-box')
+								#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid gray')
+									div(style="font-size:28px;margin:5px;padding:5px;margin-left:0px")
+										i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
+									div(style="font-size:28px;margin:5px;padding:5px;margin-left:0px")
+										i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
+										p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{num_of_applause}
+								#nextBtn(style="float:right;width:80%;overflow:none;")
+									div(style="font-size:24px;font-weight:800;padding:10px;border-bottom:1px solid lightgray;width:100%!important") Hi my name is Kumar
+									div(style="height: 1.2em;min-height:4rem;white-space: nowrap;overflow-y: hidden;text-overflow: ellipsis;font-size:13.5px;padding:10px;border-bottom:1px solid lightgray;") Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.physical shape.
+					
+			.gridbox.gridright(data-spy="affix" )
+				.right(style="background-color:white!important;")
+					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
+						h4 What?
+						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
+					div(style="padding:10px;background-color:#c4d4ea91!important")
+						h2 Where?
+						p The Pulpit Rock is in Norway
+						h2 Price?
+						p The walk is free!
+					div
+						h2 What?
+						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
+						h2 Where?
+						p The Pulpit Rock is in Norway
+						h2 Price?
+						p The walk is free!

@@ -2,6 +2,7 @@ var express = require('express');
 var crypto = require('crypto');
 var url = require('url');
 var mime = require('mime');
+var path = require('path');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -10,7 +11,7 @@ var User = require('../models/user');
 var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads/')
+    cb(null, './public/uploads/')
   },
   filename: function (req, file, cb) {
     crypto.pseudoRandomBytes(16, function (err, raw) {
@@ -87,7 +88,8 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 	// Check for Image Field
 	console.log(req.file);
 	if(req.file){
-	    var profileImagePath = req.file.path;
+	    var profileImageName = req.file.filename;
+      console.log(profileImageName);
 	}
 	// Form Validation
 	req.checkBody('name', 'Name is required').notEmpty();
@@ -121,7 +123,7 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 			email: email,
 			username: username,
 			password: password,
-			avatarPath: profileImagePath
+			avatarPath: profileImageName
 		});
 		// Create User
 		User.createUser(newUser, function(err) {

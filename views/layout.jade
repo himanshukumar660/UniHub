@@ -79,17 +79,16 @@ html(lang='en')
                     | Home
                 li(class=(title == 'Open Issues' ? 'active' : ''))
                   a(href='#')
-                    | Open issues
-                li(class=(title == 'Closed Issues' ? 'active' : ''))
-                  a(href='/users/logout')
-                    span.glyphicon.glyphicon
-                    |  Closed issues
+                    | My issues
                 li(class=(title == 'My Organisations' ? 'active' : ''))
                   a(href='#')
                     | My Organisations
+                li(class=(title == 'My Organisations' ? 'active' : ''))
+                  a(href='#')
+                    | Notifications
                 li(class=(title == 'Logout' ? 'active' : ''))
                   a(href='/users/logout')
-                    span.glyphicon.glyphicon-log-out
+                    span
                     |  Logout        
     div
       block content

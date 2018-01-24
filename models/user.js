@@ -48,7 +48,7 @@ var userSchema = new Schema({
 	},
 	avatarPath: {
 		type: String,
-		default: "/uploads/defpicman.jpg"
+		default: "defpicman.jpg"
 	}
 });
 
