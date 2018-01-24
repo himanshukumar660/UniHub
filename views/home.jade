@@ -86,19 +86,13 @@ block content
 		restDiv = "<span id='extra'>"+rest+"</span>";
 		
 		var aFull = "<a id=fullDesc >" + "... Read More" + "</a>";
-		var aLess = "<a id=lessDesc>" + " Read Less" + "</a>";
 		
 		myDiv.text(less);
 		myDiv.append(restDiv);
 		$('#extra').hide();
 		myDiv.append(aFull);
-		//- 
-		//- $('#lessDesc').click(function(){
-		//- 	console.log("Hi");
-		//- 	myDiv.text(less);
-		//- 	myDiv.append(aFull);
-		//- });
 		var i=0;
+		
 		$('#fullDesc').click(function(){
 			console.log(i);
 				if(i===0)
