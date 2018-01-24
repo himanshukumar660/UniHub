@@ -301,3 +301,7 @@ li.issuePart{
         padding: 1.0121457489878542510121457489879%;
     }
 }
+
+a{
+  text-decoration: none !important;
+}

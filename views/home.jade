@@ -27,47 +27,32 @@ block content
 
 			.gridbox.gridmain
 				ul(id="issues")
-					li.issuePart.individual
-						div(style='background-color:#f6f8fa;padding:10px;padding-left:20px;')
-							span(style='font-weight:900') Himanshu
-							span(style='color:gray')  raised this issue on 27 Jun 2018 for XXX 
-
-						.main(style="padding:10px")
-									span(style="font-weight:900;font-size:23px") Hi my name is Kumar
-									div Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-						div(style='background-color:#f6f8fa;padding:10px;padding-bottom:0px;padding-left:20px;display:inline-block;width:100%')
-							i.glyphicon.glyphicon-thumbs-up(aria-hidden='true' style="font-size:23px;margin-left:5px;color:gray;float:left")
-							form( style="float:right;" action='/search', accept-charset='UTF-8', method='get')
-								input.form-control(id="comment" type='textarea' name="comment" placeholder='Write comments here' style="max-width:28rem!important;width:auto")
-					
 					li.issuePart.anonymous
 						div(style='background-color:#f6f8fa;padding:10px;padding-left:20px;')
 							span(style='font-weight:900') Anonymous
 							span(style='color:gray')  raised this issue on 27 Jun 2018 for XXX 
 							button(style="float:right;background-color:unset;border-radius:3px;border-color:#d1d5da;color:lightgray" type='button') Report Spam
-						.main
-							div(style='display:inline-flex;width:100%;box-sizing:border-box')
-								#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid gray')
-									div(style="font-size:28px;margin:5px;padding:5px;margin-left:0px")
+						.main(style='display:inline-flex;width:100%;box-sizing:border-box')
+								#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid lightgray')
+									div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
 										i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
-									div(style="font-size:28px;margin:5px;padding:5px;margin-left:0px")
+									div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
 										i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
 										p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{num_of_applause}
 								#nextBtn(style="float:right;width:80%;overflow:none;")
 									div(style="font-size:24px;font-weight:800;padding:10px;border-bottom:1px solid lightgray;width:100%!important") Hi my name is Kumar
-									div(style="height: 1.2em;min-height:4rem;white-space: nowrap;overflow-y: hidden;text-overflow: ellipsis;font-size:13.5px;padding:10px;border-bottom:1px solid lightgray;") Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+									div(id="issueDesc" style="font-size:13.5px;padding:10px;") Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 					
 					li.issuePart
 						div(style='background-color:#f6f8fa;padding:10px;padding-left:20px;')
 							span(style='font-weight:900') Himanshu
 							span(style='color:gray')  raised this issue on 27 Jun 2018
 
-						.main
-							div(style='display:inline-flex;width:100%;box-sizing:border-box')
+						.main(style='display:inline-flex;width:100%;box-sizing:border-box')
 								#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid gray')
-									div(style="font-size:28px;margin:5px;padding:5px;margin-left:0px")
+									div(style="font-size:10px;margin:5px;padding:5px;margin-left:0px")
 										i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
-									div(style="font-size:28px;margin:5px;padding:5px;margin-left:0px")
+									div(style="font-size:10px;margin:5px;padding:5px;margin-left:0px")
 										i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
 										p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{num_of_applause}
 								#nextBtn(style="float:right;width:80%;overflow:none;")
@@ -91,3 +76,42 @@ block content
 						p The Pulpit Rock is in Norway
 						h2 Price?
 						p The walk is free!
+						
+	script.
+		var myDiv = $('#issueDesc');
+		var full = myDiv.text();
+		var less = myDiv.text().substring(0,200);
+		var rest = myDiv.text().substring(200);
+		
+		restDiv = "<span id='extra'>"+rest+"</span>";
+		
+		var aFull = "<a id=fullDesc >" + "... Read More" + "</a>";
+		var aLess = "<a id=lessDesc>" + " Read Less" + "</a>";
+		
+		myDiv.text(less);
+		myDiv.append(restDiv);
+		$('#extra').hide();
+		myDiv.append(aFull);
+		//- 
+		//- $('#lessDesc').click(function(){
+		//- 	console.log("Hi");
+		//- 	myDiv.text(less);
+		//- 	myDiv.append(aFull);
+		//- });
+		var i=0;
+		$('#fullDesc').click(function(){
+			console.log(i);
+				if(i===0)
+						$('#fullDesc').text(' Read Less');
+				else
+					$('#fullDesc').text('... Read More');
+					
+				$('#extra').toggle();
+				
+				if(i==1)
+					i=0;
+				else
+					i=1;
+		});
+		
+		
