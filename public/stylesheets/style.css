@@ -17,7 +17,8 @@ body{
 	border: none !important;
   color: white !important;
 }
-.navbar-inverse .navbar-nav>li>a {
+.navbar-inverse .navbar-nav>li>
+{
     color: white !important;
 }
 .navbar-inverse .navbar-toggle:hover {
@@ -37,7 +38,7 @@ body{
 
 input {
 	color: black !important;
-	width: 97% !important;
+	width: 100% !important;
 	border-radius: 1rem;
   border: none;
 	padding: 10px 10px 10px 10px !important;
@@ -300,8 +301,61 @@ li.issuePart{
     .right {
         padding: 1.0121457489878542510121457489879%;
     }
+    .addIssueForm{
+      margin:70px auto !important;
+    }
+
 }
 
 a{
   text-decoration: none !important;
+}
+
+.addIssueFormbackground{
+  display: none;
+  position:fixed;
+  width:100%;
+  z-index:2000;
+  height:100%;
+  overflow:hidden;
+  background-color: #000c !important;
+}
+
+.addIssueForm{
+  border-radius: 2rem;
+  background-color: #e9ebee;
+  opacity: 1!important;
+  width: 42%;
+  min-width: 30rem;
+  padding: 20px;
+  margin:100px auto;
+}
+
+#addIssue{
+  position: absolute;
+  z-index: 200000;
+}
+
+#issueDescriptionTopic{
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 900;
+  border-radius: 3px;
+}
+
+#issueDescriptionText{
+  font-size: 15px;
+  margin-top: 5px; 
+  height: 10em;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+#issueDept{
+  border-radius: 3px;
+}
+textarea{
+  border:none;
 }

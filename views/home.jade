@@ -1,5 +1,26 @@
 extends layout
 block content
+	.jumbotron.text-center.addIssueFormbackground
+		.addIssueForm
+			div(style="text-align:right!important")
+				i.fa.fa-times-circle-o.closeAddIssueBox(style="font-size:30px;")
+			.card
+			.card-body
+				.form-header(style="color:black;margin:0px;padding:0px;")
+					h3(style="margin-top:10px")
+						span.fa.fa-pencil
+						|  Add issue
+
+				form(method='POST', action="/users/login" style="text-align:left;")
+					input(type='text' id="issueDept" name="issueDept" placeholder="Enter your department..." required style="margin-left:0px !important;margin-right:0px !important")
+					input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required style="margin-left:0px !important;margin-right:0px !important")
+					textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
+					div(style="display:inline-flex;width:auto")
+						input(type="checkbox" id="identity" style="width:15px!important")
+						span(style="color:black;width:150px") Be Anonymous
+					div(style="text-align:center;padding:15px !important")
+						input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Post" type="submit" name="issuePost" id="issuePost")
+
 	.gridcontainer
 		.gridwrapper
 			.gridbox.gridmenu(data-spy="affix" )		
@@ -66,53 +87,66 @@ block content
 					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
 						h4 What?
 						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
-					div(style="padding:10px;background-color:#c4d4ea91!important")
-						h2 Where?
-						p The Pulpit Rock is in Norway
-						h2 Price?
-						p The walk is free!
-					div
-						h2 What?
+					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
+						h4 What?
 						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
-						h2 Where?
-						p The Pulpit Rock is in Norway
-						h2 Price?
-						p The walk is free!
+					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
+						h4 What?
+						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
+					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
+						h4 What?
+						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
+					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
+						h4 What?
+						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
+					
+	if user
+		#addIssue
+			img(style="position:fixed;bottom:5%;right:5%;width:64px;height:64px" src="/images/add.png" )
 						
 	script.
-		var x = document.getElementsByTagName('div');
-		console.log(x);
-		for(i=0;i<x.length;i++){
-			if(x[i].id==="issueDesc")
-			{
-				var myDiv = x[i];
-				var full = x[i].innerHTML;
-				console.log("Full : "+full);
-				var less = full.substring(0,200);
-				console.log("Less : "+less);
-				var rest = full.substring(200);
-				console.log("Rest : "+rest);
+		$('#addIssue').click(function(){
+			$('.addIssueFormbackground').show();
+			$('#addIssue').hide();
+		});
+		$('.closeAddIssueBox').click(function(){
+			$('.addIssueFormbackground').hide();
+			$('#addIssue').show();
+		});
+
+		//- var x = document.getElementsByTagName('div');
+		//- console.log(x);
+		//- for(i=0;i<x.length;i++){
+		//- 	if(x[i].id==="issueDesc")
+		//- 	{
+		//- 		var myDiv = x[i];
+		//- 		var full = x[i].innerHTML;
+		//- 		console.log("Full : "+full);
+		//- 		var less = full.substring(0,200);
+		//- 		console.log("Less : "+less);
+		//- 		var rest = full.substring(200);
+		//- 		console.log("Rest : "+rest);
 				
-				var aFull = document.createElement('a');
-				aFull.setAttribute("id", "fullDesc");
-				aFull.innerHTML = "... Read More";
+		//- 		var aFull = document.createElement('a');
+		//- 		aFull.setAttribute("id", "fullDesc");
+		//- 		aFull.innerHTML = "... Read More";
 				
-				x[i].innerHTML = less;
+		//- 		x[i].innerHTML = less;
 				
 				
-				var restDiv = document.createElement('span');
-				restDiv.setAttribute("id", "extra");
-				restDiv.innerHTML = rest;
-				x[i].appendChild(restDiv);
-				restDiv.style.display = "none";
+		//- 		var restDiv = document.createElement('span');
+		//- 		restDiv.setAttribute("id", "extra");
+		//- 		restDiv.innerHTML = rest;
+		//- 		x[i].appendChild(restDiv);
+		//- 		restDiv.style.display = "none";
 				
-				x[i].appendChild(aFull);
+		//- 		x[i].appendChild(aFull);
 				
-				//- $('#extra').hide();
-			//- 	//- myDiv.append(aFull);
-			//- 	var i=0;
-			//- 	//- 
-		}};
+		//- 		//- $('#extra').hide();
+		//- 	//- 	//- myDiv.append(aFull);
+		//- 	//- 	var i=0;
+		//- 	//- 	//- 
+		//- }};
 
 		
 		
