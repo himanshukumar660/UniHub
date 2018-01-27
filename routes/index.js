@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var path = require('path');
+var Issue = require('../models/issue');
+
 
 /* Get the home page*/
 router.get('/', ensureAuthentication, function(req, res, next) {
@@ -37,5 +39,6 @@ function ensureAuthentication(req, res, next){
       return next();
     res.redirect('/users/login');
 }
+
 
 module.exports = router;

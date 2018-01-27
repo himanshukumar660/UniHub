@@ -7,8 +7,10 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
+var Issue = require('../models/issue');
 
 var multer = require('multer');
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/uploads/')
@@ -19,6 +21,7 @@ var storage = multer.diskStorage({
     });
   }
 });
+
 var upload = multer({ storage: storage });
 
 passport.serializeUser(function(user, done) {
