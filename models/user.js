@@ -42,7 +42,7 @@ var userSchema = new Schema({
 		type: Number,
 		default: 0
 	},
-	applauses: {
+	claps: {
 		type: Number,
 		default: 0
 	},

@@ -78,7 +78,11 @@ module.exports.getIssueByUsername = function(username, callback) {
 	Issue.find(query, callback);
 }
 
-module.exports.getByDate = function(callback){
+module.exports.getIssuesByDate = function(date, callback){
+	Issue.find({"datePosted" : { $lte : date }},callback).sort({datePosted: -1}).limit(10);
+}
+
+module.exports.getIssuesLatest = function(callback){
 	Issue.find(callback).sort({datePosted: -1}).limit(10);
 }
 

@@ -3,47 +3,48 @@ block content
 	.jumbotron.text-center.addIssueFormbackground
 		.addIssueForm
 			div(style="text-align:right!important")
-				i.fa.fa-times-circle-o.closeAddIssueBox(style="font-size:30px;cursor:pointer")
+				i.fa.fa-times-circle-o.closeAddIssueBox(style="font-size:30px!important")
 			.card
 			.card-body
-				.form-header(style="color:black;margin:0px;padding:0px;")
+				.form-header.myFormHeader
 					h3(style="margin-top:10px")
 						span.fa.fa-pencil
 						|  Add issue
 
-				form(method='POST', id="postIssueForm", action="/post" style="text-align:left;")
-					input(type='text' id="issueDept" name="issueDept" placeholder="Enter your department..." required style="margin-left:0px !important;margin-right:0px !important")
+				form(method='POST', id="postIssueForm", action="/post")
+					input(type='text' id="issueDept" name="issueDept" placeholder="Enter your department..." required)
 
-					input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required style="margin-left:0px !important;margin-right:0px !important")
+					input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required)
 					
 					textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
 					
 					div(style="display:inline-flex;width:auto")
-						input(type="checkbox" id="anonymity" name="anonymity" style="width:15px!important")
+						input(type="checkbox" id="anonymity" name="anonymity")
 						span(style="color:black;width:150px") Be Anonymous
 					
 					div(style="text-align:center;padding:15px !important")
-						input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Post" type="submit" name="issuePost" id="issuePost")
+						input( value="Post" type="submit" name="issuePost" id="issuePost")
 
 	.gridcontainer
 		.gridwrapper
 			.gridbox.gridmenu(data-spy="affix" )		
 				#wrapper(class="pro_info")
-					section#main(style='background-color: unset !important;top:auto !important;max-width: 40em !important;')
+					section#main
 						div
 							span.avatar 
 								img(src='./uploads/'+'#{avatar}', alt='', width='50%' style="border-radius:50%")
-							h1(style="color:black;font-size: 34px;letter-spacing: 0px;margin-bottom: 0px !important;font-family: 'Quicksand', sans-serif;margin-bottom: 20px !important;font-weight: bold") #{name} 
-							p(style='font-size: 19px;line-height: 1.3em')
+							h1 #{name} 
+							p
 								blockquote(style="color:#369a21;")
 									| #{moto}
 							ul(style="list-style:none;text-align:center;padding:0px")
-									p(style="padding:0px;margin:0px;") #{num_of_applause}
+									p #{num_of_applause}
 									img(src='/images/clap.png' style="border-radius:50%;border:1px solid #474b4f" width='60px')
 								
 								li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
 									| Issues Raised
 									h3 #{num_of_issues}
+
 								li(style="display: inline-block;padding: 0 10px")
 									| Supporters
 									h3 #{supporters}
@@ -54,52 +55,41 @@ block content
 				ul(id="issues")
 					if issues
 						for each in issues	
-							li.issuePart.anonymous(style="background-color:white")
-								div(style='background-color:#c4d4ea91;padding:10px;padding-left:20px;')
+							li.issuePart
+								div.issuePart1D
 									if (each.anonymity==="on")
 										span(style='font-weight:900') Anonymous
 									else if(each.anonymity==="off")
 										a(href="/profile/"+each.username style='font-weight:900') #{each.name}
 									span(style='color:gray')  
-										i.glyphicon.glyphicon-play(style="font-size:7pt")  
+										i.glyphicon.glyphicon-play(style="font-size:10pt")  
 										|  #{each.department}
 									if (each.anonymity==="on")
-										button(style="float:right;background-color:unset;border-radius:3px;border-color:#d1d5da;color:gray" type='button') Report Spam
-									p(style="font-size:7pt;padding:0px;margin:0px;color:gray") #{each.datePosted}
+										button.spamBtn(type='button') Report Spam
+									p(id="date") #{each.datePosted}
 									
-								.main(style='display:inline-flex;width:100%;box-sizing:border-box')
-										#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid lightgray')
-											div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
+								.main.issueBlock
+										#prevBtn
+											#likeBtns
 												i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
-											div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
+											#likeBtns
 												i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
-												p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{each.likes}
-										#nextBtn(style="float:right;width:80%;overflow:none;")
-											div(style="font-size:24px;font-weight:800;padding:10px;border-bottom:1px solid lightgray;width:100%!important") #{each.issueTopic}
-											div(id="issueDesc" style="font-size:13.5px;padding:10px;") #{each.issueDesc}
+												p #{each.likes}
+										#nextBtn
+											#issueTopic #{each.issueTopic}
+											#issueDesc #{each.issueDesc}
 
 					
 			.gridbox.gridright(data-spy="affix" )
-				.right(style="background-color:white!important;")
-					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
-						h4 What?
-						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
-					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
-						h4 What?
-						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
-					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
-						h4 What?
-						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
-					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
-						h4 What?
-						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
-					div(style="padding:10px;background-color:#c4d4ea91!important;margin-bottom:5px;font-size:12px")
+				.right
+					#notifications
 						h4 What?
 						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
 					
+					
 	if user
 		#addIssue
-			img(style="position:fixed;bottom:5%;right:5%;width:64px;height:64px;cursor:pointer" src="/images/add.png" )
+			img(src="/images/add.png" )
 						
 	script.
 		$('#addIssue').click(function(){
@@ -109,6 +99,18 @@ block content
 		$('.closeAddIssueBox').click(function(){
 			$('.addIssueFormbackground').hide();
 			$('#addIssue').show();
+		});
+		$(window).scroll(function() {
+		   if($(window).scrollTop() + $(window).height() > $(document).height() - 100) 
+		   {
+		   		 var dateLastPosted = $('p#date:last').text();
+		   		 var dateLastPosted = Date.parse(dateLastPosted);
+		   		 var url  = '/getIssues/'+dateLastPosted;
+		   		 console.log(url);
+		   		 $.get(url, function(data){
+
+			     });
+		   }
 		});
 
 		//- $('#postIssueForm').submit(function postIssue (){

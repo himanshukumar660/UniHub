@@ -2,13 +2,12 @@
 html {
     position: relative;
     min-height: 100%;
-    zoom: 0.9; 
-    -moz-transform: scale(0.9); 
-    -moz-transform-origin: 0 0;
+   
 }
 body{
-	font-family: Quicksand !important;
-	background-color: #f6f8fa !important;
+  font-family: 'Quicksand' !important;
+  font-size: 16px !important;
+  background-color: #f6f8fa !important;
 	color: black !important;
 }
 
@@ -238,7 +237,6 @@ li.issuePart{
     background-color: transparent;
     height: 85%;
     text-align: center;
-    line-height: 1.8;
     padding: 10px;
     margin-top: 20px;
     border-right: 1px solid lightgrey;
@@ -259,7 +257,6 @@ li.issuePart{
   background-color: transparent;
   height: 85%;
   text-align: center;
-  line-height: 1.8;
   padding: 10px;
   float: right;
   right:10px;
@@ -331,7 +328,7 @@ a{
   width: 42%;
   min-width: 30rem;
   padding: 20px;
-  margin:90px auto;
+  margin:60px auto;
 }
 
 #addIssue{
@@ -361,3 +358,155 @@ a{
 textarea{
   border:none;
 }
+.closeAddIssueBox{
+    font-size:30px;
+    cursor:pointer;
+}
+.myFormHeader{
+    color:black;
+    margin:0px;
+    padding:0px;
+}
+#postIssueForm{
+  text-align:left;
+}
+
+#issueDept, #issueDescriptionTopic{
+  margin-left:0px !important;
+  margin-right:0px !important;
+}
+#anonymity{
+  width:15px!important;
+}
+
+#issuePost{
+  background-color:#42b72a;
+  border:none;
+  color:white!important;
+  width:10rem!important;
+  font-size:20px;
+}
+
+.issuePart{
+  background-color:white;
+}
+
+.issuePart1D{
+  background-color:#c4d4ea91;
+  padding:10px;
+  padding-left:20px;
+}
+
+.spamBtn{
+  float:right;
+  background-color:unset;
+  border-radius:3px;
+  border-color:#d1d5da;
+  color:gray;
+}
+
+#date{
+font-size:10pt;
+padding:0px;
+margin:0px;
+color:gray;
+}
+
+.issueBlock{
+  display:inline-flex;
+  width:100%;
+  box-sizing:border-box;
+}
+
+#prevBtn{
+  width:6rem;
+  padding:10px;
+  float:left;
+  margin:5px;
+  border-right:1px solid lightgray;
+}
+
+#likeBtns{
+    font-size:25px;
+    margin:5px;
+    padding:5px;
+    margin-left:0px;
+}
+
+#likeBtns p{
+  padding:0px;
+  margin:0px;
+  font-size:10pt;
+  text-align:center;
+}
+
+#nextBtn{
+  float:right;
+  width:80%;
+  overflow:none;
+}
+
+#issueTopic{
+  font-size: 20px;
+  font-weight:500;
+  padding:10px;
+  border-bottom:1px solid lightgray;
+  width:100%!important;
+}
+
+#issueDesc{
+  padding:10px;
+  font-weight: 300;
+}
+
+.gridbox.gridright .right{
+  background-color:white!important;
+}
+
+#notifications{
+  padding:10px;
+  background-color:#c4d4ea91!important;
+  margin-bottom:5px;
+  font-size:12px;
+}
+
+#addIssue img{
+  position:fixed;
+  bottom:5%;
+  right:5%;
+  width:64px;
+  height:64px;
+  cursor:pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,106 @@
 extends layout
-
 block content
-	if user
-		h1 Welcome #{title}
-		if organisations 
-			for ech in organisations
-				h2 #{ech}
+	.gridcontainer
+		.gridwrapper
+			.gridbox.gridmenu(data-spy="affix" )		
+				#wrapper(class="pro_info")
+					section#main
+						div
+							span.avatar 
+								img(src='./uploads/'+'#{profile.avatar}', alt='', width='50%' style="border-radius:50%")
+							h1 #{profile.name} 
+							p
+								blockquote(style="color:#369a21;")
+									| #{profile.moto}
+							ul(style="list-style:none;text-align:center;padding:0px")
+									p #{profile.claps}
+									img(src='/images/clap.png' style="border-radius:50%;border:1px solid #474b4f" width='60px')
+								
+								li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
+									| Issues Raised
+									h3 #{profile.issues}
+
+								li(style="display: inline-block;padding: 0 10px")
+									| Supporters
+									h3 #{profile.supporters}
+
+
+
+			.gridbox.gridmain
+				ul(id="issues")
+					if issues
+						for each in issues	
+							li.issuePart
+								div.issuePart1D
+									if (each.anonymity==="on")
+										span(style='font-weight:900') Anonymous
+									else if(each.anonymity==="off")
+										a(href="/profile/"+each.username style='font-weight:900') #{each.name}
+									span(style='color:gray')  
+										i.glyphicon.glyphicon-play(style="font-size:10pt")  
+										|  #{each.department}
+									if (each.anonymity==="on")
+										button.spamBtn(type='button') Report Spam
+									p(id="date") #{each.datePosted}
+									
+								.main.issueBlock
+										#prevBtn
+											#likeBtns
+												i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
+											#likeBtns
+												i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
+												p #{each.likes}
+										#nextBtn
+											#issueTopic #{each.issueTopic}
+											#issueDesc #{each.issueDesc}
+
+		
+		//- $('#postIssueForm').submit(function postIssue (){
+		//-     $.ajax({
+		//-         url:'/post',
+		//-         type:'post',
+		//-         data:$('#postIssueForm').serialize(),
+		//-         success:function(){
+		//-         	console.log(data);
+		//-             alert("worked");
+		//-         }
+		//-     });
+		//- });
+
+		
+		//- var x = document.getElementsByTagName('div');
+		//- console.log(x);
+		//- for(i=0;i<x.length;i++){
+		//- 	if(x[i].id==="issueDesc")
+		//- 	{
+		//- 		var myDiv = x[i];
+		//- 		var full = x[i].innerHTML;
+		//- 		console.log("Full : "+full);
+		//- 		var less = full.substring(0,200);
+		//- 		console.log("Less : "+less);
+		//- 		var rest = full.substring(200);
+		//- 		console.log("Rest : "+rest);
+				
+		//- 		var aFull = document.createElement('a');
+		//- 		aFull.setAttribute("id", "fullDesc");
+		//- 		aFull.innerHTML = "... Read More";
+				
+		//- 		x[i].innerHTML = less;
+				
+				
+		//- 		var restDiv = document.createElement('span');
+		//- 		restDiv.setAttribute("id", "extra");
+		//- 		restDiv.innerHTML = rest;
+		//- 		x[i].appendChild(restDiv);
+		//- 		restDiv.style.display = "none";
+				
+		//- 		x[i].appendChild(aFull);
+				
+		//- 		//- $('#extra').hide();
+		//- 	//- 	//- myDiv.append(aFull);
+		//- 	//- 	var i=0;
+		//- 	//- 	//- 
+		//- }};
+
+		
 		

@@ -10,12 +10,13 @@ html(lang='en')
   link(rel='stylesheet' href='/stylesheets/style.css')
   link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
   link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-  link(href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet")
+  link(href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500" rel="stylesheet")
   link(rel="stylesheet" media="mediatype and|not|only (media feature)" href="mystylesheet.css")
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
   script(type="text/javascript" src="http://twitter.github.io/bootstrap/assets/js/bootstrap-transition.js")
   script(type="text/javascript" src="http://twitter.github.io/bootstrap/assets/js/bootstrap-collapse.js")
+  script(src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js")
   script(src='/javascripts/main.js')
   
   body
@@ -75,24 +76,23 @@ html(lang='en')
                 input.form-control(id="nav_search_input" type='search', name='q', placeholder='Search for organisations..')
               ul.nav.navbar-nav.navbar-right
                 li(class=(title == 'Home' ? 'active' : ''))
-                  a(href='#')
+                  a(href='/')
                     | Home
-                li(class=(title == 'My Organisations' ? 'active' : ''))
+                li(class=(title == 'Trending' ? 'active' : ''))
                   a(href='/trending')
                     | Trending
                 li(class=(title == 'My Organisations' ? 'active' : ''))
                   a(href='/myorganisations')
                     | My Organisations
-                li(class=(title == 'Open Issues' ? 'active' : ''))
-                  a(href='/myprofile')
+                li(class=(title == 'My profile' ? 'active' : ''))
+                  a(href='/profile/'+user.username)
                     | My profile
                 li(class=(title == 'Logout' ? 'active' : ''))
                   a(href='/users/logout')
                     span
                     |  Logout        
     div
-      block content
-    
+      block content  
 //    footer &copy; All copyright reserved
       //- br
       //- a.fa.fa-facebook(href='https://www.facebook.com/himanshueight', title='Facebook', data-toggle='tooltip', data-placement='bottom')
