@@ -75,11 +75,11 @@ module.exports.getIssueByUsername = function(username, callback) {
 }
 
 module.exports.getByDate = function(callback){
-	Issue.find().sort({datePosted: 1}).limit(10, callback);
+	Issue.find(callback).sort({datePosted: -1}).limit(10);
 }
 
 module.exports.getUserByLikes = function(id, callback) {
-	Issue.find().sort({likes: 1}).limit(10, callback);
+	Issue.find(callback).sort({likes: -1}).limit(10);
 };
 
 

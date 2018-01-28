@@ -9,17 +9,29 @@ var Issue = require('../models/issue');
 router.get('/', ensureAuthentication, function(req, res, next) {
     console.log("Welcome to your homepage!");
     console.log(req.user);
-    var moto,num_of_issues,num_of_applause;
+    //issueList = new Object();
 
-    res.render('home', {
-      title: 'Home',
-      name: req.user.name,
-      moto: req.user.moto,
-      num_of_issues: req.user.issues,
-      supporters: req.user.supporters,
-      num_of_applause: req.user.applauses,
-      avatar: req.user.avatarPath
+    Issue.getByDate(function(err, results){
+      if(err)
+        console.log("Could'nt fetch the issues");
+      else
+      {
+        res.render('home', {
+          title: 'Home',
+          name: req.user.name,
+          moto: req.user.moto,
+          num_of_issues: req.user.issues,
+          supporters: req.user.supporters,
+          num_of_applause: req.user.applauses,
+          avatar: req.user.avatarPath,
+          issues: results
+        });
+      }
     });
+
+    console.log("Hi");
+    //console.log(issueList);
+    
 });
 
 

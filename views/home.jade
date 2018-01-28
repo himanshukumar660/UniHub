@@ -52,39 +52,29 @@ block content
 
 			.gridbox.gridmain
 				ul(id="issues")
-					li.issuePart.anonymous(style="background-color:white")
-						div(style='background-color:#c4d4ea91;padding:10px;padding-left:20px;')
-							span(style='font-weight:900') Anonymous
-							span(style='color:gray')  
-								i.glyphicon.glyphicon-play(style="font-size:7pt")  
-								|  Information Technology 
-							p(style="font-size:7pt;padding:0px;margin:0px;color:gray") 27 Jun 2017
-						.main(style='display:inline-flex;width:100%;box-sizing:border-box')
-								#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid lightgray')
-									div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
-										i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
-									div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
-										i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
-										p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{num_of_applause}
-								#nextBtn(style="float:right;width:80%;overflow:none;")
-									div(style="font-size:24px;font-weight:800;padding:10px;border-bottom:1px solid lightgray;width:100%!important") Hi my name is Kumar
-									div(id="issueDesc" style="font-size:13.5px;padding:10px;") Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-	
-					li.issuePart.anonymous
-						div(style='background-color:#f6f8fa;padding:10px;padding-left:20px;')
-							span(style='font-weight:900') Anonymous
-							span(style='color:gray')  raised this issue on 27 Jun 2018 for XXX 
-							button(style="float:right;background-color:unset;border-radius:3px;border-color:#d1d5da;color:lightgray" type='button') Report Spam
-						.main(style='display:inline-flex;width:100%;box-sizing:border-box')
-								#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid lightgray')
-									div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
-										i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
-									div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
-										i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
-										p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{num_of_applause}
-								#nextBtn(style="float:right;width:80%;overflow:none;")
-									div(style="font-size:24px;font-weight:800;padding:10px;border-bottom:1px solid lightgray;width:100%!important") Hi my name is Kumar
-									div(id="issueDesc" style="font-size:13.5px;padding:10px;") Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+					if issues
+					for each in issues	
+						li.issuePart.anonymous(style="background-color:white")
+							div(style='background-color:#c4d4ea91;padding:10px;padding-left:20px;')
+								if (each.anonymity==="on")
+									span(style='font-weight:900') Anonymous
+								else if(each.anonymity==="off")
+									span(style='font-weight:900') #{each.username}
+								span(style='color:gray')  
+									i.glyphicon.glyphicon-play(style="font-size:7pt")  
+									|  #{each.department}
+								p(style="font-size:7pt;padding:0px;margin:0px;color:gray") #{each.datePosted}
+							.main(style='display:inline-flex;width:100%;box-sizing:border-box')
+									#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid lightgray')
+										div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
+											i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
+										div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
+											i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
+											p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{each.likes}
+									#nextBtn(style="float:right;width:80%;overflow:none;")
+										div(style="font-size:24px;font-weight:800;padding:10px;border-bottom:1px solid lightgray;width:100%!important") #{each.issueTopic}
+										div(id="issueDesc" style="font-size:13.5px;padding:10px;") #{each.issueDesc}
+
 					
 			.gridbox.gridright(data-spy="affix" )
 				.right(style="background-color:white!important;")
