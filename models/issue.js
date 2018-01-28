@@ -14,6 +14,10 @@ var issueSchema = new Schema({
 	username: {
 		type: String
 	},
+	//Name of the author
+	name: {
+		type: String
+	},
 
 	//Which Department does the issue belongs
 	department: {
@@ -78,7 +82,7 @@ module.exports.getByDate = function(callback){
 	Issue.find(callback).sort({datePosted: -1}).limit(10);
 }
 
-module.exports.getUserByLikes = function(id, callback) {
+module.exports.getIssueByLikes = function(callback) {
 	Issue.find(callback).sort({likes: -1}).limit(10);
 };
 

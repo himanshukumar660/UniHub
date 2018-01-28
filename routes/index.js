@@ -27,11 +27,55 @@ router.get('/', ensureAuthentication, function(req, res, next) {
           issues: results
         });
       }
-    });
+    });    
+});
 
-    console.log("Hi");
-    //console.log(issueList);
-    
+router.get('/trending', ensureAuthentication, function(req, res, next) {
+    console.log("Welcome to trending page!");
+    console.log(req.user);
+    //issueList = new Object();
+
+    Issue.getIssueByLikes(function(err, results){
+      if(err)
+        console.log("Could'nt fetch the issues");
+      else
+      {
+        res.render('home', {
+          title: 'Home',
+          name: req.user.name,
+          moto: req.user.moto,
+          num_of_issues: req.user.issues,
+          supporters: req.user.supporters,
+          num_of_applause: req.user.applauses,
+          avatar: req.user.avatarPath,
+          issues: results
+        });
+      }
+    });
+});
+
+router.get('/myprofile', ensureAuthentication, function(req, res, next) {
+    console.log("Welcome to my profile page!");
+    console.log(req.user);
+    //issueList = new Object();
+
+    Issue.getIssueByUsername(req.user.username, function(err, results){
+      if(err)
+        console.log("Could'nt fetch the issues");
+      else
+      {
+        res.render('home', {
+          title: 'Home',
+          name: req.user.name,
+          moto: req.user.moto,
+          num_of_issues: req.user.issues,
+          supporters: req.user.supporters,
+          num_of_applause: req.user.applauses,
+          avatar: req.user.avatarPath,
+          issues: results
+        });
+      }
+    });
 });
 
 
@@ -51,6 +95,7 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
         anonymity = "off";
       var post = new Issue({
         username: req.user.username,
+        name: req.user.name,
         department: department,
         status: "open",
         issueTopic: topic,
@@ -60,26 +105,10 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
       // Add post to the database
       Issue.createIssue(post, function(err){
         if(err)
-          console.log("Error Occured while uploading the post tp the database");
+          console.log("Error Occured while uploading the post to the database");
       });
     }
     res.redirect('/');
-
-//     Fucntion executed for posting the issue
-// { issueDept: 'Information Technology',
-//   issueDescriptionTopic: 'In',
-//   issueDescriptionText: 'ind',
-//   identity: 'on',
-//   issuePost: 'Post' }
-    // res.render('home', {
-    //   title: 'Home',
-    //   name: req.user.name,
-    //   moto: req.user.moto,
-    //   num_of_issues: req.user.issues,
-    //   supporters: req.user.supporters,
-    //   num_of_applause: req.user.applauses,
-    //   avatar: req.user.avatarPath
-    // });
 });
 
 

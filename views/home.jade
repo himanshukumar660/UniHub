@@ -11,7 +11,7 @@ block content
 						span.fa.fa-pencil
 						|  Add issue
 
-				form(method='POST', id="postIssueForm", action="/post", style="text-align:left;")
+				form(method='POST', id="postIssueForm", action="/post" style="text-align:left;")
 					input(type='text' id="issueDept" name="issueDept" placeholder="Enter your department..." required style="margin-left:0px !important;margin-right:0px !important")
 
 					input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required style="margin-left:0px !important;margin-right:0px !important")
@@ -53,30 +53,30 @@ block content
 			.gridbox.gridmain
 				ul(id="issues")
 					if issues
-					for each in issues	
-						li.issuePart.anonymous(style="background-color:white")
-							div(style='background-color:#c4d4ea91;padding:10px;padding-left:20px;')
-								if (each.anonymity==="on")
-									span(style='font-weight:900') Anonymous
-								else if(each.anonymity==="off")
-									span(style='font-weight:900') #{each.username}
-								span(style='color:gray')  
-									i.glyphicon.glyphicon-play(style="font-size:7pt")  
-									|  #{each.department}
-								if (each.anonymity==="on")
-									button(style="float:right;background-color:unset;border-radius:3px;border-color:#d1d5da;color:gray" type='button') Report Spam
-								p(style="font-size:7pt;padding:0px;margin:0px;color:gray") #{each.datePosted}
-								
-							.main(style='display:inline-flex;width:100%;box-sizing:border-box')
-									#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid lightgray')
-										div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
-											i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
-										div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
-											i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
-											p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{each.likes}
-									#nextBtn(style="float:right;width:80%;overflow:none;")
-										div(style="font-size:24px;font-weight:800;padding:10px;border-bottom:1px solid lightgray;width:100%!important") #{each.issueTopic}
-										div(id="issueDesc" style="font-size:13.5px;padding:10px;") #{each.issueDesc}
+						for each in issues	
+							li.issuePart.anonymous(style="background-color:white")
+								div(style='background-color:#c4d4ea91;padding:10px;padding-left:20px;')
+									if (each.anonymity==="on")
+										span(style='font-weight:900') Anonymous
+									else if(each.anonymity==="off")
+										a(href="/profile/"+each.username style='font-weight:900') #{each.name}
+									span(style='color:gray')  
+										i.glyphicon.glyphicon-play(style="font-size:7pt")  
+										|  #{each.department}
+									if (each.anonymity==="on")
+										button(style="float:right;background-color:unset;border-radius:3px;border-color:#d1d5da;color:gray" type='button') Report Spam
+									p(style="font-size:7pt;padding:0px;margin:0px;color:gray") #{each.datePosted}
+									
+								.main(style='display:inline-flex;width:100%;box-sizing:border-box')
+										#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid lightgray')
+											div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
+												i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
+											div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
+												i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
+												p(style="padding:0px;margin:0px;font-size:10pt;text-align:center") #{each.likes}
+										#nextBtn(style="float:right;width:80%;overflow:none;")
+											div(style="font-size:24px;font-weight:800;padding:10px;border-bottom:1px solid lightgray;width:100%!important") #{each.issueTopic}
+											div(id="issueDesc" style="font-size:13.5px;padding:10px;") #{each.issueDesc}
 
 					
 			.gridbox.gridright(data-spy="affix" )

@@ -77,15 +77,15 @@ html(lang='en')
                 li(class=(title == 'Home' ? 'active' : ''))
                   a(href='#')
                     | Home
-                li(class=(title == 'Open Issues' ? 'active' : ''))
-                  a(href='#')
-                    | My issues
                 li(class=(title == 'My Organisations' ? 'active' : ''))
-                  a(href='#')
+                  a(href='/trending')
+                    | Trending
+                li(class=(title == 'My Organisations' ? 'active' : ''))
+                  a(href='/myorganisations')
                     | My Organisations
-                li(class=(title == 'My Organisations' ? 'active' : ''))
-                  a(href='#')
-                    | Notifications
+                li(class=(title == 'Open Issues' ? 'active' : ''))
+                  a(href='/myprofile')
+                    | My profile
                 li(class=(title == 'Logout' ? 'active' : ''))
                   a(href='/users/logout')
                     span
