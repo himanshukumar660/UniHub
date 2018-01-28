@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var randomstring = require('randomstring');
 
 var db = mongoose.connection;
 

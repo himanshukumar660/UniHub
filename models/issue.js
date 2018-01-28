@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 // var uniqueValidator = require('mongoose-unique-validator');
-var bcrypt = require('bcrypt');
+var randomstring = require('randomstring');
 var SALT_WORK_FACTOR = 10;
 
 mongoose.connect("mongodb://127.0.0.1:27017/issues");
@@ -22,7 +22,7 @@ var issueSchema = new Schema({
 
 	//Status : Open or Close
 	status: {
-		type: Boolean,
+		type: String,
 	},
 
 	issueTopic: {
@@ -33,7 +33,7 @@ var issueSchema = new Schema({
 	},
 
 	//Anonymouse or not
-	identity: {
+	anonymity: {
 		type: String
 	},
 
@@ -50,27 +50,22 @@ var issueSchema = new Schema({
 
 	//date potsed 
 	datePosted: {
-		type: Date,
-		default: new Date()
+		type: Date
 	}
 });
 
 
 var Issue = module.exports = mongoose.model('Issue', issueSchema);
 
-module.exports.createIndividualIssue = function(newIssue, callback) {
-	newIssue.datePosted = new Date();
-	newIssue.save(callback);
-}
-
-module.exports.createAnonymousIssue = function(newIssue, callback) {
-	bcrypt.hash(newIssue.username, SALT_WORK_FACTOR, function(err, hash) {
-      if (err) return err;
-      // override the cleartext password with the hashed one
-      newIssue.username = hash;
+module.exports.createIssue = function(newIssue, callback) {
+	  console.log(newIssue.anonymity);
+	  if(newIssue.anonymity=="on")
+		{
+			newIssue.username = randomstring.generate(10);	
+		}
+	  newIssue.datePosted = new Date();
       newIssue.save(callback);
-    });
-}
+};
 
 module.exports.getIssueByUsername = function(username, callback) {
 	var query = {

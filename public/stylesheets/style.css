@@ -2,6 +2,9 @@
 html {
     position: relative;
     min-height: 100%;
+    zoom: 0.9; 
+    -moz-transform: scale(0.9); 
+    -moz-transform-origin: 0 0;
 }
 body{
 	font-family: Quicksand !important;
@@ -339,7 +342,6 @@ a{
 #issueDescriptionTopic{
   padding: 10px;
   font-size: 15px;
-  font-weight: 900;
   border-radius: 3px;
 }
 

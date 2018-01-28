@@ -3,7 +3,7 @@ block content
 	.jumbotron.text-center.addIssueFormbackground
 		.addIssueForm
 			div(style="text-align:right!important")
-				i.fa.fa-times-circle-o.closeAddIssueBox(style="font-size:30px;")
+				i.fa.fa-times-circle-o.closeAddIssueBox(style="font-size:30px;cursor:pointer")
 			.card
 			.card-body
 				.form-header(style="color:black;margin:0px;padding:0px;")
@@ -11,13 +11,17 @@ block content
 						span.fa.fa-pencil
 						|  Add issue
 
-				form(method='POST', action="/users/login" style="text-align:left;")
+				form(method='POST', id="postIssueForm", action="/post", style="text-align:left;")
 					input(type='text' id="issueDept" name="issueDept" placeholder="Enter your department..." required style="margin-left:0px !important;margin-right:0px !important")
+
 					input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required style="margin-left:0px !important;margin-right:0px !important")
+					
 					textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
+					
 					div(style="display:inline-flex;width:auto")
-						input(type="checkbox" id="identity" style="width:15px!important")
+						input(type="checkbox" id="anonymity" name="anonymity" style="width:15px!important")
 						span(style="color:black;width:150px") Be Anonymous
+					
 					div(style="text-align:center;padding:15px !important")
 						input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Post" type="submit" name="issuePost" id="issuePost")
 
@@ -102,7 +106,7 @@ block content
 					
 	if user
 		#addIssue
-			img(style="position:fixed;bottom:5%;right:5%;width:64px;height:64px" src="/images/add.png" )
+			img(style="position:fixed;bottom:5%;right:5%;width:64px;height:64px;cursor:pointer" src="/images/add.png" )
 						
 	script.
 		$('#addIssue').click(function(){
@@ -114,6 +118,19 @@ block content
 			$('#addIssue').show();
 		});
 
+		//- $('#postIssueForm').submit(function postIssue (){
+		//-     $.ajax({
+		//-         url:'/post',
+		//-         type:'post',
+		//-         data:$('#postIssueForm').serialize(),
+		//-         success:function(){
+		//-         	console.log(data);
+		//-             alert("worked");
+		//-         }
+		//-     });
+		//- });
+
+		
 		//- var x = document.getElementsByTagName('div');
 		//- console.log(x);
 		//- for(i=0;i<x.length;i++){
