@@ -63,7 +63,10 @@ block content
 								span(style='color:gray')  
 									i.glyphicon.glyphicon-play(style="font-size:7pt")  
 									|  #{each.department}
+								if (each.anonymity==="on")
+									button(style="float:right;background-color:unset;border-radius:3px;border-color:#d1d5da;color:gray" type='button') Report Spam
 								p(style="font-size:7pt;padding:0px;margin:0px;color:gray") #{each.datePosted}
+								
 							.main(style='display:inline-flex;width:100%;box-sizing:border-box')
 									#prevBtn(style='width:6rem;padding:10px;float:left;margin:5px;border-right:1px solid lightgray')
 										div(style="font-size:25px;margin:5px;padding:5px;margin-left:0px")
