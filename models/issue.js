@@ -27,11 +27,13 @@ var issueSchema = new Schema({
 	//Status : Open or Close
 	status: {
 		type: String,
+		default: "open"
 	},
 
 	issueTopic: {
 		type: String
 	},
+
 	issueDesc: {
 		type: String
 	},
@@ -41,16 +43,22 @@ var issueSchema = new Schema({
 		type: String
 	},
 
+	spamCount: {
+		type: Number,
+		default:0
+	},
+
 	//Number of likes
 	likes: {
 		type: Number,
 		default: 0,
 	},
 
-	//Comments to be implemented Later
-	// comment: [{
-	// 	type: String
-	// }],
+	supporters: [String],
+
+	comments: [{
+		type: String
+	}],
 
 	//date potsed 
 	datePosted: {
@@ -74,7 +82,7 @@ module.exports.createIssue = function(newIssue, callback) {
 module.exports.getIssueByUsername = function(username, callback) {
 	var query = {
 		username: username
-	}
+	};
 	Issue.find(query, callback);
 }
 
@@ -90,7 +98,33 @@ module.exports.getIssueByLikes = function(callback) {
 	Issue.find(callback).sort({likes: -1}).limit(10);
 };
 
+module.exports.getIssueById = function(id, callback){
+	var query = {
+		_id : id
+	}
+	Issue.findOne(query, callback);
+};
+
+
+module.exports.chkUserLikedPost = function(username, id, callback) {
+	Issue.findOne({ $and: [{_id :id}, { supporters : username }]}, callback);
+}
 
 
 
+module.exports.addUsertoSupporters = function(username, id, callback){
+		Issue.findOneAndUpdate({ _id : id }, { $push : { supporters : username}}, callback);	
+}
 
+module.exports.removeUsertoSupporters = function(username, id, callback){
+		Issue.findOneAndUpdate({ _id : id }, { $pull : { supporters : username}}, callback);	
+}
+
+module.exports.incLikesByIssues = function(username, id, callback) {
+	Issue.update({_id :id}, {$inc : {likes : 1}}, callback);
+}
+
+
+module.exports.dcrLikesByIssues = function(username, id, callback) {
+	Issue.update({_id :id}, {$inc : {likes : -1}}, callback);
+}

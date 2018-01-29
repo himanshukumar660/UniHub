@@ -7,8 +7,9 @@ html {
 body{
   font-family: 'Quicksand' !important;
   font-size: 16px !important;
-  background-color: #f6f8fa !important;
+  background-color: white !important;
 	color: black !important;
+  zoom: 0.9;
 }
 
 .container{
@@ -232,36 +233,34 @@ li.issuePart{
 }
 
 .gridmenu {
-    width: 20.481781376518218623481781376518%;
+    width: 17.481781376518218623481781376518%;
     overflow: scroll;
     background-color: transparent;
     height: 85%;
     text-align: center;
     padding: 10px;
     margin-top: 20px;
-    border-right: 1px solid lightgrey;
 }
 
 .gridmain {
-    width: 57.57854251012145748987854251012%;
+    width: 47.57854251012145748987854251012%;
     overflow: scroll;
     float: left;
     position: absolute;
-    left: 20% !important;
+    left: 16% !important;
 }
 
 
 .gridright {
-  width: 20.481781376518218623481781376518%;
+  width: 17.481781376518218623481781376518%;
   overflow: scroll;
   background-color: transparent;
   height: 85%;
   text-align: center;
   padding: 10px;
   float: right;
-  right:10px;
+  left: 61.6%;
   margin-top: 20px;
-  border-left: 1px solid lightgrey;
 }
 .right {
     background-color: #e9ebee;
@@ -392,9 +391,10 @@ textarea{
 }
 
 .issuePart1D{
-  background-color:#c4d4ea91;
+  background-color:#d4e8ff90;
   padding:10px;
   padding-left:20px;
+  border-bottom:1px solid #d4e8ff;
 }
 
 .spamBtn{
@@ -450,13 +450,15 @@ color:gray;
   font-size: 20px;
   font-weight:500;
   padding:10px;
-  border-bottom:1px solid lightgray;
   width:100%!important;
+  margin:5px;
 }
 
 #issueDesc{
   padding:10px;
-  font-weight: 300;
+  font-weight: 400;
+  margin:5px;
+  border-top:1px solid lightgray;
 }
 
 .gridbox.gridright .right{
@@ -480,33 +482,75 @@ color:gray;
 }
 
 
+#likeBtns button.iconsBtnLike{
+  padding: 0px;
+  background-color: unset;
+  border:none;
+}
+
+*:focus {
+    outline: none;
+}
 
 
+.fa-thumbs-up{
+  color: #42b72a !important;
+}
+
+a#issueTopic{
+  text-decoration: none;
+  color: black
+}
+
+a#issueTopic:hover{
+  opacity: 1;
+}
 
 
+section#main ul{
+  list-style:none;
+  text-align:center;
+  padding:0px;
+}
 
+li#iRD{
+  display: inline-block;
+  padding: 0 10px;
+  border-right: 1px solid #d4dbe0;
+}
 
+#commentBtn, #likeBtn{
+  color:#000000;
+  font-weight:500;
+  font-size:12pt;
+  width:50%;
+  text-align:center;
+  border:none;
+}
 
+.issueCommentPart{
+  width:100%;
+  border-top:1px solid lightgray;
+  padding:10px;
+  display:inline-flex;
+}
 
+.fa-ellipsis-h{
+  padding:5px;
+  color:gray;
+  margin-left:2px;
+}
 
+.mega-octicon.octicon-issue-opened{
+  font-size:16px;
+  background-color:#42b72a;
+  color:white;
+  padding:5px;
+  border-radius:3px;
+}
+.mega-octicon.octicon-issue-opened span{
+  font-weight:500;
+  font-family:Quicksand!important;
+  font-size:13pt;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

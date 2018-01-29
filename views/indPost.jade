@@ -1,0 +1,98 @@
+extends layout
+block content
+	.gridcontainer
+		.gridwrapper
+			.gridbox.gridmain
+				ul(id="issues")
+					if details	
+						li.issuePart
+							.issuePart1D
+								if (details.anonymity==="on")
+									span(style='font-weight:900') Anonymous
+								else if(details.anonymity==="off")
+									a(href="/profile/"+details.username id="linkProfile" style='font-weight:900') #{details.name}
+								span(style='color:gray')  
+									i.glyphicon.glyphicon-play(style="font-size:10pt")  
+									|  #{details.department}
+								if (details.anonymity==="on")
+									button.spamBtn(type='button') Report Spam
+								p(id="date") #{details.datePosted}
+
+							.main.issueBlock
+									#prevBtn
+										#likeBtns
+											i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
+										#likeBtns
+											button.iconsBtnLike(type="submit")
+												i.fa.fa-thumbs-o-up(aria-hidden='true')
+											p #{details.likes}
+									#nextBtn
+										#issueTopic #{details.issueTopic}
+										#issueDesc #{details.issueDesc}
+
+					
+		//- //Update the AJAX function to append the lazy loaded data back to the issues list.
+		//- $(window).scroll(function() {
+		//-    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) 
+		//-    {
+		//-    		 var dateLastPosted = $('p#date:last').text();
+		//-    		 var dateLastPosted = Date.parse(dateLastPosted);
+		//-    		 var url  = '/getIssues/'+dateLastPosted;
+		//-    		 console.log(url);
+		//-    		 $.get(url, function(data){
+		//-    		 	//$('ul#issues').append(
+		//-    		 		console.log(JSON.stringify(data));
+		//-    		 	//);
+		//- 	     });
+		//-    }
+		//- });
+
+		//- $('#postIssueForm').submit(function postIssue (){
+		//-     $.ajax({
+		//-         url:'/post',
+		//-         type:'post',
+		//-         data:$('#postIssueForm').serialize(),
+		//-         success:function(){
+		//-         	console.log(data);
+		//-             alert("worked");
+		//-         }
+		//-     });
+		//- });
+
+		
+		//- var x = document.getElementsByTagName('div');
+		//- console.log(x);
+		//- for(i=0;i<x.length;i++){
+		//- 	if(x[i].id==="issueDesc")
+		//- 	{
+		//- 		var myDiv = x[i];
+		//- 		var full = x[i].innerHTML;
+		//- 		console.log("Full : "+full);
+		//- 		var less = full.substring(0,200);
+		//- 		console.log("Less : "+less);
+		//- 		var rest = full.substring(200);
+		//- 		console.log("Rest : "+rest);
+				
+		//- 		var aFull = document.createElement('a');
+		//- 		aFull.setAttribute("id", "fullDesc");
+		//- 		aFull.innerHTML = "... Read More";
+				
+		//- 		x[i].innerHTML = less;
+				
+				
+		//- 		var restDiv = document.createElement('span');
+		//- 		restDiv.setAttribute("id", "extra");
+		//- 		restDiv.innerHTML = rest;
+		//- 		x[i].appendChild(restDiv);
+		//- 		restDiv.style.display = "none";
+				
+		//- 		x[i].appendChild(aFull);
+				
+		//- 		//- $('#extra').hide();
+		//- 	//- 	//- myDiv.append(aFull);
+		//- 	//- 	var i=0;
+		//- 	//- 	//- 
+		//- }};
+
+		
+		

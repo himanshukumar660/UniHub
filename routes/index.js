@@ -4,7 +4,6 @@ var path = require('path');
 var User = require('../models/user');
 var Issue = require('../models/issue');
 
-
 /* Get the home page*/
 router.get('/', ensureAuthentication, function(req, res, next) {
     console.log("Welcome to your homepage!");
@@ -41,6 +40,77 @@ router.get('/getIssues/:date', ensureAuthentication, function(req,res, next){
       {
         console.log(results);
         res.send(results);
+      }
+  })
+});
+
+
+//When the user Likes any post
+router.get('/likepost/:id', ensureAuthentication, function(req,res, next){
+  console.log("Initiating to like the post");
+  var _id = req.params.id;
+  console.log(_id);
+  console.log("Himanshu Kumar");
+  var username = req.user.username;
+  Issue.chkUserLikedPost(username, _id, function(err1, results1){
+      if(err1) throw err1
+      else
+      {
+         console.log(results1);
+         if(results1==null) //Not have liked before
+         {
+          Issue.addUsertoSupporters(username, _id, function(err2, res2){
+            if(err2) throw err2;
+            else
+            {
+              Issue.incLikesByIssues(username, _id, function(err3, results3){
+                if(err3)
+                  throw err3;
+                else
+                {
+                  console.log(results3);
+                }
+              });
+            }
+          });
+        }
+        else {
+          Issue.removeUsertoSupporters(username, _id, function(err2, res2){
+            if(err2) throw err2;
+            else
+            {
+              Issue.dcrLikesByIssues(req.user.username, _id, function(err3, results3){
+                  if(err3)
+                    throw err3;
+                  else
+                  {
+                    console.log(results3);
+                  }
+              });
+            }
+          });
+        }        
+      }
+});
+});
+
+
+//When the user demands for a single post details
+router.get('/post/:id', ensureAuthentication, function(req,res, next){
+  console.log("Fteching the post details");
+  var id = req.params.id;
+  console.log(id);
+  
+  Issue.getIssueById(id, function(err, result){
+      if(err)
+        console.log("Could'nt fetch post details");
+      else
+      {
+        console.log(result);
+        res.render('indPost', {
+          title: 'Post',
+          details: result
+        });
       }
   })
 });
