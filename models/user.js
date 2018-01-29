@@ -64,6 +64,15 @@ module.exports.createUser = function(newUser, callback) {
       newUser.save(callback);
     });
 }
+
+module.exports.incUserByIssues = function(username, callback) {
+	var query = {
+		username: username,
+		$inc : { issues : 1} 
+	}
+	User.update(query, callback);
+}
+
 module.exports.getUserByUsername = function(username, callback) {
 	var query = {
 		username: username

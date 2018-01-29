@@ -9,7 +9,6 @@ var Issue = require('../models/issue');
 router.get('/', ensureAuthentication, function(req, res, next) {
     console.log("Welcome to your homepage!");
     console.log(req.user);
-    //issueList = new Object();
 
     Issue.getIssuesLatest(function(err, results){
       if(err)
@@ -118,9 +117,18 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
         anonymity: anonymity
       });
       // Add post to the database
-      Issue.createIssue(post, function(err){
+      Issue.createIssue(post, function(err, result){
         if(err)
           console.log("Error Occured while uploading the post to the database");
+        else{
+          if(result.anonymity==="off")
+          {
+            var username = result.username;
+            User.incUserByIssues(username, function(errInc, resultsInc){
+              if(errInc) throw errInc;
+            });
+          }
+        }
       });
     }
     res.redirect('/');
