@@ -105,12 +105,12 @@ module.exports.getIssueById = function(id, callback){
 	Issue.findOne(query, callback);
 };
 
-
+module.exports.chkWholeIssuesForLiked = function(username, callback){
+	Issue.find({ supporters : username}, callback);
+}
 module.exports.chkUserLikedPost = function(username, id, callback) {
 	Issue.findOne({ $and: [{_id :id}, { supporters : username }]}, callback);
 }
-
-
 
 module.exports.addUsertoSupporters = function(username, id, callback){
 		Issue.findOneAndUpdate({ _id : id }, { $push : { supporters : username}}, callback);	
@@ -123,7 +123,6 @@ module.exports.removeUsertoSupporters = function(username, id, callback){
 module.exports.incLikesByIssues = function(username, id, callback) {
 	Issue.update({_id :id}, {$inc : {likes : 1}}, callback);
 }
-
 
 module.exports.dcrLikesByIssues = function(username, id, callback) {
 	Issue.update({_id :id}, {$inc : {likes : -1}}, callback);

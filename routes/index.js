@@ -13,7 +13,7 @@ router.get('/', ensureAuthentication, function(req, res, next) {
       if(err)
         console.log("Could'nt fetch the issues");
       else
-      {
+      { 
         res.render('home', {
           title: 'Home',
           name: req.user.name,
@@ -56,40 +56,31 @@ router.get('/likepost/:id', ensureAuthentication, function(req,res, next){
       if(err1) throw err1
       else
       {
-         console.log(results1);
          if(results1==null) //Not have liked before
          {
-          Issue.addUsertoSupporters(username, _id, function(err2, res2){
+          Issue.addUsertoSupporters(username, _id, function(err2){
             if(err2) throw err2;
             else
             {
-              Issue.incLikesByIssues(username, _id, function(err3, results3){
+              Issue.incLikesByIssues(username, _id, function(err3){
                 if(err3)
                   throw err3;
-                else
-                {
-                  console.log(results3);
-                }
               });
             }
           });
         }
         else {
-          Issue.removeUsertoSupporters(username, _id, function(err2, res2){
+          Issue.removeUsertoSupporters(username, _id, function(err2){
             if(err2) throw err2;
             else
             {
-              Issue.dcrLikesByIssues(req.user.username, _id, function(err3, results3){
+              Issue.dcrLikesByIssues(req.user.username, _id, function(err3){
                   if(err3)
                     throw err3;
-                  else
-                  {
-                    console.log(results3);
-                  }
               });
             }
           });
-        }        
+        } 
       }
 });
 });
@@ -191,13 +182,7 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
         if(err)
           console.log("Error Occured while uploading the post to the database");
         else{
-          if(result.anonymity==="off")
-          {
-            var username = result.username;
-            User.incUserByIssues(username, function(errInc, resultsInc){
-              if(errInc) throw errInc;
-            });
-          }
+          console.log('Issue Posted..');
         }
       });
     }

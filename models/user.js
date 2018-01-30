@@ -38,11 +38,11 @@ var userSchema = new Schema({
 	// 	type: Number,
 	// 	default: 0
 	// },
-	issues: {
-		type: Number,
-		default: 0
-	},
-	// claps: {
+	// issues: {
+	// 	type: Number,
+	// 	default: 0
+	// },
+	// // claps: {
 	// 	type: Number,
 	// 	default: 0
 	// },
@@ -63,14 +63,6 @@ module.exports.createUser = function(newUser, callback) {
       newUser.password = hash;
       newUser.save(callback);
     });
-}
-
-module.exports.incUserByIssues = function(username, callback) {
-	var query = {
-		username: username,
-		$inc : { issues : 1} 
-	}
-	User.update(query, callback);
 }
 
 module.exports.getUserByUsername = function(username, callback) {

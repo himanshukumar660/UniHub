@@ -32,38 +32,29 @@ block content
 					section#main
 						div
 							span.avatar 
-								img(src='./uploads/'+'#{avatar}', alt='', width='50%' style="border-radius:50%")
+								img(src='./uploads/'+'#{avatar}', alt='Profile Pic' style="border-radius:50%;width:150px;height:150px")
 							h1 #{name} 
 							p
 								blockquote(style="color:#369a21;")
 									| #{moto}
-							ul
-								li#iRD
-									| Issues Raised
-									h3 #{num_of_issues}
-
-								li(style="display: inline-block;padding: 0 10px")
-									| Supporters
-									h3 #{supporters}
-
-
-
 			.gridbox.gridmain
 				ul(id="issues")
 					if issues
 						for each in issues	
 							li.issuePart
-								.issuePart1D
-									if (each.anonymity==="on")
-										span(style='font-weight:900') Anonymous
-									else if(each.anonymity==="off")
-										a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;color:#2d283e ') #{each.name}
-									
-									span(style='color:gray')  
-										i.glyphicon.glyphicon-play(style="font-size:10pt")  
-										|  #{each.department}
-									
-									div(style="float:right !important")
+								.issuePart1D(style="display:inline-flex;width:100%;padding-left:13px")
+									div(style="display:left;width:80%;")
+										if (each.anonymity==="on")
+											span(style='font-weight:900') Anonymous
+										else if(each.anonymity==="off")
+											a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
+										
+										span(style='color:gray')  
+											i.glyphicon.glyphicon-play(style="font-size:10pt")  
+											a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;')  #{each.department}
+										p(id="date") #{each.datePosted}
+			
+									div(style="display:right;width:20%")
 										if trending
 											i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
 											
@@ -72,14 +63,11 @@ block content
 												span Open
 										else
 											i(class="mega-octicon octicon-issue-closed")
-										a(href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover")
-											i(class="fa fa-ellipsis-h")
-
-									p(id="date") #{each.datePosted}
-			
+									
 								.main.issueBlock
 									#nextBtn
-										a#issueTopic(href="/post/"+each._id) #{each.issueTopic}
+										div(style="margin-left:10px")
+											a#issueTopic(href="/post/"+each._id) #{each.issueTopic}
 										#issueDesc #{each.issueDesc}
 								
 								.issueCommentPart
@@ -88,8 +76,8 @@ block content
 										|  Like		
 									button(id="commentBtn")
 										i(class="mega-octicon octicon-comment" style="font-size:18px")
-										|  Comment	
-
+										|  Comment
+								
 			.gridbox.gridright(data-spy="affix" )
 				.right
 					#notifications
@@ -102,6 +90,11 @@ block content
 			img(src="/images/add.png" )
 						
 	script.
+		var issuedate = $('p#date').each(function(){
+			var modDate = $(this).text().substring(0,15);
+			$(this).html(modDate);
+		});
+
 		$('#addIssue').click(function(){
 			$('.addIssueFormbackground').show();
 			$('#addIssue').hide();
@@ -112,7 +105,7 @@ block content
 			$('#addIssue').show();
 		});
 		
-		$('#likeBtn').click(function(e){
+		$('button#likeBtn').click(function(e){
 		    e.preventDefault();
 		    $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
 		    var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
