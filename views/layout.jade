@@ -41,7 +41,7 @@ html(lang='en')
                     span.glyphicon.glyphicon-log-in
                     |  Login
             if user
-              form#nav_search_form.form-inline( action='/search', accept-charset='UTF-8', method='get')
+              form#nav_search_form.form-inline.my-lg-0.mr-auto( action='/search', accept-charset='UTF-8', method='get')
                 input.form-control(id="nav_search_input" type='search', name='q', placeholder='Search for organisations..')
               ul.nav.navbar-nav.navbar-right
                 li(class=(title == 'Organisations' ? 'active' : ''))
@@ -72,7 +72,7 @@ html(lang='en')
                     span.glyphicon.glyphicon-log-in
                     |  Login
             if user
-              form#nav_search_form.form-inline( action='/search', accept-charset='UTF-8', method='get')
+              form#nav_search_form.form-inline.my-lg-0.mr-auto( action='/search', accept-charset='UTF-8', method='get')
                 input.form-control(id="nav_search_input" type='search', name='q', placeholder='Search for organisations..')
               ul.nav.navbar-nav.navbar-right
                 li(class=(title == 'Home' ? 'active' : ''))
