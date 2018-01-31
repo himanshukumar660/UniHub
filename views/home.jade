@@ -1,30 +1,5 @@
 extends layout
 block content
-	.jumbotron.text-center.addIssueFormbackground
-		.addIssueForm
-			div(style="text-align:right!important")
-				i.fa.fa-times-circle-o.closeAddIssueBox(style="font-size:30px!important")
-			.card
-			.card-body
-				.form-header.myFormHeader
-					h3(style="margin-top:10px")
-						span.fa.fa-pencil
-						|  Add issue
-
-				form(method='POST', id="postIssueForm", action="/post")
-					input(type='text' id="issueDept" name="issueDept" placeholder="Enter your department..." required)
-
-					input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required)
-					
-					textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
-					
-					div(style="display:inline-flex;width:auto")
-						input(type="checkbox" id="anonymity" name="anonymity")
-						span(style="color:black;width:150px") Be Anonymous
-					
-					div(style="text-align:center;padding:15px !important")
-						input( value="Post" type="submit" name="issuePost" id="issuePost")
-
 	.gridcontainer
 		.gridwrapper
 			.gridbox.gridmenu(data-spy="affix" )		
@@ -32,26 +7,33 @@ block content
 					ul(id="myOrgsList")
 						for each in userDetails.orgs
 							li #{each}
-
-									
+						
 			.gridbox.gridmain
 				ul(id="issues")
 					li.issuePart
-						.issuePart1D(style="display:inline-flex;width:100%;padding-left:13px")
-							
-							
-						.main.issueBlock
-							#nextBtn
-								div(style="margin-left:10px")
-									a#issueTopic(href="/post/") each.issueTopic
-								#issueDesc each.issueDesc
-						
-
+						form(method='POST', id="postIssueForm", action="/post")		
+							.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+								div(style="float:left")
+									h(style="font-weight:500;font-size:14pt") Add issue							
+								div(style="text-align:center;float:right!important")
+									input( value="Post" type="submit" name="issuePost" id="issuePost")
+							.main.issueBlock
+								#nextBtn
+									div(style="margin-left:5px")
+											input(type='text' id="issueDept" name="issueDept" placeholder="Referring to..." required)
+											
+											input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required)
+											
+											textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
+											
+											div(style="display:inline-flex;width:auto")
+												input(type="checkbox" id="anonymity" name="anonymity")
+											span(style="color:black;width:150px") Be Anonymous
 					if issues
 						for each in issues	
 							li.issuePart
-								.issuePart1D(style="display:inline-flex;width:100%;padding-left:13px")
-									div(style="display:left;width:80%;")
+								.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+									div(style="float:left;width:80%;")
 										if (each.anonymity==="on")
 											span(style='font-weight:900') Anonymous
 										else if(each.anonymity==="off")
@@ -62,7 +44,7 @@ block content
 											a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;')  #{each.department}
 										p(id="date") #{each.datePosted}
 			
-									div(style="display:right;width:20%")
+									div(style="float:right")
 										if trending
 											i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
 											
@@ -75,7 +57,7 @@ block content
 								.main.issueBlock
 									#nextBtn
 										div(style="margin-left:10px")
-											a#issueTopic(href="/post/"+each._id) #{each.issueTopic}
+											a#issueTopic(href="/indpost/"+each._id) #{each.issueTopic}
 										#issueDesc #{each.issueDesc}
 								
 								.issueCommentPart

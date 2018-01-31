@@ -9,80 +9,75 @@ var db = mongoose.connection;
 
 var Schema = mongoose.Schema;
 
-var issueSchema = new Schema({
-	//Username of the author
-	username: {
-		type: String,
-		required: true
+var issueDetails = new Schema({
+	datePosted: {
+		type: Date
 	},
-	//Name of the author
-	name: {
-		type: String,
-		required: true
-	},
-
-	//Which Department does the issue belongs
+	
 	department: {
 		type: String,
 		required: true
 	},
+	
+	issueTopic: {
+		type:String
+	},
 
-	//Status : Open or Close
+	issueDesc: {
+		type:String
+	},
+	
 	status: {
 		type: String,
 		default: "open"
 	},
-
-	issueTopic: {
-		type: String,
-		required: true
-	},
-
-	issueDesc: {
-		type: String,
-		required: true
-	},
-
-	//Anonymouse or not
-	anonymity: {
-		type: String
-	},
-
+	
+	supporters: [String],
+	
 	spamCount: {
 		type: Number,
 		default:0
 	},
-
-	//Number of likes
-	likes: {
-		type: Number,
-		default: 0,
-	},
-
-	supporters: [String],
-
+	
 	comments: [{
 		type: String
-	}],
+	}]
 
-	//date potsed 
-	datePosted: {
-		type: Date
-	}
 });
 
+var issueSchema = new Schema({
+	username: {
+		type: String,
+	},
+	
+	anonymity: {
+		type: String
+	},
+
+	myissueDetails: [issueDetails],
+});
 
 var Issue = module.exports = mongoose.model('Issue', issueSchema);
 
-module.exports.createIssue = function(newIssue, callback) {
+var IssueDetails = mongoose.model('IssueDetails', issueDetails);
+
+module.exports.addRaiser = function(newIssue, callback) {
 	  console.log(newIssue.anonymity);
 	  if(newIssue.anonymity=="on")
 		{
 			newIssue.username = randomstring.generate(10);	
 		}
-	  newIssue.datePosted = new Date();
       newIssue.save(callback);
 };
+
+//Check if user has raised any issue
+module.exports.chkUser = function(username, callback){
+	Issue.findOne({username:username}, callback);
+}
+
+module.exports.addIssueDetails = function(username, issueDtl, callback) {
+	Issue.findOneAndUpdate({username: username}, {$push: {myissueDetails : issueDtl}}, callback);
+}
 
 module.exports.getIssueByUsername = function(username, callback) {
 	var query = {

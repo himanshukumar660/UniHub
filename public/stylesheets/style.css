@@ -361,7 +361,7 @@ a{
 #issueDescriptionText{
   font-size: 15px;
   margin-top: 5px; 
-  height: 10em;
+  height: 6em;
   width: 100%;
   max-width: 100%;
   padding: 10px;
@@ -459,7 +459,7 @@ color:gray;
 
 #nextBtn{
   float:right;
-  width:80%;
+  width:100%;
   overflow:none;
 }
 
@@ -586,4 +586,19 @@ a#linkProfile:hover {
   padding-right: 10px;
   border-radius:3px;
   width: 97.5% !important;
+}
+#issueDept{
+  border:1px solid #e8f3ff;
+}
+#issueDescriptionTopic{
+ border:1px solid #e8f3ff; 
+}
+#issueDescriptionText{
+ border:1px solid #e8f3ff; 
+}
+#issuePost{
+  border:1px solid #e8f3ff;
+  padding:0px !important;
+  width:5rem !important;
+  border-radius: 3px;
 }
