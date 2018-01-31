@@ -48,7 +48,7 @@ router.get('/getIssues/:date', ensureAuthentication, function(req,res, next){
 
 
 //When the user Likes any post
-router.get('/likepost/:id', ensureAuthentication, function(req,res, next){
+router.post('/likepost/:id', ensureAuthentication, function(req,res, next){
   console.log("Initiating to like the post");
   var _id = req.params.id;
   console.log(_id);
@@ -89,6 +89,27 @@ router.get('/likepost/:id', ensureAuthentication, function(req,res, next){
 
 
 //When the user demands for a single post details
+router.get('/search_org/:orgname', ensureAuthentication, function(req,res, next){
+  console.log("Fteching the organisations details");
+  var id = req.params.orgname;
+  console.log(id);
+  
+  Issue.getorgnames(id, function(err, result){
+      if(err)
+        console.log("Could'nt fetch names of organisations");
+      else
+      {
+        console.log(result);
+        res.render('indPost', {
+          title: 'Post',
+          details: result
+        });
+      }
+  })
+});
+
+
+//When the user demands for a single post details
 router.get('/post/:id', ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
   var id = req.params.id;
@@ -113,21 +134,21 @@ router.get('/trending', ensureAuthentication, function(req, res, next) {
     console.log("Welcome to trending page!");
     console.log(req.user);
     //issueList = new Object();
-
     Issue.getIssueByLikes(function(err, results){
       if(err)
         console.log("Could'nt fetch the issues");
       else
       {
-        res.render('home', {
-          title: 'Trending',
-          name: req.user.name,
-          moto: req.user.moto,
-          num_of_issues: req.user.issues,
-          supporters: req.user.supporters,
-          num_of_applause: req.user.applauses,
-          avatar: req.user.avatarPath,
-          issues: results
+        User.getUserByUsername(req.user.username, function(req2,res2){
+          if(err) throw err;
+          else
+          {
+            res.render('home', {
+              title: 'Home',
+              userDetails: res2,
+              issues: results
+            });
+          }
         });
       }
     });

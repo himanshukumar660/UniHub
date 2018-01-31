@@ -12,16 +12,19 @@ var Schema = mongoose.Schema;
 var issueSchema = new Schema({
 	//Username of the author
 	username: {
-		type: String
+		type: String,
+		required: true
 	},
 	//Name of the author
 	name: {
-		type: String
+		type: String,
+		required: true
 	},
 
 	//Which Department does the issue belongs
 	department: {
-		type: String
+		type: String,
+		required: true
 	},
 
 	//Status : Open or Close
@@ -31,11 +34,13 @@ var issueSchema = new Schema({
 	},
 
 	issueTopic: {
-		type: String
+		type: String,
+		required: true
 	},
 
 	issueDesc: {
-		type: String
+		type: String,
+		required: true
 	},
 
 	//Anonymouse or not
@@ -113,11 +118,11 @@ module.exports.chkUserLikedPost = function(username, id, callback) {
 }
 
 module.exports.addUsertoSupporters = function(username, id, callback){
-		Issue.findOneAndUpdate({ _id : id }, { $push : { supporters : username}}, callback);	
+	Issue.findOneAndUpdate({ _id : id }, { $addToSet : { supporters : username}}, callback);	
 }
 
 module.exports.removeUsertoSupporters = function(username, id, callback){
-		Issue.findOneAndUpdate({ _id : id }, { $pull : { supporters : username}}, callback);	
+	Issue.findOneAndUpdate({ _id : id }, { $pull : { supporters : username}}, callback);	
 }
 
 module.exports.incLikesByIssues = function(username, id, callback) {

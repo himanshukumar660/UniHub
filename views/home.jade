@@ -36,6 +36,17 @@ block content
 									
 			.gridbox.gridmain
 				ul(id="issues")
+					li.issuePart
+						.issuePart1D(style="display:inline-flex;width:100%;padding-left:13px")
+							
+							
+						.main.issueBlock
+							#nextBtn
+								div(style="margin-left:10px")
+									a#issueTopic(href="/post/") each.issueTopic
+								#issueDesc each.issueDesc
+						
+
 					if issues
 						for each in issues	
 							li.issuePart
@@ -77,9 +88,46 @@ block content
 								
 			.gridbox.gridright(data-spy="affix" )
 				.right
-					#notifications
-						h4 What?
-						p The Pulpit Rock is a part of a mountain that looks like a pulpit.
+					#notifications(style="text-align:left!important")
+						a(href="/trending" style="font-weight:500") 
+							p Trending
+						ul(id="trndingIssues" style="list-style:none")
+								li
+									p Issue Topic goes here.
+								li
+									p Issue Topic goes here.
+								li
+									p Issue Topic goes here.
+								li
+									p Issue Topic goes here.
+
+					#notifications(style="text-align:left!important")
+						a(href="/trending" style="font-weight:500") 
+							p Trending
+						ul(id="trndingIssues" style="list-style:none")
+							li
+								p Issue Topic goes here.
+							li
+								p Issue Topic goes here.
+							li
+								p Issue Topic goes here.
+							li
+								p Issue Topic goes here.
+
+					#notifications(style="text-align:left!important")
+						a(href="/trending" style="font-weight:500") 
+							p Trending
+						ul(id="trndingIssues" style="list-style:none")
+							li
+								p Issue Topic goes here.
+							li
+								p Issue Topic goes here.
+							li
+								p Issue Topic goes here.
+							li
+								p Issue Topic goes here.
+	
+
 					
 					
 	if user
@@ -111,13 +159,26 @@ block content
 		    $.ajax({
 			  url: _url,
 			  cache: false,
-			  method: 'GET',
+			  method: 'POST',
 			  success: function(data){
 			    console.log(data);
 			  }
 			});
 		});
-
+		$('#nav_search_input').on("input", function(){
+		   	var query = this.value;
+		   	query = query.toLowerCase().replace(/\s/g, '');
+		   	console.log(query);
+		    var _url = "/search_org/"+query;
+		    $.ajax({
+		    url: _url,
+		    cache: false,
+		    method: 'GET',
+		    success: function(data){
+		       console.log(data);
+		    }
+		  });
+		});
 		//- $(window).scroll(function() {
 		//-    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) 
 		//-    {
