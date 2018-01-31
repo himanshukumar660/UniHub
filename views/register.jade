@@ -17,7 +17,7 @@ block content
 					
 		form(method='POST', action="/users/register" style="margin-top:20px !important" enctype="multipart/form-data")
 			input(id='name', type='text', placeholder="Your Name", name="name", value= '#{name}')
-			textarea#moto(rows='2', placeholder='What is your principle ?', name="moto") #{moto}
+			textarea#moto(rows='2', placeholder='What is your principle ?', name="moto" style="width:100%!important") #{moto}
 			input(id='username', type='text', name='username', placeholder='Choose Username' value='#{username}')     
 			input(id='email', type='text', name='email', placeholder='Email Address' value='#{email}')
 			input(id='password', type='password', name='password', placeholder='Password')

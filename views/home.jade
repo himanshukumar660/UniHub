@@ -136,8 +136,13 @@ block content
 		    e.preventDefault();
 		    $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
 		    var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
-		    id = id.substring(6);
+		    console.log(id);
+		    
+		    id = id.substring(9);
+		    console.log(id);
+		    
 		    var _url = "/likepost/"+id;
+		    console.log(_url);
 		    $.ajax({
 			  url: _url,
 			  cache: false,

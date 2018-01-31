@@ -9,75 +9,68 @@ var db = mongoose.connection;
 
 var Schema = mongoose.Schema;
 
-var issueDetails = new Schema({
-	datePosted: {
-		type: Date
+var issueSchema = new Schema({
+	//Username of the author
+	username: {
+		type: String,
+		required: true
 	},
-	
+
+	//Which Department does the issue belongs
 	department: {
 		type: String,
 		required: true
 	},
-	
-	issueTopic: {
-		type:String
+	name: {
+		type: String
 	},
-
-	issueDesc: {
-		type:String
-	},
-	
+	//Status : Open or Close
 	status: {
 		type: String,
 		default: "open"
 	},
-	
-	supporters: [String],
-	
-	spamCount: {
-		type: Number,
-		default:0
-	},
-	
-	comments: [{
+
+	issueTopic: {
 		type: String
-	}]
-
-});
-
-var issueSchema = new Schema({
-	username: {
-		type: String,
 	},
-	
+
+	issueDesc: { 
+		type:String
+	},
+
+	//Anonymouse or not
 	anonymity: {
 		type: String
 	},
 
-	myissueDetails: [issueDetails],
+	spamCount: {
+		type: Number,
+		default:0
+	},
+
+	supporters: [String],
+
+	comments: [String],
+
+	//date potsed 
+	datePosted: {
+		type: Date
+	}
 });
+
 
 var Issue = module.exports = mongoose.model('Issue', issueSchema);
 
-var IssueDetails = mongoose.model('IssueDetails', issueDetails);
-
-module.exports.addRaiser = function(newIssue, callback) {
+module.exports.createIssue = function(newIssue, callback) {
 	  console.log(newIssue.anonymity);
 	  if(newIssue.anonymity=="on")
 		{
 			newIssue.username = randomstring.generate(10);	
 		}
+	  newIssue.datePosted = new Date();
+
       newIssue.save(callback);
 };
-
-//Check if user has raised any issue
-module.exports.chkUser = function(username, callback){
-	Issue.findOne({username:username}, callback);
-}
-
-module.exports.addIssueDetails = function(username, issueDtl, callback) {
-	Issue.findOneAndUpdate({username: username}, {$push: {myissueDetails : issueDtl}}, callback);
-}
 
 module.exports.getIssueByUsername = function(username, callback) {
 	var query = {

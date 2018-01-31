@@ -32,18 +32,7 @@ var userSchema = new Schema({
 		required: true,
 	},
 	orgs: [String],
-	// supporters: {
-	// 	type: Number,
-	// 	default: 0
-	// },
-	// issues: {
-	// 	type: Number,
-	// 	default: 0
-	// },
-	// // claps: {
-	// 	type: Number,
-	// 	default: 0
-	// },
+	
 	avatarPath: {
 		type: String,
 		default: "defpicman.jpg"
