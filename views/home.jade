@@ -4,9 +4,25 @@ block content
 		.gridwrapper
 			.gridbox.gridmenu(data-spy="affix" )		
 				#wrapper(class="pro_info")
-					ul(id="myOrgsList")
-						for each in userDetails.orgs
-							li #{each}
+					ul(style="padding:0px")
+						li(style="list-style:none;")
+							p(style="font-weight:500;font-size:10pt;text-align:left") Himanshu Kumar	
+						li(style='list-style:none;')
+							p(style="font-weight:500;font-size:10pt;text-align:left") My organisations
+							ul(id="myOrgsList")
+								for each in userDetails.orgs
+									li #{each}
+								li#orgname 
+									| NIT Durgapur
+								li#orgname
+									| Microsoft
+								li#orgname
+									| GNU Linux Users Group
+								li#orgname
+									| Amazon
+								li#orgname
+									| Information Technology
+
 						
 			.gridbox.gridmain
 				ul(id="issues")
@@ -54,6 +70,7 @@ block content
 												span Open
 										else
 											i(class="mega-octicon octicon-issue-closed")
+												span  Closed
 									
 								.main.issueBlock
 									#nextBtn
@@ -70,7 +87,7 @@ block content
 										|  Comment
 								
 			.gridbox.gridright(data-spy="affix" )
-				.right
+				.right(style="background-color:unset!important")
 					#notifications(style="text-align:left!important")
 						a(href="/trending" style="font-weight:500") 
 							p Trending

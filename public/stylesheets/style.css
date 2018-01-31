@@ -7,7 +7,7 @@ html {
 body{
   font-family: 'Quicksand' !important;
   font-size: 16px !important;
-  background-color: white !important;
+  background-color: #e9ebee3d !important;
 	color: black !important;
   zoom: 0.9;
 }
@@ -221,7 +221,7 @@ li.issuePart{
     display:inline;
     height:100%;
     position:absolute;
-    top:70px;
+    top:40px;
 }
 
 .gridwrapper {
@@ -597,6 +597,20 @@ li#iRD{
 
 }
 
+.mega-octicon.octicon-issue-closed {
+  font-size:16px;
+  background-color:red;
+  color:white;
+  padding:5px;
+  border-radius:3px;
+}
+.mega-octicon.octicon-issue-closed span{
+  font-weight:500;
+  font-family:Quicksand!important;
+  font-size:13pt;
+
+}
+
 a#linkProfile:hover {
   text-decoration: underline!important;
   color:#3479b7;
@@ -622,3 +636,50 @@ a#linkProfile:hover {
 #issueDescriptionText{
  border:1px solid #e8f3ff; 
 }
+
+#myOrgsList{
+  list-style: none;
+  text-align:left;
+  padding: 0px; 
+  font-size:12pt;
+}
+
+#orgname{
+  font-size:10pt;
+  border: 1px solid #e9ebee3d;
+  transition: background-color 0.2s ease;
+  padding: 5px;
+  background-color: unset;
+  border-radius: 2px;
+  font-weight: 400;
+}
+
+#orgname:hover{
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+.navbar{
+  margin-bottom: 0px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

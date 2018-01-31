@@ -60,7 +60,7 @@ html(lang='en')
                 li(class=(title == 'Add Organisations' ? 'active' : '') id="addorg")
                   a(href='/addorgs/')
                     | + Organisations
-                li(class=(title == 'My profile' ? 'active' : ''))
+                li(class=(title == 'Profile' ? 'active' : ''))
                   a(href='/profile/'+user.username)
                     | My profile
                 li(class=(title == 'Settings' ? 'active' : ''))
@@ -70,8 +70,7 @@ html(lang='en')
                   a(href='/users/logout')
                     span
                     |  Logout        
-    div
-      block content
+    block content
 
 
 //    footer &copy; All copyright reserved
