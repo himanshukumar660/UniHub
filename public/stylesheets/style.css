@@ -119,9 +119,9 @@ a:hover {
   background-size: 7%;
 }
 
+
 @media (min-width: 992px)
 {
-
   #myNavbar{
     display: flex !important;
     width: auto;
@@ -270,7 +270,18 @@ li.issuePart{
     margin-bottom: 1%;
 }
 
+
+  #addorg{
+    display: none;
+  }
 @media only screen and (max-width: 500px) {
+
+  #nav_search_form{
+    display: none;
+  }
+  #addorg{
+      display: block;
+  }
     #linkProfile{
       font-size: 10pt !important;
     }
@@ -399,10 +410,25 @@ textarea{
   background-color:#42b72a;
   border:none;
   color:white!important;
-  width:10rem!important;
   font-size:20px;
+  padding: 10px !important;
+  padding-left:15px !important; 
+  padding-right:15px !important; 
+  border:1px solid #e8f3ff;
+  border-radius: 2rem;
+  box-shadow: 0 2px 4px 0 #e8f3ff,0 2px 10px 0 #e8f3ff!important;
 }
 
+#issuePost:hover{
+  background-color: #3d9a33;
+}
+.postIssuePart{
+    border-radius: 3px;
+    border: 1px solid #d1d5da;
+    margin: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff!important;
+}
 .issuePart{
   background-color:white;
 }
@@ -595,10 +621,4 @@ a#linkProfile:hover {
 }
 #issueDescriptionText{
  border:1px solid #e8f3ff; 
-}
-#issuePost{
-  border:1px solid #e8f3ff;
-  padding:0px !important;
-  width:5rem !important;
-  border-radius: 3px;
 }

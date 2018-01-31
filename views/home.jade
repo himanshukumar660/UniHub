@@ -10,13 +10,11 @@ block content
 						
 			.gridbox.gridmain
 				ul(id="issues")
-					li.issuePart
+					li.postIssuePart
 						form(method='POST', id="postIssueForm", action="/post")		
 							.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
 								div(style="float:left")
 									h(style="font-weight:500;font-size:14pt") Add issue							
-								div(style="text-align:center;float:right!important")
-									input( value="Post" type="submit" name="issuePost" id="issuePost")
 							.main.issueBlock
 								#nextBtn
 									div(style="margin-left:5px")
@@ -26,9 +24,12 @@ block content
 											
 											textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
 											
-											div(style="display:inline-flex;width:auto")
-												input(type="checkbox" id="anonymity" name="anonymity")
-											span(style="color:black;width:150px") Be Anonymous
+											div(style="display:inline-block;width:100%")
+												div(style="display:inline-flex;float:left")
+													input(type="checkbox" id="anonymity" name="anonymity")
+													span(style="color:black;width:150px") Be Anonymous
+												div(style="text-align:center;float:right")
+													input( value="Post" type="submit" name="issuePost" id="issuePost")
 					if issues
 						for each in issues	
 							li.issuePart
@@ -110,28 +111,13 @@ block content
 								p Issue Topic goes here.
 	
 
-					
-					
-	if user
-		#addIssue
-			img(src="/images/add.png" )
-						
+
 	script.
 		var issuedate = $('p#date').each(function(){
 			var modDate = $(this).text().substring(0,15);
 			$(this).html(modDate);
 		});
 
-		$('#addIssue').click(function(){
-			$('.addIssueFormbackground').show();
-			$('#addIssue').hide();
-		});
-
-		$('.closeAddIssueBox').click(function(){
-			$('.addIssueFormbackground').hide();
-			$('#addIssue').show();
-		});
-		
 		$('button#likeBtn').click(function(e){
 		    e.preventDefault();
 		    $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');

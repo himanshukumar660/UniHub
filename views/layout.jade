@@ -39,18 +39,7 @@ html(lang='en')
                 li(class=(title == 'Login' ? 'active' : ''))
                   a(href='/users/login')
                     span.glyphicon.glyphicon-log-in
-                    |  Login
-            if user
-              form#nav_search_form.form-inline.my-lg-0.mr-auto( action='/search', accept-charset='UTF-8', method='get')
-                input.form-control(id="nav_search_input" type='search', name='q', placeholder='Search for organisations..')
-              ul.nav.navbar-nav.navbar-right
-                li(class=(title == 'Organisations' ? 'active' : ''))
-                  a(href='#')
-                    | Organisations
-                li(class=(title == 'Logout' ? 'active' : ''))
-                  a(href='/users/logout')
-                    span.glyphicon.glyphicon-log-out
-                    |  Logout        
+                    |  Login  
     else
       nav.navbar.navbar-inverse(data-spy="affix" style="width:100%;z-index:10000")
         .container-fluid
@@ -61,16 +50,6 @@ html(lang='en')
               span.icon-bar
             a.navbar-brand(href='#') WebSiteName
           #myNavbar.collapse.navbar-collapse
-            if !user
-              ul.nav.navbar-nav.navbar-right
-                li(class=(title == 'Register' ? 'active' : ''))
-                  a(href='/users/register')
-                    span.glyphicon.glyphicon-user
-                    |  Sign Up
-                li(class=(title == 'Login' ? 'active' : ''))
-                  a(href='/users/login')
-                    span.glyphicon.glyphicon-log-in
-                    |  Login
             if user
               form#nav_search_form.form-inline.my-lg-0.mr-auto( action='/search', accept-charset='UTF-8', method='get')
                 input.form-control(id="nav_search_input" type='search', name='q', placeholder='Search for organisations..')
@@ -78,15 +57,15 @@ html(lang='en')
                 li(class=(title == 'Home' ? 'active' : ''))
                   a(href='/')
                     | Home
-                li(class=(title == 'Trending' ? 'active' : ''))
-                  a(href='/trending')
-                    | Trending
-                li(class=(title == 'My Organisations' ? 'active' : ''))
-                  a(href='/myorganisations')
-                    | My Organisations
+                li(class=(title == 'Add Organisations' ? 'active' : '') id="addorg")
+                  a(href='/addorgs/')
+                    | + Organisations
                 li(class=(title == 'My profile' ? 'active' : ''))
                   a(href='/profile/'+user.username)
                     | My profile
+                li(class=(title == 'Settings' ? 'active' : ''))
+                  a(href='/settings/')
+                    | Settings
                 li(class=(title == 'Logout' ? 'active' : ''))
                   a(href='/users/logout')
                     span
