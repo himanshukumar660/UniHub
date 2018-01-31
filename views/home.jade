@@ -29,14 +29,11 @@ block content
 		.gridwrapper
 			.gridbox.gridmenu(data-spy="affix" )		
 				#wrapper(class="pro_info")
-					section#main
-						div
-							span.avatar 
-								img(src='./uploads/'+'#{avatar}', alt='Profile Pic' style="border-radius:50%;width:150px;height:150px")
-							h1 #{name} 
-							p
-								blockquote(style="color:#369a21;")
-									| #{moto}
+					ul(id="myOrgsList")
+						for each in userDetails.orgs
+							li #{each}
+
+									
 			.gridbox.gridmain
 				ul(id="issues")
 					if issues

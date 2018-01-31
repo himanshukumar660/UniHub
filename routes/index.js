@@ -13,17 +13,19 @@ router.get('/', ensureAuthentication, function(req, res, next) {
       if(err)
         console.log("Could'nt fetch the issues");
       else
-      { 
-        res.render('home', {
-          title: 'Home',
-          name: req.user.name,
-          moto: req.user.moto,
-          num_of_issues: req.user.issues,
-          supporters: req.user.supporters,
-          num_of_applause: req.user.applauses,
-          avatar: req.user.avatarPath,
-          issues: results
+      {
+        User.getUserByUsername(req.user.username, function(req2,res2){
+          if(err) throw err;
+          else
+          {
+            res.render('home', {
+              title: 'Home',
+              userDetails: res2,
+              issues: results
+            });
+          }
         });
+        
       }
     });    
 });

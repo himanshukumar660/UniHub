@@ -31,9 +31,7 @@ var userSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	orgs: [{
-		type: String
-	}],
+	orgs: [String],
 	// supporters: {
 	// 	type: Number,
 	// 	default: 0
