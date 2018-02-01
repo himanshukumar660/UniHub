@@ -4,6 +4,7 @@ var path = require('path');
 var User = require('../models/user');
 var Issue = require('../models/issue');
 var Org = require('../models/org');
+var shortId = require('short-mongo-id');
 
 /* Get the home page*/
 router.get('/', ensureAuthentication, function(req, res, next) {
@@ -238,18 +239,32 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
     var aboutUs = req.body.orgAbout;
     var alert = req.body.orgAlert;
     
+
     var orgDtl = new Org({
       name:name,
       alert:alert,
       aboutUs: aboutUs,
       admin: [req.user.username]
     });
+    orgDtl.userId = shortId(orgDtl._id.toString()),
+      
     console.log(orgDtl);
 
-    Org.makeOrg(orgDtl, function(err2, res2){
-      if(err2) throw err2;
+    Org.makeOrg(orgDtl, function(err1, res1){
+      if(err1) {
+        Org.adminOrgs(req.user.username, function(err2, res2){
+          if(err2) throw err2;
+          else{
+            res.render('myorg', {
+              title: 'My Organisations',
+              orgs: res2,
+              errorDup: err1
+            });
+          }
+        });
+      }
       else{
-        console.log(res2);
+        console.log(res1);
         res.redirect('/myorg');
       }
     });
@@ -260,7 +275,6 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
     Org.adminOrgs(req.user.username, function(err2, res2){
       if(err2) throw err2;
       else{
-
         res.render('myorg',{
           title: 'My Organisations',
           orgs: res2
@@ -269,7 +283,7 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
     });
 });
 
-router.get('/delorg/:orgId', ensureAuthentication, function(req, res, next) {
+router.post('/delorg/:orgId', ensureAuthentication, function(req, res, next) {
     console.log("Initiating Deletion of Organisation");
     var orgId = req.params.orgId;
     console.log(orgId);
@@ -277,10 +291,12 @@ router.get('/delorg/:orgId', ensureAuthentication, function(req, res, next) {
     if(err2) throw err2;
         else{
             console.log(res2);
+            res.redirect('/myorg');
           }   
     });
-    res.redirect('/myorg');
 });
+
+
 
 function ensureAuthentication(req, res, next){
     if(req.isAuthenticated())

@@ -1,44 +1,31 @@
 extends home
-block issues
+block joinorg
 	.gridbox.gridmain
-				ul(id="issues")
-					if issues
-						for each in issues	
-							li.issuePart
-								div.issuePart1D
-									if (each.anonymity==="on")
-										span(style='font-weight:900') Anonymous
-									else if(each.anonymity==="off")
-										a(href="/profile/"+each.username style='font-weight:900') #{each.name}
-									span(style='color:gray')  
-										i.glyphicon.glyphicon-play(style="font-size:10pt")  
-										|  #{each.department}
-									if (each.anonymity==="on")
-										button.spamBtn(type='button') Report Spam
-									p(id="date") #{each.datePosted}
-									
-								.main.issueBlock
-										#prevBtn
-											#likeBtns
-												i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
-											#likeBtns
-												i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
-												p #{each.likes}
-										#nextBtn
-											#issueTopic #{each.issueTopic}
-											#issueDesc #{each.issueDesc}
-	script.
-		$('#nav_search_input').on("input", function(){
-				   	var query = this.value;
-				   	query = query.toLowerCase().replace(/\s/g, '');
-				   	console.log(query);
-				    var _url = "/search_org/"+query;
-				    $.ajax({
-				    url: _url,
-				    cache: false,
-				    method: 'GET',
-				    success: function(data){
-				       console.log(data);
-				    }
-				  });
-				});
+		ul(id="issues")
+			if issues
+				for each in issues	
+					li.issuePart
+						div.issuePart1D
+							if (each.anonymity==="on")
+								span(style='font-weight:900') Anonymous
+							else if(each.anonymity==="off")
+								a(href="/profile/"+each.username style='font-weight:900') #{each.name}
+							span(style='color:gray')  
+								i.glyphicon.glyphicon-play(style="font-size:10pt")  
+								|  #{each.department}
+							if (each.anonymity==="on")
+								button.spamBtn(type='button') Report Spam
+							p(id="date") #{each.datePosted}
+							
+						.main.issueBlock
+								#prevBtn
+									#likeBtns
+										i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
+									#likeBtns
+										i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
+										p #{each.likes}
+								#nextBtn
+									#issueTopic #{each.issueTopic}
+									#issueDesc #{each.issueDesc}
+	
+

@@ -60,6 +60,9 @@ html(lang='en')
                 li(class=(title == 'Add Organisations' ? 'active' : '') id="addorg")
                   a(href='/addorgs/')
                     | + Organisations
+                li(class=(title == 'My Organisations' ? 'active' : ''))
+                  a(href='/myorg/')
+                    | My Organisations
                 li(class=(title == 'Profile' ? 'active' : ''))
                   a(href='/profile/'+user.username)
                     | My profile
@@ -73,6 +76,21 @@ html(lang='en')
     block content
 
 
+    script.
+      $('#nav_search_input').on("input", function(){
+              var query = this.value;
+              query = query.toLowerCase().replace(/\s/g, '');
+              console.log(query);
+              var _url = "/search_org/"+query;
+              $.ajax({
+              url: _url,
+              cache: false,
+              method: 'GET',
+              success: function(data){
+                 console.log(data);
+              }
+            });
+          });
 //    footer &copy; All copyright reserved
       //- br
       //- a.fa.fa-facebook(href='https://www.facebook.com/himanshueight', title='Facebook', data-toggle='tooltip', data-placement='bottom')

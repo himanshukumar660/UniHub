@@ -8,12 +8,18 @@ block issues
 						div(style="float:left")
 							h(style="font-weight:500;font-size:14pt")
 								i(class="fa fa-plus")
-							|  Organisation							
+							|  Organisation
+
+					if errorDup
+							.alert.alert-danger#err 
+								b(style="font-weight:800 !important;text-transform: capitalize;") Name Already Exists. 
+								.glyphicon.glyphicon-remove(style="float:right" id="close_error")
+											
 					.main.issueBlock
 						#nextBtn
 							div(style="margin-left:5px")
 									input(type='text' id="orgName" name="orgName" placeholder="Name of organisation" required)
-									
+										
 									input(type='text' id="orgAlert" name="orgAlert" placeholder="Criteria for Joining?")
 									
 									textarea(id="orgAbout" name="orgAbout" placeholder="About Organisation" required )
@@ -28,12 +34,17 @@ block issues
 							div(style="float:left;width:80%;")
 								span(style='color:gray')
 									a(href="/indorg/"+each._id id="linkProfile" style='font-weight:900;')  #{each.name}
+
+								span(style='color:gray')
+									br
+									span(style="color:black;font-weight:500") UID : 
+									| #{each.userId}
+								
 								p(id="date") #{each.dateMade}
 
-							div(style="float:right")
-									button#delete(value="Delete" style="background-color:red;color:white;border:1px solid red;border-radius:3px ")
-										h  Delete
-						
+							div(style="float:right" id="postDelBtn")
+									form(method="post" action="/delorg/"+each._id)
+										input#delete(value="Delete" type="submit" style="background-color:red;color:white!important;font-weight:500;border:1px solid red;border-radius:3px ")
 						.main.issueBlock
 							#prevBtn
 								#likeBtns
@@ -43,12 +54,15 @@ block issues
 								#issueDesc(style="border-top:none") #{each.aboutUs}
 
 	script.
+		$('.glyphicon.glyphicon-remove#close_error').click(function(){
+			$(this).parents('.alert.alert-danger#err').remove();
+		});
 		$('button#delete').click(function(e){
 		    e.preventDefault();
 		    $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
 		    var indorg = $(this).parents('li.issuePart').find('a#linkProfile').attr('href');
 		    indorg = indorg.substring(8);
-		 
+
 		    var _url = "/delorg/"+indorg;
 		    console.log(_url);
 		    $.ajax({
@@ -59,6 +73,7 @@ block issues
 			    console.log("Post Deleted successfully");
 			  }
 			});
+
 		});
 
 

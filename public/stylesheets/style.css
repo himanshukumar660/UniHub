@@ -398,7 +398,7 @@ textarea{
   text-align:left;
 }
 
-#issueDept, #orgName, #issueDescriptionTopic, #orgAlert{
+#issueDept, #orgName, #issueDescriptionTopic, #orgAlert, #orgUserId{
   margin-left:0px !important;
   margin-right:0px !important;
 }
@@ -627,7 +627,7 @@ a#linkProfile:hover {
   border-radius:3px;
   width: 97.5% !important;
 }
-#issueDept, #orgName{
+#issueDept, #orgName, #orgUserId{
   border:1px solid #e8f3ff;
 }
 #issueDescriptionTopic, #orgAlert{

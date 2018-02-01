@@ -11,10 +11,16 @@ var Schema = mongoose.Schema;
 
 var orgSchema = new Schema({
 	//Name of the author
+	userId:{
+		type: String,
+		required: true
+	},
+	
 	name: {
 		type: String,
-		unique: true
+		required:true
 	},
+
 	//date the organisation registered
 	dateMade: {
 		type: Date
