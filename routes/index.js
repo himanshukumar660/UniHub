@@ -3,6 +3,7 @@ var router = express.Router();
 var path = require('path');
 var User = require('../models/user');
 var Issue = require('../models/issue');
+var Org = require('../models/org');
 
 /* Get the home page*/
 router.get('/', ensureAuthentication, function(req, res, next) {
@@ -18,14 +19,20 @@ router.get('/', ensureAuthentication, function(req, res, next) {
           if(err) throw err;
           else
           {
-            res.render('home', {
-              title: 'Home',
-              userDetails: res2,
-              issues: results
+            Org.adminOrgs(req.user.username, function(err3, res3){
+              if(err3) throw err3;
+              else{
+
+                res.render('issues',{
+                  title: 'Home',
+                  orgs: res3,
+                  userDetails: res2,
+                  issues: results
+                })    
+              }
             });
           }
-        });
-        
+        });        
       }
     });    
 });
@@ -175,7 +182,6 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
     });    
 });
 
-
 //Post the issue
 router.post('/post', ensureAuthentication, function(req, res, next) {
     if(req.body){
@@ -211,6 +217,70 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
     res.redirect('/');
 });
 
+
+router.get('/orgs/:orgname', ensureAuthentication, function(req, res, next) {
+    console.log("Fetchgin the organisation details");
+    var orgname = req.params.orgname;
+    Org.findOrg(orgname, function(err2, res2){
+      if(err) throw err;
+      else{
+        res.render('joinorg', {
+          title: 'Groups',
+          orgs: res
+        });
+      }
+    });
+});
+
+router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
+    console.log("Initiating to add the organisation");
+    var name = req.body.orgName;
+    var aboutUs = req.body.orgAbout;
+    var alert = req.body.orgAlert;
+    
+    var orgDtl = new Org({
+      name:name,
+      alert:alert,
+      aboutUs: aboutUs,
+      admin: [req.user.username]
+    });
+    console.log(orgDtl);
+
+    Org.makeOrg(orgDtl, function(err2, res2){
+      if(err2) throw err2;
+      else{
+        console.log(res2);
+        res.redirect('/myorg');
+      }
+    });
+});
+
+router.get('/myorg', ensureAuthentication, function(req, res, next) {
+    console.log("loading organisation add page");
+    Org.adminOrgs(req.user.username, function(err2, res2){
+      if(err2) throw err2;
+      else{
+
+        res.render('myorg',{
+          title: 'My Organisations',
+          orgs: res2
+        })    
+      }
+    });
+});
+
+router.get('/delorg/:orgId', ensureAuthentication, function(req, res, next) {
+    console.log("Initiating Deletion of Organisation");
+    var orgId = req.params.orgId;
+    console.log(orgId);
+    Org.deleteOrg(orgId, req.user.username, function(err2, res2){
+    if(err2) throw err2;
+        else{
+            console.log(res2);
+          }   
+    });
+    res.redirect('/myorg');
+});
 
 function ensureAuthentication(req, res, next){
     if(req.isAuthenticated())

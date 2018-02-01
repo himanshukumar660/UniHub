@@ -13,18 +13,19 @@ var orgSchema = new Schema({
 	//Name of the author
 	name: {
 		type: String,
-		unique: true,
-		required: true
+		unique: true
 	},
 	//date the organisation registered
 	dateMade: {
 		type: Date
 	},
+	alert:{
+		type:String,
+	},
 	//About the organisation
 	aboutUs: {
 		type: String,
-		unique: true,
-		required: true
+		unique: true
 	},
 	//Listing of all the members
 	members: [String],
@@ -86,7 +87,7 @@ module.exports.acceptPendingReq = function(orgId, usernameOfReqUser, callback){
 
 module.exports.deleteOrg = function(orgId, usernameAdmin, callback){
 	//Search the entire org list that contails both the organisationID and admin contains the username Admin  
-	Org.remove({$and : [{_id: OrgId, admin: {$in : [usernameAdmin]}}]}, callback);
+	Org.remove({$and : [{_id: orgId, admin: {$in : [usernameAdmin]}}]}, callback);
 }
 
 module.exports.exitOrgMember = function(orgId, username, callback){
@@ -107,4 +108,10 @@ module.exports.chkMember = function(orgId, username, callback){
 	Org.find({$and : [{_id:orgId, members : {$in : [username]}}]}, callback);
 }
 
+module.exports.findOrg = function(orgname, callback){
+	Org.find({$name : {$regex : /orgname/, $options : 'i'} }, callback);
+}
 
+module.exports.adminOrgs = function(username, callback){
+	Org.find({admin : {$in : [username]}}, callback);
+}
