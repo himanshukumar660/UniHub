@@ -17,9 +17,13 @@ var issueSchema = new Schema({
 	},
 
 	//Which Department does the issue belongs
-	department: {
+	orgUserId: {
 		type: String,
 		required: true
+	},
+	
+	orgname:{
+		type: String,
 	},
 	name: {
 		type: String
@@ -55,7 +59,7 @@ var issueSchema = new Schema({
 	//date potsed 
 	datePosted: {
 		type: Date
-	}
+	},
 });
 
 

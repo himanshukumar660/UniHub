@@ -6,14 +6,24 @@ block content
 				#wrapper(class="pro_info")
 					ul(style="padding:0px")
 						li(style="list-style:none;")
-							p(style="font-weight:500;font-size:10pt;text-align:left") Himanshu Kumar	
+							p(style="font-weight:500;font-size:12pt;text-align:left") #{name}	
 						li(style='list-style:none;')
 							a(href="/myorg")
-								p(style="font-weight:500;font-size:10pt;text-align:left") My organisations
-							if orgs
-								ul(id="myOrgsList")
-									for each in orgs
-										li#orgname #{each.name}
+								p(style="font-weight:500;font-size:12pt;text-align:left") My organisations
+							if adminctrlorgs
+								if adminctrlorgs.length!=0
+									ul(id="myOrgsList")
+										| Admin Controls :
+										for each in adminctrlorgs
+											li#orgname(style="font-size:11pt") 
+												a(href="/indorg/"+each._id) #{each.name}
+							if memberctrlorgs
+								if memberctrlorgs.length!=0
+									ul(id="myOrgsList")
+											| Membership :
+											for each in memberctrlorgs
+												li#orgname(style="font-size:11pt") 
+													a(href="/indorg/"+each._id) #{each.name}
 			block issues
 			block addmyorg
 			block joinorg
@@ -48,9 +58,9 @@ block content
 								p Issue Topic goes here.
 
 					#notifications(style="text-align:left!important")
-						a(href="/trending" style="font-weight:500") 
+						a(href="/trending" style="font-weight:500;font-size:12pt") 
 							p Trending
-						ul(id="trndingIssues" style="list-style:none")
+						ul(id="trndingIssues" style="list-style:none;font-size:11pt")
 							li
 								p Issue Topic goes here.
 							li
@@ -84,6 +94,23 @@ block content
 			  url: _url,
 			});
 		});
+		
+		$('button#likeBtn').click(function(e){
+		    e.preventDefault();
+		    $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
+		    var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
+		    console.log(id);
+		    
+		    id = id.substring(9);
+		    console.log(id);
+		    
+		    var _url = "/likepost/"+id;
+		    console.log(_url);
+		    $.post({
+			  url: _url,
+			});
+		});
+		
 		
 		//- $(window).scroll(function() {
 		//-    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) 

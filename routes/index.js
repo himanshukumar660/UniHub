@@ -10,26 +10,33 @@ var shortId = require('short-mongo-id');
 router.get('/', ensureAuthentication, function(req, res, next) {
     console.log("Welcome to your homepage!");
     console.log(req.user);
+    var username = req.user.username;
 
-    Issue.getIssuesLatest(function(err, results){
-      if(err)
+    Issue.getIssuesLatest(function(err1, res1){
+      if(err1)
         console.log("Could'nt fetch the issues");
       else
       {
-        User.getUserByUsername(req.user.username, function(req2,res2){
-          if(err) throw err;
+        User.getUserByUsername(username, function(err2,res2){
+          if(err2) throw err2;
           else
           {
-            Org.adminOrgs(req.user.username, function(err3, res3){
+            Org.adminOrgs(username, function(err3, res3){
               if(err3) throw err3;
               else{
-
-                res.render('issues',{
-                  title: 'Home',
-                  orgs: res3,
-                  userDetails: res2,
-                  issues: results
-                })    
+                Org.memberOrgs(username, function(err4, res4){
+                 if(err4) throw err4;
+                 else{
+                    res.render('issues',{
+                      title: 'Home',
+                      name: req.user.name,
+                      adminctrlorgs: res3,
+                      memberctrlorgs: res4,
+                      userDetails: res2,
+                      issues: res1
+                    })  
+                  } 
+                }); 
               }
             });
           }
@@ -96,25 +103,7 @@ router.post('/likepost/:id', ensureAuthentication, function(req,res, next){
 });
 
 
-//When the user demands for a single post details
-router.get('/search_org/:orgname', ensureAuthentication, function(req,res, next){
-  console.log("Fteching the organisations details");
-  var id = req.params.orgname;
-  console.log(id);
-  
-  Issue.getorgnames(id, function(err, result){
-      if(err)
-        console.log("Could'nt fetch names of organisations");
-      else
-      {
-        console.log(result);
-        res.render('indPost', {
-          title: 'Post',
-          details: result
-        });
-      }
-  })
-});
+
 
 
 //When the user demands for a single post details
@@ -162,6 +151,49 @@ router.get('/trending', ensureAuthentication, function(req, res, next) {
     });
 });
 
+//Post the issue
+//Status : Checked
+router.post('/post', ensureAuthentication, function(req, res, next) {
+    if(req.body){
+        var orgId = req.body.orguserId;
+        var topic = req.body.issueDescriptionTopic;
+        var desc = req.body.issueDescriptionText;
+        var name = req.user.name;
+
+        var anonymity;
+
+        if(req.body.anonymity)
+          anonymity =  "on";
+        else
+          anonymity = "off";
+
+        var issue = new Issue({
+          username: req.user.username,
+          orgUserId: orgId,
+          name: name,
+          status: "open",
+          issueTopic: topic,
+          issueDesc: desc,
+          anonymity: anonymity,
+        });
+        Org.findOrgByUID(orgId, function(err1, res1){
+          if(err1) throw err1;
+          else{
+              issue.orgname = res1.name;
+              Issue.createIssue(issue, function(err2, res2){
+                if(err2) throw err2;
+                  //console.log("Error Occured while uploading the post to the database");
+                else{
+                  console.log('Issue Posted..');
+                }
+              });    
+          }
+        });
+        
+      }
+    res.redirect('/');
+});
+
 router.get('/profile/:username', ensureAuthentication, function(req, res, next) {
     console.log("Fetchgin the profile details");
     var username = req.params.username || req.user.username;
@@ -183,51 +215,20 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
     });    
 });
 
-//Post the issue
-router.post('/post', ensureAuthentication, function(req, res, next) {
-    if(req.body){
-      var department = req.body.issueDept;
-      var topic = req.body.issueDescriptionTopic;
-      var desc = req.body.issueDescriptionText;
-      var anonymity;
-
-      if(req.body.anonymity)
-        anonymity =  "on";
-      else
-        anonymity = "off";
-
-      var issue = new Issue({
-        username: req.user.username,
-        department: department,
-        status: "open",
-        name: req.user.name,
-        issueTopic: topic,
-        issueDesc: desc,
-        anonymity: anonymity,
-      });
-
-      Issue.createIssue(issue, function(err, result){
-        if(err)
-          throw err;
-          //console.log("Error Occured while uploading the post to the database");
-        else{
-          console.log('Issue Posted..');
-        }
-      });
-    }
-    res.redirect('/');
-});
 
 
-router.get('/orgs/:orgname', ensureAuthentication, function(req, res, next) {
+// The APIs for accessing the organisation modiules.
+
+
+router.get('/orgs/:orgUID', ensureAuthentication, function(req, res, next) {
     console.log("Fetchgin the organisation details");
-    var orgname = req.params.orgname;
-    Org.findOrg(orgname, function(err2, res2){
-      if(err) throw err;
+    var orgUID = req.params.orgUID;
+    Org.findOrgByUID(orgUID, function(err2, res2){
+      if(err2) throw err2;
       else{
         res.render('joinorg', {
           title: 'Groups',
-          orgs: res
+          orgs: res2
         });
       }
     });
@@ -297,6 +298,25 @@ router.post('/delorg/:orgId', ensureAuthentication, function(req, res, next) {
 });
 
 
+//When the user demands for a single post details
+router.get('/search_org/:orgname', ensureAuthentication, function(req,res, next){
+  console.log("Fteching the organisations details");
+  var id = req.params.orgname;
+  console.log(id);
+  
+  Issue.getorgnames(id, function(err, result){
+      if(err)
+        console.log("Could'nt fetch names of organisations");
+      else
+      {
+        console.log(result);
+        res.render('indPost', {
+          title: 'Post',
+          details: result
+        });
+      }
+  })
+});
 
 function ensureAuthentication(req, res, next){
     if(req.isAuthenticated())

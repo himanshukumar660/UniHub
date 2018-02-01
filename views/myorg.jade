@@ -6,17 +6,12 @@ block issues
 				form(method='POST', id="addMyOrg", action="/addmyorg")		
 					.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
 						div(style="float:left")
-							h(style="font-weight:500;font-size:14pt")
-								i(class="fa fa-plus")
-							|  Organisation
+							h(style="font-weight:500;font-size:14pt") Make Organisation
+						div(style="float:right")
+							i(class="glyphicon glyphicon-plus" id="expandMakeOrg")			
 
-					if errorDup
-							.alert.alert-danger#err 
-								b(style="font-weight:800 !important;text-transform: capitalize;") Name Already Exists. 
-								.glyphicon.glyphicon-remove(style="float:right" id="close_error")
-											
 					.main.issueBlock
-						#nextBtn
+						#nextBtn(style="display:none")
 							div(style="margin-left:5px")
 									input(type='text' id="orgName" name="orgName" placeholder="Name of organisation" required)
 										
@@ -25,13 +20,13 @@ block issues
 									textarea(id="orgAbout" name="orgAbout" placeholder="About Organisation" required )
 									
 									div(style="width:100%;text-align:center;")
-										input( value="Add" type="submit" name="orgSubmit" id="orgSubmit" style="max-width:10rem;")
+										input( value="Add" type="submit" name="orgSubmit" id="orgSubmit" style="max-width:71.77px;")
 
 			if orgs
 				for each in orgs
 					li.issuePart
 						.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-							div(style="float:left;width:80%;")
+							div(style="float:left;")
 								span(style='color:gray')
 									a(href="/indorg/"+each._id id="linkProfile" style='font-weight:900;')  #{each.name}
 
@@ -75,6 +70,8 @@ block issues
 			});
 
 		});
-
-
+		$('#expandMakeOrg').click(function(){
+				$('#nextBtn').toggle();
+				$(this).toggleClass('glyphicon-plus glyphicon-minus');
+			})
 

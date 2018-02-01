@@ -118,6 +118,19 @@ module.exports.findOrg = function(orgname, callback){
 	Org.find({$name : {$regex : /orgname/, $options : 'i'} }, callback);
 }
 
+module.exports.findOrgByUID = function(orguid, callback){
+	Org.findOne({userId : orguid}, callback);
+}
+
+module.exports.findOrgByID = function(orguid, callback){
+	Org.findOne({_id : orguid}, callback);
+}
+
 module.exports.adminOrgs = function(username, callback){
 	Org.find({admin : {$in : [username]}}, callback);
 }
+
+module.exports.memberOrgs = function(username, callback){
+	Org.find({members : {$in : [username]}}, callback);
+}
+

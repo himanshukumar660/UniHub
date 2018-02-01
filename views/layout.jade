@@ -52,7 +52,7 @@ html(lang='en')
           #myNavbar.collapse.navbar-collapse
             if user
               form#nav_search_form.form-inline.my-lg-0.mr-auto( action='/search', accept-charset='UTF-8', method='get')
-                input.form-control(id="nav_search_input" type='search', name='q', placeholder='Search for organisations..')
+                input.form-control(id="nav_search_input" type='search', name='q', placeholder='Enter organisation UID or name..')
               ul.nav.navbar-nav.navbar-right
                 li(class=(title == 'Home' ? 'active' : ''))
                   a(href='/')

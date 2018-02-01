@@ -411,11 +411,11 @@ textarea{
   border:none;
   color:white!important;
   font-size:20px;
-  padding: 10px !important;
+  padding: 5px !important;
   padding-left:15px !important; 
   padding-right:15px !important; 
   border:1px solid #e8f3ff;
-  border-radius: 2rem;
+  border-radius: 5px;
   box-shadow: 0 2px 4px 0 #e8f3ff,0 2px 10px 0 #e8f3ff!important;
 }
 
@@ -664,10 +664,66 @@ a#linkProfile:hover {
 }
 
 
+/* For listing of my organisation.. Credits to w3school
+/*the container must be positioned relative:*/
+.custom-select {
+  position: relative;
+}
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+.select-selected {
+  background-color: #e8f3ff;
+}
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 12pt;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid black;
+  border-color: black transparent transparent transparent;
+}
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent black transparent;
+  top: 7px;
+}
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: black;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent;
+  cursor: pointer;
+}
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: #e8f3ff;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+.select-items div:hover {
+  background-color: #90c2f9;
+}
 
+/*/////////////////////////////////////////////////////////////////////////////////////////////*/
 
+#expandPost{
+  cursor: pointer;
+}
 
-
+#expandMakeOrg{
+  cursor: pointer;
+}
 
 
 
