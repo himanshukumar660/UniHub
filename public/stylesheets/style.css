@@ -35,7 +35,7 @@ body{
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
     color: white !important;
-    background-color: #42b72a !important;
+    background-color: #2e293e !important;
     border:none !important;
 }
 
@@ -724,11 +724,6 @@ a#linkProfile:hover {
 #expandMakeOrg{
   cursor: pointer;
 }
-
-
-
-
-
 
 
 

@@ -41,7 +41,7 @@ html(lang='en')
                     span.glyphicon.glyphicon-log-in
                     |  Login  
     else
-      nav.navbar.navbar-inverse(data-spy="affix" style="width:100%;z-index:10000")
+      nav.navbar.navbar-inverse(data-spy="affix" style="width:100%;z-index:10000;")
         .container-fluid
           .navbar-header
             button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
@@ -53,24 +53,24 @@ html(lang='en')
             if user
               form#nav_search_form.form-inline.my-lg-0.mr-auto( action='/search', accept-charset='UTF-8', method='get')
                 input.form-control(id="nav_search_input" type='search', name='q', placeholder='Enter organisation UID or name..')
-              ul.nav.navbar-nav.navbar-right
+              ul.nav.navbar-nav.navbar-right(style="font-size:12pt!important;font-weight:500")
                 li(class=(title == 'Home' ? 'active' : ''))
-                  a(href='/')
+                  a(href='/' style="padding-right:0px")
                     | Home
-                li(class=(title == 'Add Organisations' ? 'active' : '') id="addorg")
-                  a(href='/addorgs/')
+                li(class=(title == 'Add Organisations' ? 'active' : '' ) id="addorg")
+                  a(href='/addorgs/' style="padding-right:0px")
                     | + Organisations
-                li(class=(title == 'My Organisations' ? 'active' : ''))
-                  a(href='/myorg/')
+                li(class=(title == 'My Organisations' ? 'active' : '') )
+                  a(href='/myorg/' style="padding-right:0px")
                     | My Organisations
-                li(class=(title == 'Profile' ? 'active' : ''))
-                  a(href='/profile/'+user.username)
+                li(class=(title == 'Profile' ? 'active' : '') )
+                  a(href='/profile/'+user.username style="padding-right:0px")
                     | My profile
                 li(class=(title == 'Settings' ? 'active' : ''))
-                  a(href='/settings/')
+                  a(href='/settings/' style="padding-right:0px")
                     | Settings
                 li(class=(title == 'Logout' ? 'active' : ''))
-                  a(href='/users/logout')
+                  a(href='/users/logout' style="padding-right:0px")
                     span
                     |  Logout        
     block content
