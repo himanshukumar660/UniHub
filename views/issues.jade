@@ -65,9 +65,14 @@ block issues
 								#issueDesc #{each.issueDesc}
 						
 						.issueCommentPart
-							button(id="likeBtn") 
-								i(class="fa fa-thumbs-o-up" style="font-size:18px")
-								|  Like		
+							button(id="likeBtn")
+								if (each.supporters.indexOf(username))
+									i(class="fa fa-thumbs-o-up" style="font-size:18px")
+									|  Like
+								else
+									i(class="fa fa-thumbs-up" style="font-size:18px")
+									|  Like
+
 							button(id="commentBtn")
 								i(class="mega-octicon octicon-comment" style="font-size:18px")
 								|  Comment
@@ -148,3 +153,19 @@ block issues
 				$('#nextBtn').toggle();
 				$(this).toggleClass('glyphicon-plus glyphicon-minus');
 			})
+
+			$('button#likeBtn').click(function(e){
+			    e.preventDefault();
+			    $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
+			    var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
+			    console.log(id);
+			    
+			    id = id.substring(9);
+			    console.log(id);
+			    
+			    var _url = "/likepost/"+id;
+			    console.log(_url);
+			    $.post({
+				  url: _url,
+				});
+			});

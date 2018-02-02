@@ -29,6 +29,7 @@ router.get('/', ensureAuthentication, function(req, res, next) {
                  else{
                     res.render('issues',{
                       title: 'Home',
+                      username: req.user.username,
                       name: req.user.name,
                       adminctrlorgs: res3,
                       memberctrlorgs: res4,

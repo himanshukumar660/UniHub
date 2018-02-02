@@ -78,38 +78,6 @@ block content
 			var modDate = $(this).text().substring(0,21);
 			$(this).html(modDate);
 		});
-
-		$('button#likeBtn').click(function(e){
-		    e.preventDefault();
-		    $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
-		    var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
-		    console.log(id);
-		    
-		    id = id.substring(9);
-		    console.log(id);
-		    
-		    var _url = "/likepost/"+id;
-		    console.log(_url);
-		    $.post({
-			  url: _url,
-			});
-		});
-		
-		$('button#likeBtn').click(function(e){
-		    e.preventDefault();
-		    $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
-		    var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
-		    console.log(id);
-		    
-		    id = id.substring(9);
-		    console.log(id);
-		    
-		    var _url = "/likepost/"+id;
-		    console.log(_url);
-		    $.post({
-			  url: _url,
-			});
-		});
 		
 		
 		//- $(window).scroll(function() {
