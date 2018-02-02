@@ -32,38 +32,7 @@ block issues
 											span(style="color:black;width:150px") Be Anonymous
 										div(style="text-align:center;float:right")
 											input( value="Post" type="submit" name="issuePost" id="issuePost")
-			if adminctrlorgs
-				if adminctrlorgs.length>0
-					for each in adminctrlorgs
-						li.issuePart
-							.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-								div(style="float:left;")
-									span(style='color:gray')
-										a(href="/indorg/"+each._id id="linkProfile" style='font-weight:900;')  #{each.name}
-
-									span(style='color:gray')
-										br
-										span(style="color:black;font-weight:500") UID : 
-										| #{each.userId}
-									
-									p(id="date") #{each.dateMade}
-
-								div(style="float:right" id="postDelBtn")
-										form(method="post" action="/delorg/"+each._id)
-											input#delete(value="Join" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px")
-							.main.issueBlock
-								#prevBtn
-									#likeBtns
-										i(class="mega-octicon octicon-organization" style="color:gray")  
-										p(style="font-weight:200!important;color:black") #{each.members.length+each.admin.length}
-								#nextBtn
-									if each.alert
-										.alert.alert-danger#err(style="padding:10px;margin-bottom:0px;")
-											p(style="text-transform: capitalize;") 
-												b Please Note 
-												| : #{each.alert}
-									#issueDesc(style="border-top:none") #{each.aboutUs}
-			
+						
 			if issues
 				for each in issues	
 					li.issuePart

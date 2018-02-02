@@ -16,7 +16,7 @@ body{
 	align: center;
 }
 .container-fluid {
-	background-color: #2d283e !important;
+	background-color: black !important;
 	border: none !important;
   color: white !important;
 }
@@ -35,7 +35,7 @@ body{
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
     color: white !important;
-    background-color: #2e293e !important;
+    background-color: black !important;
     border:none !important;
 }
 
@@ -112,13 +112,14 @@ a:hover {
 }
 
 .form-control {
-  border-radius: 2rem !important;
-  background-image:url("../images/search.gif") !important;
-  background-position: right;
-  background-repeat: no-repeat;
-  background-size: 7%;
+ background-color: #3f4448 !important; 
+ border: none !important;
+ color: white !important;
+ font-weight: 500;
 }
-
+.form-control::placeholder{
+  color: red;
+}
 
 @media (min-width: 992px)
 {
@@ -271,16 +272,33 @@ li.issuePart{
 }
 
 
-  #addorg{
+  #myorganisation{
     display: none;
   }
+  #myprofile{
+    display: none;
+  }
+  #exploreorg{
+    display: none;
+  }
+
+
 @media only screen and (max-width: 500px) {
 
   #nav_search_form{
     display: none;
   }
-  #addorg{
-      display: block;
+  #myorganisation{
+    display: block;
+  }
+  #myprofile{
+    display: block;
+  }
+  #exploreorg{
+    display: block;
+  }
+  #searchorgform{
+    display: none;
   }
     #linkProfile{
       font-size: 10pt !important;
@@ -724,10 +742,15 @@ a#linkProfile:hover {
 #expandMakeOrg{
   cursor: pointer;
 }
+#searchorg{
+  background-color:#3f4447!important;
+  color: lightgray;
+}
 
-
-
-
+#searchorg:hover{
+  color:white;
+  opacity: 1;
+}
 
 
 

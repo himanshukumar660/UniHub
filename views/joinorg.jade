@@ -2,30 +2,41 @@ extends home
 block joinorg
 	.gridbox.gridmain
 		ul(id="issues")
-			if issues
-				for each in issues	
-					li.issuePart
-						div.issuePart1D
-							if (each.anonymity==="on")
-								span(style='font-weight:900') Anonymous
-							else if(each.anonymity==="off")
-								a(href="/profile/"+each.username style='font-weight:900') #{each.name}
-							span(style='color:gray')  
-								i.glyphicon.glyphicon-play(style="font-size:10pt")  
-								|  #{each.department}
-							if (each.anonymity==="on")
-								button.spamBtn(type='button') Report Spam
-							p(id="date") #{each.datePosted}
-							
-						.main.issueBlock
+			if orgsByName
+				if orgsByName.length>0
+					for each in orgsByName
+						li.issuePart
+							.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+								div(style="float:left;")
+									span(style='color:gray')
+										a(href="/indorg/"+each._id id="linkProfile" style='font-weight:900;')  #{each.name}
+
+									span(style='color:gray')
+										br
+										span(style="color:black;font-weight:500") UID : 
+										| #{each.userId}
+									
+									p(id="date") #{each.dateMade}
+
+								div(style="float:right" id="postDelBtn")
+										form(method="post" action="/delorg/"+each._id)
+											input#delete(value="Join" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px")
+							.main.issueBlock
 								#prevBtn
 									#likeBtns
-										i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
-									#likeBtns
-										i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
-										p #{each.likes}
+										i(class="mega-octicon octicon-organization" style="color:gray")  
+										p(style="font-weight:200!important;color:black") #{each.members.length+each.admin.length}
 								#nextBtn
-									#issueTopic #{each.issueTopic}
-									#issueDesc #{each.issueDesc}
-	
-
+									if each.alert
+										.alert.alert-danger#err(style="padding:10px;margin-bottom:0px;")
+											p(style="text-transform: capitalize;") 
+												b Please Note 
+												| : #{each.alert}
+									#issueDesc(style="border-top:none") #{each.aboutUs}
+				else
+					div(style="text-align:center!important;padding-top:100px")
+						img(src="/images/errorLogo.png" style="width:30%;opacity:0.7")
+						br
+						br
+						h(style="font-weight:500; font-size:25pt; color:grey") No Results Found 
+						

@@ -28,7 +28,7 @@ html(lang='en')
               span.icon-bar
               span.icon-bar
               span.icon-bar
-            a.navbar-brand(href='#') WebSiteName
+            a.navbar-brand(href='#') UniHub
           #myNavbar.collapse.navbar-collapse
             if !user
               ul.nav.navbar-nav.navbar-right
@@ -48,55 +48,47 @@ html(lang='en')
               span.icon-bar
               span.icon-bar
               span.icon-bar
-            a.navbar-brand(href='#') WebSiteName
+            a.navbar-brand(href='#') UniHub
           #myNavbar.collapse.navbar-collapse
             if user
-              form#nav_search_form.form-inline.my-lg-0.mr-auto( action='/search', accept-charset='UTF-8', method='get')
-                input.form-control(id="nav_search_input" type='search', name='q', placeholder='Enter organisation UID or name..')
-              ul.nav.navbar-nav.navbar-right(style="font-size:12pt!important;font-weight:500")
-                li(class=(title == 'Home' ? 'active' : ''))
-                  a(href='/' style="padding-right:0px")
-                    | Home
-                li(class=(title == 'Add Organisations' ? 'active' : '' ) id="addorg")
-                  a(href='/addorgs/' style="padding-right:0px")
-                    | + Organisations
-                li(class=(title == 'My Organisations' ? 'active' : '') )
-                  a(href='/myorg/' style="padding-right:0px")
-                    | My Organisations
-                li(class=(title == 'Profile' ? 'active' : '') )
-                  a(href='/profile/'+user.username style="padding-right:0px")
-                    | My profile
-                li(class=(title == 'Settings' ? 'active' : ''))
-                  a(href='/settings/' style="padding-right:0px")
-                    | Settings
-                li(class=(title == 'Logout' ? 'active' : ''))
-                  a(href='/users/logout' style="padding-right:0px")
-                    span
-                    |  Logout        
+              .col-lg-6
+               form.input-group(id="searchorgform" method='get')
+                  input.form-control(type='text', placeholder='Enter organisation UID or name' id="orgquery")
+                  span.input-group-btn
+                    button.btn.btn-secondary#searchorg(type='button')
+                      i(class="fa fa-search")
+              .col-lg-6
+                ul.nav.navbar-nav.navbar-right(style="font-size:12pt!important;font-weight:500;")
+                  li(class=(title == 'Home' ? 'active' : ''))
+                    a(href='/' style="padding-right:0px")
+                      | Home
+                  li(class=(title == 'Join Organisations' ? 'active' : '') id="exploreorg")
+                    a(href='/joinorg' style="padding-right:0px")
+                      | Explore
+                  li(class=(title == 'My Organisations' ? 'active' : '') id="myorganisation")
+                    a(href='/myorg/' style="padding-right:0px")
+                      | My Organisations
+                  li(class=(title == 'Profile' ? 'active' : '') id="myprofile")
+                    a(href='/profile/'+user.username style="padding-right:0px")
+                      | My profile
+                  li(class=(title == 'Settings' ? 'active' : ''))
+                    a(href='/settings/' style="padding-right:0px")
+                      | Settings
+                  li(class=(title == 'Logout' ? 'active' : ''))
+                    a(href='/users/logout' style="padding-right:0px")
+                      span
+                      |  Logout        
     block content
 
-
     script.
-      $('#nav_search_input').on("input", function(){
+      $('input').attr('autocomplete', 'off'); 
+      $('#searchorg').click(function(){
+        $('#searchorgform').submit();
+      });
+
+       $('#orgquery').on("input", function(){
               var query = this.value;
-              query = query.toLowerCase().replace(/\s/g, '');
               console.log(query);
-              var _url = "/search_org/"+query;
-              $.ajax({
-              url: _url,
-              cache: false,
-              method: 'GET',
-              success: function(data){
-                 console.log(data);
-              }
-            });
-          });
-//    footer &copy; All copyright reserved
-      //- br
-      //- a.fa.fa-facebook(href='https://www.facebook.com/himanshueight', title='Facebook', data-toggle='tooltip', data-placement='bottom')
-      //- a.fa-twitter.fa(href='https://www.linkedin.com/in/himanshu-kumar-883648118/', title='Linkedin', data-toggle='tooltip', data-placement='bottom')
-      //- a.fa-google.fa(href='https://github.com/himanshukumar660', title='Github', data-toggle='tooltip', data-placement='bottom')
-      //- a.fa-linkedin.fa(href='mailto:himanshukumar660@gmail.com', title='Mail', data-toggle='tooltip', data-placement='bottom')
-      //- a.fa-github.fa(href='mailto:himanshukumar660@gmail.com', title='Mail', data-toggle='tooltip', data-placement='bottom')
-      //-   
-      //-   
+              var _url = "/joinorg/"+query;
+              $('#searchorgform').attr('action', _url);       
+       });

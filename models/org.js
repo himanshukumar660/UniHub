@@ -41,8 +41,10 @@ var orgSchema = new Schema({
 	pendingRequest : [String],
 });
 
+orgSchema.index({'$**' : 'text'});
 
 var Org = module.exports = mongoose.model('Org', orgSchema);
+
 
 module.exports.makeOrg = function(orgDetails, callback){
 	//INCOMPLETE
@@ -115,15 +117,15 @@ module.exports.chkMember = function(orgId, username, callback){
 }
 
 module.exports.findOrg = function(orgname, callback){
-	Org.find({$name : {$regex : /orgname/, $options : 'i'} }, callback);
+	Org.find({$text : {$search : orgname}}, callback);
 }
 
 module.exports.findOrgByUID = function(orguid, callback){
-	Org.findOne({userId : orguid}, callback);
+	Org.find({userId : orguid}, callback);
 }
 
 module.exports.findOrgByID = function(orguid, callback){
-	Org.findOne({_id : orguid}, callback);
+	Org.find({_id : orguid}, callback);
 }
 
 module.exports.adminOrgs = function(username, callback){

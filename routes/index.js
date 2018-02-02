@@ -6,6 +6,8 @@ var Issue = require('../models/issue');
 var Org = require('../models/org');
 var shortId = require('short-mongo-id');
 
+//Following are related with the issues 
+
 /* Get the home page*/
 router.get('/', ensureAuthentication, function(req, res, next) {
     console.log("Welcome to your homepage!");
@@ -103,10 +105,6 @@ router.post('/likepost/:id', ensureAuthentication, function(req,res, next){
 });
 });
 
-
-
-
-
 //When the user demands for a single post details
 router.get('/indpost/:id', ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
@@ -127,7 +125,7 @@ router.get('/indpost/:id', ensureAuthentication, function(req,res, next){
   })
 });
 
-
+//Trending Posts : Fetch the issues with maximum number of Likes
 router.get('/trending', ensureAuthentication, function(req, res, next) {
     console.log("Welcome to trending page!");
     console.log(req.user);
@@ -195,6 +193,10 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
     res.redirect('/');
 });
 
+
+//Following deals with the user profiles
+
+
 router.get('/profile/:username', ensureAuthentication, function(req, res, next) {
     console.log("Fetchgin the profile details");
     var username = req.params.username || req.user.username;
@@ -218,21 +220,32 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
 
 
 
-// The APIs for accessing the organisation modiules.
+// Following deals with the APIs for accessing the organisation modiules.
 
 
-router.get('/orgs/:orgUID', ensureAuthentication, function(req, res, next) {
+router.post('/search_org/:orgnameId', ensureAuthentication, function(req, res, next) {
     console.log("Fetchgin the organisation details");
-    var orgUID = req.params.orgUID;
-    Org.findOrgByUID(orgUID, function(err2, res2){
-      if(err2) throw err2;
-      else{
-        res.render('joinorg', {
-          title: 'Groups',
-          orgs: res2
-        });
+    var orgnameId = "Information Technology"//req.params.orgnamId.replace('_', ' ');
+    console.log(orgnameId);
+    Org.findOrg(orgnameId, function(err1, res1){
+      if(err1) throw err1;
+      else
+      {
+            Org.findOrgByUID(orgnameId, function(err2, res2){
+            if(err2) throw err2;
+            else{
+              console.log('Fetched The results');
+              console.log(res1);
+              console.log(res2);
+              res.render('joinorg', {
+                title: 'Groups',
+                orgsname: res1,
+                orgsid: res2
+              });
+            }
+         });  
       }
-    });
+    });  
 });
 
 router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
@@ -285,6 +298,21 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
     });
 });
 
+router.get('/joinorg/:orgname', ensureAuthentication, function(req, res, next) {
+    console.log("loading organisation add page");
+    var orgname = req.params.orgname;
+    Org.findOrg(orgname, function(err2, res2){
+      if(err2) throw err2;
+      else{
+        res.render('joinorg',{
+          title: 'Join Organisations',
+          orgsByName: res2,
+        })    
+      }
+    })          
+  });
+
+
 router.post('/delorg/:orgId', ensureAuthentication, function(req, res, next) {
     console.log("Initiating Deletion of Organisation");
     var orgId = req.params.orgId;
@@ -296,27 +324,6 @@ router.post('/delorg/:orgId', ensureAuthentication, function(req, res, next) {
             res.redirect('/myorg');
           }   
     });
-});
-
-
-//When the user demands for a single post details
-router.get('/search_org/:orgname', ensureAuthentication, function(req,res, next){
-  console.log("Fteching the organisations details");
-  var id = req.params.orgname;
-  console.log(id);
-  
-  Issue.getorgnames(id, function(err, result){
-      if(err)
-        console.log("Could'nt fetch names of organisations");
-      else
-      {
-        console.log(result);
-        res.render('indPost', {
-          title: 'Post',
-          details: result
-        });
-      }
-  })
 });
 
 function ensureAuthentication(req, res, next){

@@ -6,7 +6,8 @@ block content
 				#wrapper(class="pro_info")
 					ul(style="padding:0px")
 						li(style="list-style:none;")
-							p(style="font-weight:500;font-size:12pt;text-align:left") #{name}	
+							a(href='/profile/'+user.username style="padding-right:0px")
+								p(style="font-weight:500;font-size:12pt;text-align:left") #{name}	
 						li(style='list-style:none;')
 							a(href="/myorg")
 								p(style="font-weight:500;font-size:12pt;text-align:left") My organisations
