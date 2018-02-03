@@ -37,9 +37,15 @@ block issues
 								
 								p(id="date") #{each.dateMade}
 
-							div(style="float:right" id="postDelBtn")
-									form(method="post" action="/delorg/"+each._id)
-										input#delete(value="Delete" type="submit" style="background-color:red;color:white!important;font-weight:500;border:1px solid red;border-radius:3px ")
+							div(style="float:right;display:inline-flex" id="postDelBtn")
+									form(method="post" action="/delorg/"+each.userId)
+										button(type="submit" id="delete" title="Delete organisation" style="color:red!important;background-color:unset;border:none;font-size:19pt")
+											i(class="fa fa-trash-o")
+
+									form(method="post" action="/exitOrg/"+each._id)
+										button(type="submit" id="exit" title="Exit organisation" style="color:#42B72B!important;background-color:unset;border:none;font-size:19pt")
+											i(class="fa fa-sign-out")
+
 						.main.issueBlock
 							#prevBtn
 								#likeBtns

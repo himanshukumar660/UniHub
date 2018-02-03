@@ -24,15 +24,22 @@ block joinorg
 									p(id="date") #{each.dateMade}
 
 								div(style="float:right" id="postDelBtn")
-											if (each.members.indexOf(username)>-1 || each.admin.indexOf(username)>-1)
-												form(method="post" action="/exitOrg/"+each._id style="disply:inline-block")
-													input#join(value="Exit" type="submit" style="background-color:red;color:white!important;font-weight:500;border:1px solid red;border-radius:3px;min-width:70px")
-											else if(each.pendingRequest.indexOf(username)>-1)
-												form(method="post" action="/exitOrg/"+each._id style="disply:inline-block")
-													input#join(value="Pending" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
-											else
-												form(method="post" action="/joinorg/"+each._id)
-													input#join(value="Join" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px")
+
+									if (each.members.indexOf(username)>-1 || each.admin.indexOf(username)>-1)
+										if (each.members.indexOf(username)>-1)
+											input#join(value="Member" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
+							
+										else if (each.admin.indexOf(username)>-1)
+											input#join(value="Admin" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
+
+									else if(each.pendingRequest.indexOf(username)>-1)
+										div(style="color:#42b72a;")
+											i(class="mega-octicon octicon-check" style="font-size:14pt")
+											h Pending
+
+									else
+										form(method="post" action="/joinorg/"+each._id)
+											input#join(value="Join" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px")
 							.main.issueBlock
 								#prevBtn
 									#likeBtns
@@ -45,6 +52,7 @@ block joinorg
 												b Please Note 
 												| : #{each.alert}
 									#issueDesc(style="border-top:none") #{each.aboutUs}
+
 				else if(initial=="true")
 					div(style="text-align:center!important;padding-top:100px")
 						img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")

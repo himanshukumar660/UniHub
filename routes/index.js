@@ -234,7 +234,7 @@ router.post('/joinorg/:orgId', ensureAuthentication, function(req, res, next) {
       {
         console.log('Added to pending Queue!!');
         console.log('Waiting for the adminstrator for accepting the request');
-        res.send(res2);
+        res.redirect('back');
       }
     })   
 });
@@ -320,8 +320,9 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
     })          
   });
 
+
 router.post('/exitOrg/:orgId', ensureAuthentication, function(req, res, next){
-  var orgId = req.params.userId;
+  var orgId = req.params.orgId;
   var username = req.user.username;
   Org.exitOrgAll(orgId, username, function(err1, res1){
     if(err1) throw err1;
@@ -331,16 +332,23 @@ router.post('/exitOrg/:orgId', ensureAuthentication, function(req, res, next){
     }
   })
 });
-router.post('/delorg/:orgId', ensureAuthentication, function(req, res, next) {
+
+
+router.post('/delorg/:orgUId', ensureAuthentication, function(req, res, next) {
     console.log("Initiating Deletion of Organisation");
-    var orgId = req.params.orgId;
+    var orgId = req.params.orgUId;
     console.log(orgId);
-    Org.deleteOrg(orgId, req.user.username, function(err2, res2){
-    if(err2) throw err2;
-        else{
-            console.log(res2);
-            res.redirect('/myorg');
-          }   
+    Issue.deleteIssueByOrgUserId(orgId, function(err1, res1){
+      if(err1) throw err1;
+      else
+      {
+        Org.deleteOrg(orgId, req.user.username, function(err2, res2){
+          if(err2) throw err2;
+              else{
+                  res.redirect('/myorg');
+                }   
+          });
+      }
     });
 });
 

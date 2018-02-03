@@ -13,6 +13,7 @@ var orgSchema = new Schema({
 	//Name of the author
 	userId:{
 		type: String,
+		unique: true,
 		required: true
 	},
 	
@@ -31,7 +32,6 @@ var orgSchema = new Schema({
 	//About the organisation
 	aboutUs: {
 		type: String,
-		unique: true
 	},
 	//Listing of all the members
 	members: [String],
@@ -86,7 +86,7 @@ module.exports.acceptPendingReq = function(orgId, usernameOfReqUser,callback){
 
 module.exports.deleteOrg = function(orgId, usernameAdmin, callback){
 	//Search the entire org list that contails both the organisationID and admin contains the username Admin  
-	Org.remove({$and : [{_id: orgId, admin: {$in : [usernameAdmin]}}]}, callback);
+	Org.remove({$and : [{userId: orgId, admin: {$in : [usernameAdmin]}}]}, callback);
 }
 
 module.exports.exitOrgMember = function(orgId, username, callback){
@@ -107,15 +107,15 @@ module.exports.exitOrgAdmin = function(orgId, username, callback){
 }
 
 module.exports.chkMembership = function(orgId, username, callback){
-	Org.find({$or : [{members: {$in : [username]}, admin: {$in : [username]}}]}, callback);
+	Org.findOne({$or : [{members: {$in : [username]}, admin: {$in : [username]}}]}, callback);
 }
 
 module.exports.chkAdmin = function(orgId, username, callback){
-	Org.find({$and : [{_id:orgId, admin : {$in : [username]}}]}, callback);
+	Org.findOne({$and : [{_id:orgId, admin : {$in : [username]}}]}, callback);
 }
 
 module.exports.chkMember = function(orgId, username, callback){
-	Org.find({$and : [{_id:orgId, members : {$in : [username]}}]}, callback);
+	Org.findOne({$and : [{_id:orgId, members : {$in : [username]}}]}, callback);
 }
 
 module.exports.findInOrg = function(orgname, callback){
@@ -123,11 +123,11 @@ module.exports.findInOrg = function(orgname, callback){
 }
 
 module.exports.findOrgByUID = function(orguid, callback){
-	Org.find({userId : orguid}, callback);
+	Org.findOne({userId : orguid}, callback);
 }
 
 module.exports.findOrgByID = function(orguid, callback){
-	Org.find({_id : orguid}, callback);
+	Org.findOne({_id : orguid}, callback);
 }
 
 module.exports.adminOrgs = function(username, callback){

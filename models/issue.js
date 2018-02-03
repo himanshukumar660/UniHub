@@ -25,6 +25,7 @@ var issueSchema = new Schema({
 	orgname:{
 		type: String,
 	},
+
 	name: {
 		type: String
 	},
@@ -124,3 +125,17 @@ module.exports.incLikesByIssues = function(username, id, callback) {
 module.exports.dcrLikesByIssues = function(username, id, callback) {
 	Issue.update({_id :id}, {$inc : {likes : -1}}, callback);
 }
+
+module.exports.getIssueByOrgUserId = function(orguid, callback){
+	var query = {
+		orgUserId : orguid
+	}
+	Issue.find(query, callback);
+};
+
+module.exports.deleteIssueByOrgUserId = function(orguid, callback){
+	var query = {
+		orgUserId : orguid
+	}
+	Issue.remove(query, callback);
+};
