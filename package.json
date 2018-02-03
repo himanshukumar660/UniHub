@@ -27,6 +27,7 @@
     "passport-local": "*",
     "serve-favicon": "~2.4.5",
     "randomstring": "*",
-    "short-mongo-id": "*"
+    "short-mongo-id": "*",
+    "request": "*"
   }
 }
