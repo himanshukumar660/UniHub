@@ -227,7 +227,7 @@ router.post('/joinorg/:orgUId', ensureAuthentication, function(req, res, next) {
     console.log("Fetchgin the organisation details");
     var orgUId = req.params.orgUId;
     var username = req.user.username;
-    console.log(orgId);
+    console.log(orgUId);
     Org.enterOrg(orgUId, username, function(err2, res2){
       if(err2) throw err2;
       else
@@ -326,7 +326,7 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
 router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
   var orgUId = req.params.orgUId;
   var username = req.user.username;
-  Org.exitOrgAdmin(orgUId, username, function(err1, res1){
+  Org.exitOrgAll(orgUId, username, function(err1, res1){
     if(err1) throw err1;
     else{
         //We have equated the following to 1 becuase of async nature of javascript. 

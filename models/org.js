@@ -83,11 +83,10 @@ module.exports.acceptPendingReq = function(orgUId, usernameOfReqUser,callback){
 	Org.findOneAndUpdate({userId: orgUId}, {$addToSet: {members : usernameOfReqUser}}, callback);
 }
 
-module.exports.exitOrgAdmin = function(orgUId, username, callback){
+module.exports.exitOrgAll = function(orgUId, username, callback){
 	//find the Admin from Admin list and remove him
 	// When someone is admin and leaves a gorup, exit him from the member group as well.
-	Org.findOneAndUpdate({userId : orgUId}, {$pull : {members : username}});
-	Org.findOneAndUpdate({userId: orgUId}, {$pull : {admin : username}}, callback);
+	Org.findOneAndUpdate({userId: orgUId}, {$pull : {admin : username, members: username}}, callback);
 }
 
 module.exports.exitOrgMember = function(orgUId, username, callback){
