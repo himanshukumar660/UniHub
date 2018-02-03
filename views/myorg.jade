@@ -42,7 +42,7 @@ block issues
 										button(type="submit" id="delete" title="Delete organisation" style="color:red!important;background-color:unset;border:none;font-size:19pt")
 											i(class="fa fa-trash-o")
 
-									form(method="post" action="/exitOrg/"+each._id)
+									form(method="post" action="/exitOrg/"+each.userId)
 										button(type="submit" id="exit" title="Exit organisation" style="color:#42B72B!important;background-color:unset;border:none;font-size:19pt")
 											i(class="fa fa-sign-out")
 
@@ -50,7 +50,7 @@ block issues
 							#prevBtn
 								#likeBtns
 									i(class="mega-octicon octicon-organization" style="color:gray")  
-									p(style="font-weight:200!important;color:black") #{each.members.length+each.admin.length}
+									p(style="font-weight:200!important;color:black") #{each.members.length}
 							#nextBtn
 								if each.alert
 									.alert.alert-danger#err(style="padding:10px;margin-bottom:0px;")

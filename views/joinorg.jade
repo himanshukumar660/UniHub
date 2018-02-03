@@ -25,26 +25,27 @@ block joinorg
 
 								div(style="float:right" id="postDelBtn")
 
-									if (each.members.indexOf(username)>-1 || each.admin.indexOf(username)>-1)
-										if (each.members.indexOf(username)>-1)
-											input#join(value="Member" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
-							
-										else if (each.admin.indexOf(username)>-1)
+									if (each.members.indexOf(username)>-1)
+										if (each.admin.indexOf(username)>-1)
 											input#join(value="Admin" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
+							
+										else
+											input#join(value="Member" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
 
 									else if(each.pendingRequest.indexOf(username)>-1)
 										div(style="color:#42b72a;")
-											i(class="mega-octicon octicon-check" style="font-size:14pt")
-											h Pending
+											i(class="ionicons ion-android-checkmark-circle" style="font-size:15pt")
+											h  Pending
 
 									else
-										form(method="post" action="/joinorg/"+each._id)
+										form(method="post" action="/joinorg/"+each.userId)
 											input#join(value="Join" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px")
+							
 							.main.issueBlock
 								#prevBtn
 									#likeBtns
 										i(class="mega-octicon octicon-organization" style="color:gray")  
-										p(style="font-weight:200!important;color:black") #{each.members.length+each.admin.length}
+										p(style="font-weight:200!important;color:black") #{each.members.length}
 								#nextBtn
 									if each.alert
 										.alert.alert-danger#err(style="padding:10px;margin-bottom:0px;")

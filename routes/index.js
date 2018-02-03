@@ -223,12 +223,12 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
 // Following deals with the APIs for accessing the organisation modiules.
 
 
-router.post('/joinorg/:orgId', ensureAuthentication, function(req, res, next) {
+router.post('/joinorg/:orgUId', ensureAuthentication, function(req, res, next) {
     console.log("Fetchgin the organisation details");
-    var orgId = req.params.orgId;
+    var orgUId = req.params.orgUId;
     var username = req.user.username;
     console.log(orgId);
-    Org.enterOrg(orgId, username, function(err2, res2){
+    Org.enterOrg(orgUId, username, function(err2, res2){
       if(err2) throw err2;
       else
       {
@@ -250,7 +250,8 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
       name:name,
       alert:alert,
       aboutUs: aboutUs,
-      admin: [req.user.username]
+      admin: [req.user.username],
+      members: [req.user.username]
     });
     orgDtl.userId = shortId(orgDtl._id.toString()),
       
@@ -273,6 +274,7 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
         console.log(res1);
       }
     });
+
     res.redirect('/myorg');
 });
 
@@ -321,28 +323,81 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
   });
 
 
-router.post('/exitOrg/:orgId', ensureAuthentication, function(req, res, next){
-  var orgId = req.params.orgId;
+router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
+  var orgUId = req.params.orgUId;
   var username = req.user.username;
-  Org.exitOrgAll(orgId, username, function(err1, res1){
+  Org.exitOrgAdmin(orgUId, username, function(err1, res1){
     if(err1) throw err1;
     else{
-      console.log('Access Reveoked');
-      res.redirect('/myorg');
-    }
-  })
+        //We have equated the following to 1 becuase of async nature of javascript. 
+        // The Fact is that even after calling the exitOrgAdmin , the fucntion sees the previus state result.
+        //So we need to make sure that we are not including the results of previous state of the database.
+          Org.exitOrgMember(orgUId, username, function(err2, res2){
+            if(err2) throw err2;
+            else{
+               if(res2.admin.length==0)
+                  {
+                    console.log("No one is Admin Now. Do somehting..");
+                    if(res2.members.length==1)
+                    {   
+                      //If no one is present in the organisation, just delete the organisation
+                      console.log("No one is member.. Finally delete the organisation");
+                      Issue.deleteIssueByOrgUserId(orgUId, function(err3, res3){
+                        if(err3) throw err3;
+                        else
+                        {
+                          console.log('Deletion of issues successfull');
+                          Org.deleteOrgEmptyMember(orgUId, function(err4, res4){
+                            if(err4) throw err4;
+                            else
+                            {
+                              res.redirect('/myorg');
+                            }
+                          })
+                        }
+                      });
+                    }
+                    else if(res2.members.length>1)
+                    {
+                      console.log("Found one member.. Make him the admin of the organisation");
+                      Org.makeUserAdmin(orgUId, res2.members[1], function(err3, res3){
+                        if(err3) throw err3;
+                        else{
+                          res.redirect('/myorg');
+                        }
+                      });
+                    }
+                  }
+                else if(res2.admin.length>0)
+                  {
+                    console.log("Admin already exists.. We are saved. ");
+                    Org.exitOrgMember(orgUId, username, function(err3, res3){
+                      if(err3) throw err3;
+                      else
+                        res.redirect('/myorg');
+                    });     
+                  }
+                else
+                  {
+                    //This is the case when the admin equals to zero. In that case we would just delete the organisation.
+                    // The matter of fact is that the function never will execute this else condition.
+                  }
+              }  
+          });
+        }
+      });
 });
 
 
 router.post('/delorg/:orgUId', ensureAuthentication, function(req, res, next) {
     console.log("Initiating Deletion of Organisation");
-    var orgId = req.params.orgUId;
-    console.log(orgId);
-    Issue.deleteIssueByOrgUserId(orgId, function(err1, res1){
+    var orgUId = req.params.orgUId;
+    console.log(orgUId);
+    Issue.deleteIssueByOrgUserId(orgUId, function(err1, res1){
       if(err1) throw err1;
       else
       {
-        Org.deleteOrg(orgId, req.user.username, function(err2, res2){
+        Org.deleteOrg(orgUId, req.user.username, function(err2, res2){
           if(err2) throw err2;
               else{
                   res.redirect('/myorg');
