@@ -332,58 +332,53 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
         //We have equated the following to 1 becuase of async nature of javascript. 
         // The Fact is that even after calling the exitOrgAdmin , the fucntion sees the previus state result.
         //So we need to make sure that we are not including the results of previous state of the database.
-          Org.exitOrgMember(orgUId, username, function(err2, res2){
-            if(err2) throw err2;
-            else{
-               if(res2.admin.length==0)
-                  {
-                    console.log("No one is Admin Now. Do somehting..");
-                    if(res2.members.length==1)
-                    {   
-                      //If no one is present in the organisation, just delete the organisation
-                      console.log("No one is member.. Finally delete the organisation");
-                      Issue.deleteIssueByOrgUserId(orgUId, function(err3, res3){
-                        if(err3) throw err3;
-                        else
-                        {
-                          console.log('Deletion of issues successfull');
-                          Org.deleteOrgEmptyMember(orgUId, function(err4, res4){
-                            if(err4) throw err4;
-                            else
-                            {
-                              res.redirect('/myorg');
-                            }
-                          })
-                        }
-                      });
-                    }
-                    else if(res2.members.length>1)
-                    {
-                      console.log("Found one member.. Make him the admin of the organisation");
-                      Org.makeUserAdmin(orgUId, res2.members[1], function(err3, res3){
-                        if(err3) throw err3;
-                        else{
-                          res.redirect('/myorg');
-                        }
-                      });
-                    }
-                  }
-                else if(res2.admin.length>0)
-                  {
-                    console.log("Admin already exists.. We are saved. ");
-                    Org.exitOrgMember(orgUId, username, function(err3, res3){
-                      if(err3) throw err3;
-                      else
-                        res.redirect('/myorg');
-                    });     
-                  }
+          if(res1.admin.length==1)
+          {
+            console.log("No one is Admin Now. Do somehting..");
+            if(res1.members.length==1)
+            {   
+              //If no one is present in the organisation, just delete the organisation
+              console.log("No one is member.. Finally delete the organisation");
+              Issue.deleteIssueByOrgUserId(orgUId, function(err2, res2){
+                if(err2) throw err2;
                 else
-                  {
-                    //This is the case when the admin equals to zero. In that case we would just delete the organisation.
-                    // The matter of fact is that the function never will execute this else condition.
-                  }
-              }  
-          });
+                {
+                  console.log('Deletion of issues successfull');
+                  Org.deleteOrgEmptyMember(orgUId, function(err3, res3){
+                    if(err3) throw err3;
+                    else
+                    {
+                      res.redirect('/myorg');
+                    }
+                  })
+                }
+              });
+            }
+            else if(res1.members.length>1)
+            {
+              console.log("Found one member.. Make him the admin of the organisation");
+              Org.makeUserAdmin(orgUId, res1.members[1], function(err2, res2){
+                if(err2) throw err2;
+                else{
+                  res.redirect('/myorg');
+                }
+              });
+            }
+          }
+          else if(res1.admin.length>1)
+          {
+            console.log("Admin already exists.. We are saved. ");
+            Org.exitOrgMember(orgUId, username, function(err2, res2){
+              if(err2) throw err2;
+              else
+                res.redirect('/myorg');
+            });     
+          }
+          else
+          {
+            //This is the case when the admin equals to zero. In that case we would just delete the organisation.
+            // The matter of fact is that the function never will execute this else condition.
+          }
         }
       });
 });

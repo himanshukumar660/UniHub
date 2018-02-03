@@ -87,6 +87,7 @@ module.exports.exitOrgAdmin = function(orgUId, username, callback){
 	//find the Admin from Admin list and remove him
 	// When someone is admin and leaves a gorup, exit him from the member group as well.
 	Org.findOneAndUpdate({userId : orgUId}, {$pull : {members : username}});
+	Org.findOneAndUpdate({userId: orgUId}, {$pull : {admin : username}}, callback);
 }
 
 module.exports.exitOrgMember = function(orgUId, username, callback){
