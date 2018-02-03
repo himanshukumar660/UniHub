@@ -46,30 +46,19 @@ block issues
 									i(class="mega-octicon octicon-organization" style="color:gray")  
 									p(style="font-weight:200!important;color:black") #{each.members.length+each.admin.length}
 							#nextBtn
+								if each.alert
+									.alert.alert-danger#err(style="padding:10px;margin-bottom:0px;")
+										p(style="text-transform: capitalize;") 
+											b Please Note 
+											| : #{each.alert}
+								
 								#issueDesc(style="border-top:none") #{each.aboutUs}
 
 	script.
 		$('.glyphicon.glyphicon-remove#close_error').click(function(){
 			$(this).parents('.alert.alert-danger#err').remove();
 		});
-		$('button#delete').click(function(e){
-		    e.preventDefault();
-		    $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
-		    var indorg = $(this).parents('li.issuePart').find('a#linkProfile').attr('href');
-		    indorg = indorg.substring(8);
 
-		    var _url = "/delorg/"+indorg;
-		    console.log(_url);
-		    $.ajax({
-			  url: _url,
-			  cache: false,
-			  method: 'GET',
-			  success: function(data){
-			    console.log("Post Deleted successfully");
-			  }
-			});
-
-		});
 		$('#expandMakeOrg').click(function(){
 				$('#nextBtn').toggle();
 				$(this).toggleClass('glyphicon-plus glyphicon-minus');

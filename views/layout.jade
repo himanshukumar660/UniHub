@@ -63,7 +63,7 @@ html(lang='en')
                     a(href='/' style="padding-right:0px")
                       | Home
                   li(class=(title == 'Join Organisations' ? 'active' : '') id="exploreorg")
-                    a(href='/joinorg' style="padding-right:0px")
+                    a(href='/searchorg/q' style="padding-right:0px")
                       | Explore
                   li(class=(title == 'My Organisations' ? 'active' : '') id="myorganisation")
                     a(href='/myorg/' style="padding-right:0px")
@@ -89,6 +89,6 @@ html(lang='en')
        $('#orgquery').on("input", function(){
               var query = this.value;
               console.log(query);
-              var _url = "/joinorg/"+query;
+              var _url = "/searchorg/"+query;
               $('#searchorgform').attr('action', _url);       
        });

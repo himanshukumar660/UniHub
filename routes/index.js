@@ -223,29 +223,20 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
 // Following deals with the APIs for accessing the organisation modiules.
 
 
-router.post('/search_org/:orgnameId', ensureAuthentication, function(req, res, next) {
+router.post('/joinorg/:orgId', ensureAuthentication, function(req, res, next) {
     console.log("Fetchgin the organisation details");
-    var orgnameId = "Information Technology"//req.params.orgnamId.replace('_', ' ');
-    console.log(orgnameId);
-    Org.findOrg(orgnameId, function(err1, res1){
-      if(err1) throw err1;
+    var orgId = req.params.orgId;
+    var username = req.user.username;
+    console.log(orgId);
+    Org.enterOrg(orgId, username, function(err2, res2){
+      if(err2) throw err2;
       else
       {
-            Org.findOrgByUID(orgnameId, function(err2, res2){
-            if(err2) throw err2;
-            else{
-              console.log('Fetched The results');
-              console.log(res1);
-              console.log(res2);
-              res.render('joinorg', {
-                title: 'Groups',
-                orgsname: res1,
-                orgsid: res2
-              });
-            }
-         });  
+        console.log('Added to pending Queue!!');
+        console.log('Waiting for the adminstrator for accepting the request');
+        res.send(res2);
       }
-    });  
+    })   
 });
 
 router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
@@ -280,9 +271,9 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
       }
       else{
         console.log(res1);
-        res.redirect('/myorg');
       }
     });
+    res.redirect('/myorg');
 });
 
 router.get('/myorg', ensureAuthentication, function(req, res, next) {
@@ -298,21 +289,48 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
     });
 });
 
-router.get('/joinorg/:orgname', ensureAuthentication, function(req, res, next) {
+router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next) {
     console.log("loading organisation add page");
+
     var orgname = req.params.orgname;
-    Org.findOrg(orgname, function(err2, res2){
+    if(orgname=="q")
+    {
+      res.render('joinorg', {
+        title: 'Explore Orgs',
+        username: req.user.username,
+        orgsByName: [],
+        initial: "true"
+      })
+    }
+    
+    if(req.query.suborgquery)
+      orgname = req.query.suborgquery;
+
+    console.log(orgname);
+    Org.findInOrg(orgname, function(err2, res2){
       if(err2) throw err2;
       else{
         res.render('joinorg',{
-          title: 'Join Organisations',
+          title: 'Explore Orgs',
+          username: req.user.username,
           orgsByName: res2,
+          initial: "false"
         })    
       }
     })          
   });
 
-
+router.post('/exitOrg/:orgId', ensureAuthentication, function(req, res, next){
+  var orgId = req.params.userId;
+  var username = req.user.username;
+  Org.exitOrgAll(orgId, username, function(err1, res1){
+    if(err1) throw err1;
+    else{
+      console.log('Access Reveoked');
+      res.redirect('/myorg');
+    }
+  })
+});
 router.post('/delorg/:orgId', ensureAuthentication, function(req, res, next) {
     console.log("Initiating Deletion of Organisation");
     var orgId = req.params.orgId;

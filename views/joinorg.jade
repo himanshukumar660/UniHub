@@ -2,6 +2,11 @@ extends home
 block joinorg
 	.gridbox.gridmain
 		ul(id="issues")
+			li.postIssuePart.searchorgformClass
+				form(id="searchorgformdash" method='get')
+					.issuePart1D(style="display:inline-flex;width:100%;padding-left:13px")
+						input(type='text' id="orgquerySearchBar" name="suborgquery" placeholder="Enter UID or name" required)		
+						
 			if orgsByName
 				if orgsByName.length>0
 					for each in orgsByName
@@ -19,8 +24,15 @@ block joinorg
 									p(id="date") #{each.dateMade}
 
 								div(style="float:right" id="postDelBtn")
-										form(method="post" action="/delorg/"+each._id)
-											input#delete(value="Join" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px")
+											if (each.members.indexOf(username)>-1 || each.admin.indexOf(username)>-1)
+												form(method="post" action="/exitOrg/"+each._id style="disply:inline-block")
+													input#join(value="Exit" type="submit" style="background-color:red;color:white!important;font-weight:500;border:1px solid red;border-radius:3px;min-width:70px")
+											else if(each.pendingRequest.indexOf(username)>-1)
+												form(method="post" action="/exitOrg/"+each._id style="disply:inline-block")
+													input#join(value="Pending" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
+											else
+												form(method="post" action="/joinorg/"+each._id)
+													input#join(value="Join" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px")
 							.main.issueBlock
 								#prevBtn
 									#likeBtns
@@ -33,10 +45,29 @@ block joinorg
 												b Please Note 
 												| : #{each.alert}
 									#issueDesc(style="border-top:none") #{each.aboutUs}
+				else if(initial=="true")
+					div(style="text-align:center!important;padding-top:100px")
+						img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
+						br
+						br
+						h(style="font-weight:500; font-size:25pt; color:grey") Results appears here
+				
 				else
 					div(style="text-align:center!important;padding-top:100px")
-						img(src="/images/errorLogo.png" style="width:30%;opacity:0.7")
+						img(src="/images/ErrorLogo.png" style="width:30%;opacity:0.7")
 						br
 						br
-						h(style="font-weight:500; font-size:25pt; color:grey") No Results Found 
-						
+						h(style="font-weight:500; font-size:25pt; color:grey") No results found 
+	script.
+		$('input#join').click(function(){
+			this.toggle(function(){
+				this.attr('value', 'Joined');
+			});
+		});
+		$('#orgquerySearchBar').on("input", function(){
+			var query = this.value;
+			console.log(query);
+			var _url = "/searchorg/"+query;
+			console.log(_url);
+			$('#searchorgformdash').attr('action', _url);       
+		});

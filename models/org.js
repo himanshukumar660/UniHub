@@ -84,15 +84,6 @@ module.exports.acceptPendingReq = function(orgId, usernameOfReqUser,callback){
 	Org.findOneAndUpdate({_id: orgId}, {$addToSet: {members : usernameOfReqUser}}, callback);
 }
 
-module.exports.acceptPendingReq = function(orgId, usernameOfReqUser, callback){
-	//Accepting Pending requests can be only performed by the admins.
-
-	//Remove from the pending request fields
-	Org.findOneAndUpdate({_id: orgId}, {$pull: {pendingRequest : usernameOfReqUser}});
-	//Add to the members field
-	Org.findOneAndUpdate({_id: orgId}, {$addToSet: {members : usernameOfReqUser}}, callback);
-}
-
 module.exports.deleteOrg = function(orgId, usernameAdmin, callback){
 	//Search the entire org list that contails both the organisationID and admin contains the username Admin  
 	Org.remove({$and : [{_id: orgId, admin: {$in : [usernameAdmin]}}]}, callback);
@@ -103,9 +94,20 @@ module.exports.exitOrgMember = function(orgId, username, callback){
 	Org.findOneAndUpdate({_id: orgId}, {$pull : {members : username}}, callback);
 }
 
+module.exports.exitOrgAll = function(orgId, username, callback){
+	//find the member from member list and remove him
+	Org.findOneAndUpdate({_id: orgId}, {$pull : {members : username}});
+	Org.findOneAndUpdate({_id: orgId}, {$pull : {admin : username}}, callback);
+}
+
+
 module.exports.exitOrgAdmin = function(orgId, username, callback){
 	//find the Admin from Admin list and remove him
 	Org.findOneAndUpdate({_id: orgId}, {$pull : {admin : username}}, callback);
+}
+
+module.exports.chkMembership = function(orgId, username, callback){
+	Org.find({$or : [{members: {$in : [username]}, admin: {$in : [username]}}]}, callback);
 }
 
 module.exports.chkAdmin = function(orgId, username, callback){
@@ -116,7 +118,7 @@ module.exports.chkMember = function(orgId, username, callback){
 	Org.find({$and : [{_id:orgId, members : {$in : [username]}}]}, callback);
 }
 
-module.exports.findOrg = function(orgname, callback){
+module.exports.findInOrg = function(orgname, callback){
 	Org.find({$text : {$search : orgname}}, callback);
 }
 

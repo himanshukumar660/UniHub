@@ -281,7 +281,9 @@ li.issuePart{
   #exploreorg{
     display: none;
   }
-
+  .searchorgformClass {
+    display: none;
+  }
 
 @media only screen and (max-width: 500px) {
 
@@ -295,6 +297,9 @@ li.issuePart{
     display: block;
   }
   #exploreorg{
+    display: block;
+  }
+   .searchorgformClass {
     display: block;
   }
   #searchorgform{
@@ -586,12 +591,17 @@ li#iRD{
   width:50%;
   text-align:center;
   border:none;
+  padding: 7px;
+  transition: background-color 0.2s ease-in-out;
 }
 
+#commentBtn:hover, #likeBtn:hover{
+  background-color: #e8f3ff;
+}
 .issueCommentPart{
   width:100%;
   border-top:1px solid lightgray;
-  padding:10px;
+  padding:5px;
   display:inline-flex;
 }
 
