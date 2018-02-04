@@ -305,21 +305,23 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
       })
     }
     
-    if(req.query.suborgquery)
-      orgname = req.query.suborgquery;
+    else{
+      if(req.query.suborgquery)
+        orgname = req.query.suborgquery;
 
-    console.log(orgname);
-    Org.findInOrg(orgname, function(err2, res2){
-      if(err2) throw err2;
-      else{
-        res.render('joinorg',{
-          title: 'Explore Orgs',
-          username: req.user.username,
-          orgsByName: res2,
-          initial: "false"
-        })    
-      }
-    })          
+      console.log(orgname);
+      Org.findInOrg(orgname, function(err2, res2){
+        if(err2) throw err2;
+        else{
+          res.render('joinorg',{
+            title: 'Explore Orgs',
+            username: req.user.username,
+            orgsByName: res2,
+            initial: "false"
+          })    
+        }
+      })
+    }          
   });
 
 

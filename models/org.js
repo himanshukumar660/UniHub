@@ -14,11 +14,13 @@ var orgSchema = new Schema({
 	userId:{
 		type: String,
 		unique: true,
+		index: true,
 		required: true
 	},
 	
 	name: {
 		type: String,
+		index : true,
 		required:true
 	},
 
@@ -41,13 +43,24 @@ var orgSchema = new Schema({
 	pendingRequest : [String],
 });
 
-orgSchema.index({
-	'$**' : 'text'
-});
+orgSchema.index({'$**' : 'text'},{default_language : "none"});
 
 var Org = module.exports = mongoose.model('Org', orgSchema);
 
+// Org.ensureIndexes(function (err) {
+//   console.log('ENSURE INDEX')
+//   if (err) console.log(err)
+// });
 
+Org.on('index', function(err) {
+    if (err) {
+        console.error('Org index error: %s', err);
+    } else {
+        console.info('Org indexing complete');
+    }
+});
+
+mongoose.set('debug', true);
 module.exports.makeOrg = function(orgDetails, callback){
 	//INCOMPLETE
 	// if org name exists
@@ -113,13 +126,11 @@ module.exports.chkMember = function(orgUId, username, callback){
 }
 
 module.exports.findInOrg = function(orgname, callback){
-	Org.find({
-		$text : {
+	Org.find({$text : {
 			$search : orgname,
-			$language : "none",
-			$caseSensitive : false,
-		},
-	}, callback);
+			$caseSensitive : false}},
+			{ score : { $meta: "textScore" } }).sort({ score : { $meta : 'textScore' } })
+    .exec(callback); 
 }
 
 module.exports.findOrgByUID = function(orguid, callback){
