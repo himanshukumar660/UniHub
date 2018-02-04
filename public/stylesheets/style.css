@@ -305,9 +305,6 @@ li.issuePart{
   #searchorgform{
     display: none;
   }
-    #linkProfile{
-      font-size: 10pt !important;
-    }
     a#issueTopic{
       font-size: 12pt;
     }
@@ -769,11 +766,11 @@ a#linkProfile:hover {
   background-color: white;
   box-shadow: 0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff!important; 
 }
-#manageOrg{
+#manageOrg, #joinOrg, #exitOrg {
   transition: all 0.4s ease;
 }
 
-#manageOrg:hover{
+#manageOrg:hover, #joinOrg:hover, #exitOrg:hover{
   background-color: #e8f3ff;
 }
 

@@ -225,10 +225,45 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
 
 
 
+//The following method shows official page of the organisation
+router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
+    console.log("Fetchgin the organisation details");
+    var orgUId = req.params.orgUId;
+    var username = req.user.username;
+    console.log(orgUId);
+    Org.findOrgByUID(orgUId, function(err1, res1){
+      if(err1) throw err1;
+      else{
+          console.log(res1);
+          Issue.getOpenIssueByOrgUserId(orgUId, function(err2, res2){
+          if(err2) throw err2;
+          else{
+              console.log(res2);
+              Issue.getClosedIssueByOrgUserId(orgUId, function(err3, res3){
+                if(err3) throw err3;
+                else{
+                  console.log(res3);
+                  res.render('indorgissues', {
+                    title: res1.name+" : ",
+                    username: username,
+                    orgDtl : res1,
+                    openIssues: res2,
+                    closedIssues: res3  
+                  });
+                }
+            });
+          }
+        });
+      }
+    });    
+});
+
+
+
 // Following deals with the APIs for accessing the organisation modiules.
 
 
-router.post('/joinorg/:orgUId', ensureAuthentication, function(req, res, next) {
+router.post('/joinOrg/:orgUId', ensureAuthentication, function(req, res, next) {
     console.log("Fetchgin the organisation details");
     var orgUId = req.params.orgUId;
     var username = req.user.username;
@@ -437,24 +472,24 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
       });
 });
 
-
-router.post('/delorg/:orgUId', ensureAuthentication, function(req, res, next) {
-    console.log("Initiating Deletion of Organisation");
-    var orgUId = req.params.orgUId;
-    console.log(orgUId);
-    Issue.deleteIssueByOrgUserId(orgUId, function(err1, res1){
-      if(err1) throw err1;
-      else
-      {
-        Org.deleteOrg(orgUId, req.user.username, function(err2, res2){
-          if(err2) throw err2;
-              else{
-                  res.redirect('/myorg');
-                }   
-          });
-      }
-    });
-});
+// The following method deletes the organisation
+// router.post('/delorg/:orgUId', ensureAuthentication, function(req, res, next) {
+//     console.log("Initiating Deletion of Organisation");
+//     var orgUId = req.params.orgUId;
+//     console.log(orgUId);
+//     Issue.deleteIssueByOrgUserId(orgUId, function(err1, res1){
+//       if(err1) throw err1;
+//       else
+//       {
+//         Org.deleteOrg(orgUId, req.user.username, function(err2, res2){
+//           if(err2) throw err2;
+//               else{
+//                   res.redirect('/myorg');
+//                 }   
+//           });
+//       }
+//     });
+// });
 
 function ensureAuthentication(req, res, next){
     if(req.isAuthenticated())

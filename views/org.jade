@@ -1,0 +1,60 @@
+extends layout
+block content
+	.gridcontainer
+		.gridwrapper
+			.gridbox.gridmenu(data-spy="affix")		
+				#wrapper(class="pro_info")
+					section#main(style='background-color: unset !important;top:auto !important;max-width: 40em !important;')
+						div
+							a(href="/profile" style="font-size:1.2em;") #{orgDtl.name} 
+						
+							blockquote(style="color:#369a21;padding:10px;font-size:12pt;margin-top:15px!important") #{orgDtl.aboutUs}
+
+							ul
+								li(style="display: inline-block;padding: 0 20px")
+									| Members
+									h3 #{orgDtl.members.length}
+
+								ul(style="font-size:11pt;list-style:none;padding:0px;")
+									li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
+										| Issues Open
+										h3 #{openIssues.length}
+									li(style="display: inline-block;padding: 0 10px")
+										| Issues Closed
+										h3 #{closedIssues.length}
+
+					if(orgDtl.admin.indexOf(username)>-1)
+						div(id="manageOrg" style="padding:10px")
+							a(href="#") Pending Request
+
+					if(orgDtl.members.indexOf(username)>-1)
+						form(method="post" action="/exitOrg/"+orgDtl.userId)
+							div(id="exitOrg" style="padding:10px")
+								button(style="border:none;background-color:unset") 
+									a() Exit Organisation
+
+					else if(orgDtl.pendingRequest.indexOf(username)>-1)
+							div(style="color:#42b72a;")
+								i(class="ionicons ion-android-checkmark-circle" style="font-size:15pt;margin-bottom:15px!important;")
+								h  Pending Approval
+					else
+						form(method="post" action="/joinOrg/"+orgDtl.userId)
+							div(id="joinOrg" style="margin-bottom:15px!important;padding:10px")
+								button(style="border:none;background-color:unset")
+									a() Join Organisation
+
+			block issues
+			block pendingreq
+
+		
+			.gridbox.gridright(data-spy="affix" )
+				.right(style="background-color:unset!important")
+	
+
+
+	script.
+		var issuedate = $('p#date').each(function(){
+			console.log($(this).text());
+			var modDate = $(this).text().substring(0,21);
+			$(this).html(modDate);
+		});

@@ -133,6 +133,14 @@ module.exports.getIssueByOrgUserId = function(orguid, callback){
 	Issue.find(query, callback);
 };
 
+module.exports.getOpenIssueByOrgUserId = function(orguid, callback){
+	Issue.find({$and : [{orgUserId : orguid}, {status : "open"}]}, callback);
+};
+
+module.exports.getClosedIssueByOrgUserId = function(orguid, callback){
+	Issue.find({$and : [{orgUserId : orguid}, {status : "closed"}]}, callback);
+};
+
 module.exports.deleteIssueByOrgUserId = function(orguid, callback){
 	var query = {
 		orgUserId : orguid

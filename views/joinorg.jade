@@ -14,7 +14,7 @@ block joinorg
 							.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
 								div(style="float:left;")
 									span(style='color:gray')
-										a(href="/indorg/"+each._id id="linkProfile" style='font-weight:900;')  #{each.name}
+										a(href="/orgs/"+each.userId id="linkProfile" style='font-weight:500;')  #{each.name}
 
 									span(style='color:gray')
 										br
@@ -38,7 +38,7 @@ block joinorg
 											h  Pending
 
 									else
-										form(method="post" action="/joinorg/"+each.userId)
+										form(method="post" action="/joinOrg/"+each.userId)
 											input#join(value="Join" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px")
 							
 							.main.issueBlock

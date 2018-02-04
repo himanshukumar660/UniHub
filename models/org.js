@@ -10,7 +10,7 @@ var db = mongoose.connection;
 var Schema = mongoose.Schema;
 
 var orgSchema = new Schema({
-	//Name of the author
+	//userID is the organisation user id
 	userId:{
 		type: String,
 		unique: true,
