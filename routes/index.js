@@ -76,7 +76,6 @@ router.post('/likepost/:id', ensureAuthentication, function(req,res, next){
   console.log("Initiating to like the post");
   var _id = req.params.id;
   console.log(_id);
-  console.log("Himanshu Kumar");
   var username = req.user.username;
   Issue.chkUserLikedPost(username, _id, function(err1, results1){
       if(err1) throw err1

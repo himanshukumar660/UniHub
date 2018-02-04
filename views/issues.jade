@@ -63,18 +63,31 @@ block issues
                   a#issueTopic(href="/indpost/"+each._id) #{each.issueTopic}
                 #issueDesc #{each.issueDesc}
           
-            .issueCommentPart
-              button(id="likeBtn")
-                if (each.supporters.indexOf(username)==-1)
-                  i(class="fa fa-thumbs-o-up" style="font-size:18px;")
-                  |  Like
-                else
-                  i(class="fa fa-thumbs-up" style="font-size:18px")
-                  |  Like
+            div
+              ul(style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
+                li
+                  a(href="#" ) 
+                    span(id="num_of_likes") #{each.supporters.length}
+                    |  Likes
+                li
+                  h(style="margin-right:5px;margin-left:5px") -
+                li
+                  a(href="#")
+                    span(id="num_of_comments") #{each.comments.length}
+                    |  Comments
+             
+              .issueCommentPart
+                button(id="likeBtn")
+                  if (each.supporters.indexOf(username)==-1)
+                    i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                    |  Like
+                  else
+                    i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
+                    |  Like
 
-              button(id="commentBtn")
-                i(class="mega-octicon octicon-comment" style="font-size:18px")
-                |  Comment
+                button(id="commentBtn")
+                  i(class="mega-octicon octicon-comment" style="font-size:18px")
+                  |  Comment
 
   script.
     //- ////////////////////////// Coded from W3schools for options /////////////////////////////////////////////////
@@ -154,6 +167,17 @@ block issues
       })
 
       $('button#likeBtn').click(function(e){
+
+        if( $('i#likeBtnLogo').hasClass("fa-thumbs-up") )
+          { 
+            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])-1);
+          }
+        
+        else if( $('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
+          {
+            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])+1);
+          }
+
           e.preventDefault();
           $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
           var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
