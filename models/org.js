@@ -149,3 +149,6 @@ module.exports.memberOrgs = function(username, callback){
 	Org.find({members : {$in : [username]}}, callback);
 }
 
+module.exports.pendingOrgs = function(username, callback){
+	Org.find({pendingRequest : {$in : [username]}}, callback);
+}

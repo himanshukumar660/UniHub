@@ -2,29 +2,35 @@ extends layout
 block content
 	.gridcontainer
 		.gridwrapper
-			.gridbox.gridmenu(data-spy="affix" )		
+			.gridbox.gridmenu(data-spy="affix")		
 				#wrapper(class="pro_info")
-					ul(style="padding:0px")
-						li(style="list-style:none;")
-							a(href='/profile/'+username style="padding-right:0px")
-								p(style="font-weight:500;font-size:12pt;text-align:left") #{name}	
-						li(style='list-style:none;')
-							a(href="/myorg")
-								p(style="font-weight:500;font-size:12pt;text-align:left") My organisations
-							if adminctrlorgs
-								if adminctrlorgs.length!=0
-									ul(id="myOrgsList")
-										| Admin Controls :
-										for each in adminctrlorgs
-											li#orgname(style="font-size:11pt") 
-												a(href="/indorg/"+each._id) #{each.name}
-							if memberctrlorgs
-								if memberctrlorgs.length!=0
-									ul(id="myOrgsList")
-											| Membership :
-											for each in memberctrlorgs
-												li#orgname(style="font-size:11pt") 
-													a(href="/indorg/"+each._id) #{each.name}
+					section#main(style='background-color: unset !important;top:auto !important;max-width: 40em !important;')
+						div
+							span.avatar 
+								img(src='/uploads/'+'#{userDetails.avatarPath}', alt='', width='125px' height="125px" style="border-radius:50%;padding:10px;margin-bottom:10px!important")
+							div
+								a(href="/profile" style="font-size:1.2em;") #{userDetails.name} 
+						
+							blockquote(style="color:#369a21;padding:10px;font-size:12pt;margin-top:15px!important") #{userDetails.moto}
+
+							ul(style="font-size:11pt;list-style:none;padding:0px;")
+									li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
+										| Membership
+										h3 #{memberctrlorgs.length}
+									li(style="display: inline-block;padding: 0 20px")
+										| Admin
+										h3 #{adminctrlorgs.length}
+
+						div(style="display: inline-block;font-size:11pt")
+										| Pending Apporval
+										h3 #{pendingctrlorgs.length}
+
+						div(id="manageOrg" style="margin-bottom:15px!important;padding:10px")
+							a(href="/myorg") Manage Organisations
+
+
+
+
 			block issues
 			block addmyorg
 			block joinorg
@@ -32,44 +38,6 @@ block content
 								
 			.gridbox.gridright(data-spy="affix" )
 				.right(style="background-color:unset!important")
-					#notifications(style="text-align:left!important")
-						a(href="/trending" style="font-weight:500") 
-							p Trending
-						ul(id="trndingIssues" style="list-style:none")
-								li
-									p Issue Topic goes here.
-								li
-									p Issue Topic goes here.
-								li
-									p Issue Topic goes here.
-								li
-									p Issue Topic goes here.
-
-					#notifications(style="text-align:left!important")
-						a(href="/trending" style="font-weight:500") 
-							p Trending
-						ul(id="trndingIssues" style="list-style:none")
-							li
-								p Issue Topic goes here.
-							li
-								p Issue Topic goes here.
-							li
-								p Issue Topic goes here.
-							li
-								p Issue Topic goes here.
-
-					#notifications(style="text-align:left!important")
-						a(href="/trending" style="font-weight:500;font-size:12pt") 
-							p Trending
-						ul(id="trndingIssues" style="list-style:none;font-size:11pt")
-							li
-								p Issue Topic goes here.
-							li
-								p Issue Topic goes here.
-							li
-								p Issue Topic goes here.
-							li
-								p Issue Topic goes here.
 	
 
 

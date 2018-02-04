@@ -235,7 +235,7 @@ li.issuePart{
 }
 
 .gridmenu {
-    width: 17.481781376518218623481781376518%;
+    width: 20.481781376518218623481781376518%;
     overflow: scroll;
     background-color: transparent;
     height: 85%;
@@ -245,22 +245,22 @@ li.issuePart{
 }
 
 .gridmain {
-    width: 42.57854251012145748987854251012%;
+    width: 62.57854251012145748987854251012%;
     overflow: scroll;
     float: left;
     position: absolute;
-    left: 16% !important;
+    left: 19% !important;
 }
 
 
 .gridright {
-  width: 23.481781376518218623481781376518%;
+  width: 18.481781376518218623481781376518%;
   overflow: scroll;
   background-color: transparent;
   height: 85%;
   text-align: center;
   float: right;
-  left: 56.6%;
+  left: 79.6%;
   margin-top: 20px;
 }
 .right {
@@ -761,7 +761,22 @@ a#linkProfile:hover {
   color:white;
   opacity: 1;
 }
+.pro_info{
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #d1d5da;
+  margin:5px;
+  background-color: white;
+  box-shadow: 0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff!important; 
+}
+#manageOrg{
+  transition: all 0.4s ease;
+}
 
+#manageOrg:hover{
+  background-color: #e8f3ff;
+}
 
-
-
+.active{
+  border-bottom: 2px solid #369a21;
+}

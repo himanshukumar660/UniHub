@@ -29,15 +29,21 @@ router.get('/', ensureAuthentication, function(req, res, next) {
                 Org.memberOrgs(username, function(err4, res4){
                  if(err4) throw err4;
                  else{
-                    res.render('issues',{
-                      title: 'Home',
-                      username: req.user.username,
-                      name: req.user.name,
-                      adminctrlorgs: res3,
-                      memberctrlorgs: res4,
-                      userDetails: res2,
-                      issues: res1
-                    })  
+                  Org.pendingOrgs(username, function(err5, res5){
+                    if(err5) throw err5;
+                    else{
+                        res.render('issues',{
+                          title: 'Home',
+                          username: req.user.username,
+                          name: req.user.name,
+                          adminctrlorgs: res3,
+                          memberctrlorgs: res4,
+                          pendingctrlorgs: res5,
+                          userDetails: res2,
+                          issues: res1
+                        })
+                    }
+                  }) 
                   } 
                 }); 
               }
@@ -280,50 +286,97 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
 
 router.get('/myorg', ensureAuthentication, function(req, res, next) {
     console.log("loading organisation add page");
-    Org.adminOrgs(req.user.username, function(err2, res2){
+    var username = req.user.username;
+
+    User.getUserByUsername(username, function(err2, res2){
       if(err2) throw err2;
       else{
-        res.render('myorg',{
-          title: 'My Organisations',
-          orgs: res2
-        })    
+        Org.adminOrgs(username, function(err3, res3){
+          if(err3) throw err3;
+          else{
+            Org.memberOrgs(username, function(err4, res4){
+              if(err4) throw err4;
+              else{
+                Org.pendingOrgs(username, function(err5, res5){
+                  if(err5) throw err5;
+                  else{
+                      res.render('myorg',{
+                        title: 'My Organisations',
+                        adminctrlorgs: res3,
+                        memberctrlorgs: res4,
+                        pendingctrlorgs: res5,
+                        userDetails: res2
+                      })
+                  }
+                })
+              }
+            })    
+          }
+        });
       }
-    });
+    })
 });
 
 router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next) {
     console.log("loading organisation add page");
-
-    var orgname = req.params.orgname;
-    if(orgname=="q")
-    {
-      res.render('joinorg', {
-        title: 'Explore Orgs',
-        username: req.user.username,
-        orgsByName: [],
-        initial: "true"
-      })
-    }
-    
-    else{
-      if(req.query.suborgquery)
-        orgname = req.query.suborgquery;
-
-      console.log(orgname);
-      Org.findInOrg(orgname, function(err2, res2){
+    var username = req.user.username;
+      User.getUserByUsername(username, function(err2,res2){
         if(err2) throw err2;
-        else{
-          res.render('joinorg',{
-            title: 'Explore Orgs',
-            username: req.user.username,
-            orgsByName: res2,
-            initial: "false"
-          })    
-        }
-      })
-    }          
-  });
+        else
+        {
+          var orgname = req.params.orgname;
+          if(orgname=="q")
+          {
+            res.render('joinorg', {
+              title: 'Explore Orgs',
+              username: req.user.username,
+              orgsByName: [],
+              userDetails: res2,
+              initial: "true"
+            })
+          }
+          
+          else{
 
+            if(req.query.suborgquery)
+              orgname = req.query.suborgquery;
+
+            console.log(orgname);
+            Org.adminOrgs(username, function(err3, res3){
+              if(err3) throw res3;
+              else
+              {
+                Org.memberOrgs(username, function(err4, res4){
+                  if(err4) throw res4;
+                  else{
+                    Org.pendingOrgs(username, function(err5, res5){
+                      if(err5) throw err5;
+                      else{
+                        Org.findInOrg(orgname, function(err6, res6){
+                          if(err6) throw err6;
+                          else{
+                            res.render('joinorg',{
+                              title: 'Explore Orgs',
+                              username: req.user.username,
+                              userDetails: res2,
+                              adminctrlorgs: res3,
+                              memberctrlorgs: res4,
+                              pendingctrlorgs: res5,
+                              orgsByName: res6,
+                              initial: "false"
+                            })    
+                          }
+                        })
+                      }
+                    })
+                  }
+                })
+              }
+            })
+          }
+        }
+      });          
+  });
 
 router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
   var orgUId = req.params.orgUId;

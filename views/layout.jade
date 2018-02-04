@@ -61,31 +61,36 @@ html(lang='en')
               .col-lg-6
                 ul.nav.navbar-nav.navbar-right(style="font-size:12pt!important;font-weight:500;")
                   li(class=(title == 'Home' ? 'active' : '') style="display:inline-flex")
-                    a(href='/' style="padding-right:0px")
+                    a(href='/')
                       i( class="ionicons ion-android-home" style="font-size:20pt!important;")
                     
                   li(class=(title == 'Join Organisations' ? 'active' : '') id="exploreorg")
-                    a(href='/searchorg/q' style="padding-right:0px")
+                    a(href='/searchorg/q' )
                       | Explore
                   
                   li(class=(title == 'My Organisations' ? 'active' : '') id="myorganisation")
-                    a(href='/myorg/' style="padding-right:0px")
+                    a(href='/myorg/' )
                       | My Organisations
                   
                   li(class=(title == 'Profile' ? 'active' : '') id="myprofile")
-                    a(href='/profile/'+user.username style="padding-right:0px")
+                    a(href='/profile/'+user.username )
                       | My profile
 
-                  li(class=(title == 'Settings' ? 'active' : ''))
-                    a(href='/settings/' style="padding-right:0px")
-                      i(class="ionicons ion-android-settings" style="font-size:20pt!important;")
+
+                  li(class=(title == 'My Organisations' ? 'active' : ''))
+                    a(href='/myorg')
+                      i(class="ionicons ion-ios-people" style="font-size:20pt!important;")
                   
                   li(class=(title == 'Settings' ? 'active' : ''))
-                      a(href='/settings/' style="padding-right:0px")
+                    a(href='/settings/')
+                      i(class="ionicons ion-android-settings" style="font-size:20pt!important;")
+                  
+                  li(class=(title == 'help' ? 'active' : ''))
+                      a(href='/settings/')
                         i(class="ionicons ion-help-circled" style="font-size:20pt!important;")
               
                   li(class=(title == 'Logout' ? 'active' : ''))
-                    a(href='/users/logout' style="padding-right:0px")
+                    a(href='/users/logout')
                       i(class="ionicons ion-log-out" style="font-size:20pt!important;")        
     block content
 
