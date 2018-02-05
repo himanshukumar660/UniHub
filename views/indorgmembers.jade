@@ -1,0 +1,45 @@
+extends org
+block issues
+  .gridbox.gridmain
+    ul(id="members")
+        if members
+          for each in members  
+            li.issuePart
+              .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+                div(style="float:left;")
+                  a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
+                  p(id="date") Requested On : #{each.datePosted}
+
+      else
+        div(style="text-align:center!important;padding-top:100px")
+            img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
+            br
+            br
+            h(style="font-weight:500; font-size:25pt; color:grey") Here appears the pending requests
+  script.
+      $('button#likeBtn').click(function(e){
+
+        if( $('i#likeBtnLogo').hasClass("fa-thumbs-up") )
+          { 
+            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])-1);
+          }
+        
+        else if( $('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
+          {
+            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])+1);
+          }
+
+          e.preventDefault();
+          $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
+          var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
+          console.log(id);
+          
+          id = id.substring(9);
+          console.log(id);
+          
+          var _url = "/likepost/"+id;
+          console.log(_url);
+          $.post({
+          url: _url,
+        });
+      });

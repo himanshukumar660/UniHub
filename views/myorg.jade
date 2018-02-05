@@ -25,8 +25,8 @@ block issues
 										input( value="Add" type="submit" name="orgSubmit" id="orgSubmit" style="max-width:71.77px;")
 
 
-			if adminctrlorgs || memberctrlorgs
-				for each in Object.assign({}, adminctrlorgs, memberctrlorgs)
+			if memberctrlorgs
+				for each in memberctrlorgs
 					li.issuePart
 						.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
 							div(style="float:left;")

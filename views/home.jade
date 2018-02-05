@@ -13,21 +13,12 @@ block content
 						
 							blockquote(style="color:#369a21;padding:10px;font-size:12pt;margin-top:15px!important") #{userDetails.moto}
 
-							ul(style="font-size:11pt;list-style:none;padding:0px;")
-									li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
-										| Membership
-										h3 #{memberctrlorgs.length}
-									li(style="display: inline-block;padding: 0 20px")
-										| Admin
-										h3 #{adminctrlorgs.length}
-
-						div(style="display: inline-block;font-size:11pt")
-										| Pending Apporval
-										h3 #{pendingctrlorgs.length}
+						div(id="myissues" style="padding:10px")
+							a(href="/myorg") My Issues
 
 						div(id="manageOrg" style="margin-bottom:15px!important;padding:10px")
 							a(href="/myorg") Manage Organisations
-
+						
 
 
 

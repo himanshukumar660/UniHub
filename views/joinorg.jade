@@ -6,7 +6,7 @@ block joinorg
 				form(id="searchorgformdash" method='get')
 					.issuePart1D(style="display:inline-flex;width:100%;padding-left:13px")
 						input(type='text' id="orgquerySearchBar" name="suborgquery" placeholder="Enter UID or name" required)		
-						
+				
 			if orgsByName
 				if orgsByName.length>0
 					for each in orgsByName
@@ -24,15 +24,18 @@ block joinorg
 									p(id="date") #{each.dateMade}
 
 								div(style="float:right" id="postDelBtn")
+									
 
-									if (each.members.indexOf(username)>-1)
-										if (each.admin.indexOf(username)>-1)
+
+
+									if (search(username, each.members))
+										if (search(username, each.admin))
 											input#join(value="Admin" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
 							
 										else
 											input#join(value="Member" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
 
-									else if(each.pendingRequest.indexOf(username)>-1)
+									else if(search(username, each.pendingRequest))
 										div(style="color:#42b72a;")
 											i(class="ionicons ion-android-checkmark-circle" style="font-size:15pt")
 											h  Pending
@@ -68,6 +71,7 @@ block joinorg
 						br
 						h(style="font-weight:500; font-size:25pt; color:grey") No results found 
 	script.
+		
 		$('input#join').click(function(){
 			this.toggle(function(){
 				this.attr('value', 'Joined');

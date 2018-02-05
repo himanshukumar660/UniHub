@@ -766,11 +766,11 @@ a#linkProfile:hover {
   background-color: white;
   box-shadow: 0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff!important; 
 }
-#manageOrg, #joinOrg, #exitOrg {
+#manageOrg, #joinOrg, #exitOrg, #myissues {
   transition: all 0.4s ease;
 }
 
-#manageOrg:hover, #joinOrg:hover, #exitOrg:hover{
+#manageOrg:hover, #joinOrg:hover, #exitOrg:hover, #myissues:hover{
   background-color: #e8f3ff;
 }
 

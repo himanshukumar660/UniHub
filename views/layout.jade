@@ -20,6 +20,14 @@ html(lang='en')
   script(src='/javascripts/main.js')
   
   body
+    -function search(nameKey, myArray){
+    -for (var i=0; i < myArray.length; i++) {
+    -if (myArray[i].username === nameKey) {
+    -return 1;
+    -}
+    -}
+    -return 0
+    -}
     if (title==='Login'||title==='Register')
       nav.navbar.navbar-inverse
         .container-fluid

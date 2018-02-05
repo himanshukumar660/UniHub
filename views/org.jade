@@ -10,30 +10,30 @@ block content
 						
 							blockquote(style="color:#369a21;padding:10px;font-size:12pt;margin-top:15px!important") #{orgDtl.aboutUs}
 
-							ul
-								li(style="display: inline-block;padding: 0 20px")
-									| Members
-									h3 #{orgDtl.members.length}
+							ul(style="font-size:11pt;list-style:none;padding:0px;")
+								li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
+									| Issues Open
+									h3 #{openIssues.length}
+								li(style="display: inline-block;padding: 0 10px")
+									| Issues Closed
+									h3 #{closedIssues.length}
 
-								ul(style="font-size:11pt;list-style:none;padding:0px;")
-									li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
-										| Issues Open
-										h3 #{openIssues.length}
-									li(style="display: inline-block;padding: 0 10px")
-										| Issues Closed
-										h3 #{closedIssues.length}
+					if(search(username, orgDtl.admin))
+						div(id="manageOrg" style="padding:10px;")
+							a(href="/pendingreq/"+orgDtl.userId) Pending Request
 
-					if(orgDtl.admin.indexOf(username)>-1)
+					if(search(username, orgDtl.members))
 						div(id="manageOrg" style="padding:10px")
-							a(href="#") Pending Request
+							a(#) Member List
 
-					if(orgDtl.members.indexOf(username)>-1)
 						form(method="post" action="/exitOrg/"+orgDtl.userId)
-							div(id="exitOrg" style="padding:10px")
+							div(id="manageOrg" style="padding:10px")
 								button(style="border:none;background-color:unset") 
 									a() Exit Organisation
 
-					else if(orgDtl.pendingRequest.indexOf(username)>-1)
+						
+
+					else if(search(username, orgDtl.pendingRequest))
 							div(style="color:#42b72a;")
 								i(class="ionicons ion-android-checkmark-circle" style="font-size:15pt;")
 								h  Pending Approval

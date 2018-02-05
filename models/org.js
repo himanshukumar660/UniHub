@@ -36,11 +36,44 @@ var orgSchema = new Schema({
 		type: String,
 	},
 	//Listing of all the members
-	members: [String],
+	members: [{
+		username :{
+			type: String,
+		},
+		name:{
+			type:String
+		},
+		DateIntraction:{
+			type: Date,
+			default: Date.now()
+		}
+	}],
 	//Listing of Admins
-	admin: [String],
+	admin: [{
+		username : {
+			type: String,
+		},
+		name:{
+			type:String
+		},
+		DateIntraction:{
+			type: Date,
+			default: Date.now()
+		}
+	}],
 	//The users those have requested to join
-	pendingRequest : [String],
+	pendingRequest : [{
+		username : {
+			type: String,
+		},
+		name:{
+			type:String
+		},
+		DateIntraction:{
+			type: Date,
+			default: Date.now()
+		}
+	}],
 });
 
 orgSchema.index({'$**' : 'text'},{default_language : "none"});
@@ -72,44 +105,44 @@ module.exports.makeOrg = function(orgDetails, callback){
 	orgDetails.save(callback);
 }
 
-module.exports.makeUserAdmin = function(orgUId, username, callback){
+module.exports.makeUserAdmin = function(orgUId, userObj, callback){
 	// if already an Admin Do nothing
 	// else
 	// 	make him admin
-	Org.findOneAndUpdate({userId: orgUId}, {$addToSet: {admin : username}}, callback);
+	Org.findOneAndUpdate({userId: orgUId}, {$addToSet: {admin : userObj}}, callback);
 }
 
-module.exports.enterOrg = function(orgUId,  username, callback){
+module.exports.enterOrg = function(orgUId,  userObj, callback){
 	// If the user already exists in the organisation 
 	// 	do nothing
 	// else
 	// 	make him a member of the organisation
-	Org.findOneAndUpdate({userId: orgUId}, {$addToSet: {pendingRequest : username}}, callback);
+	Org.findOneAndUpdate({userId: orgUId}, {$addToSet: {pendingRequest : userObj}}, callback);
 }
 
-module.exports.acceptPendingReq = function(orgUId, usernameOfReqUser,callback){
+module.exports.acceptPendingReq = function(orgUId, userObj, callback){
 	//Accepting Pending requests can be only performed by the admins.
 
 	//Remove from the pending request fields
-	Org.findOneAndUpdate({userId: orgUId}, {$pull: {pendingRequest : usernameOfReqUser}});
+	Org.findOneAndUpdate({userId: orgUId}, {$pull: {pendingRequest : userObj}});
 	//Add to the members field
-	Org.findOneAndUpdate({userId: orgUId}, {$addToSet: {members : usernameOfReqUser}}, callback);
+	Org.findOneAndUpdate({userId: orgUId}, {$addToSet: {members : userObj}}, callback);
 }
 
-module.exports.exitOrgAll = function(orgUId, username, callback){
+module.exports.exitOrgAll = function(orgUId, userObj, callback){
 	//find the Admin from Admin list and remove him
 	// When someone is admin and leaves a gorup, exit him from the member group as well.
-	Org.findOneAndUpdate({userId: orgUId}, {$pull : {admin : username, members: username}}, callback);
+	Org.findOneAndUpdate({userId: orgUId}, {$pull : {admin : userObj, members: userObj}}, callback);
 }
 
-module.exports.exitOrgMember = function(orgUId, username, callback){
+module.exports.exitOrgAdmin = function(orgUId, userObj, callback){
 	//find the member from member list and remove him
-	Org.findOneAndUpdate({userId: orgUId}, {$pull : {members : username}}, callback);
+	Org.findOneAndUpdate({userId: orgUId}, {$pull : {admin : userObj}}, callback);
 }
 
-module.exports.deleteOrg = function(orgUId, usernameAdmin, callback){
+module.exports.deleteOrg = function(orgUId, userObj, callback){
 	//Search the entire org list that contails both the organisationID and admin contains the username Admin  
-	Org.remove({$and : [{userId: orgUId, admin: {$in : [usernameAdmin]}}]}, callback);
+	Org.remove({$and : [{userId: orgUId, admin: {$elemMatch : userObj}}]}, callback);
 }
 
 module.exports.deleteOrgEmptyMember = function(orgUId, callback){
@@ -117,12 +150,12 @@ module.exports.deleteOrgEmptyMember = function(orgUId, callback){
 	Org.remove({userId: orgUId}, callback);
 }
 
-module.exports.chkAdmin = function(orgUId, username, callback){
-	Org.findOne({$and : [{userId:orgUId, admin : {$in : [username]}}]}, callback);
+module.exports.chkAdmin = function(orgUId, userObj, callback){
+	Org.findOne({$and : [{userId:orgUId, admin : {$elemMatch : userObj}}]}, callback);
 }
 
-module.exports.chkMember = function(orgUId, username, callback){
-	Org.findOne({$and : [{userId:orgUId, members : {$in : [username]}}]}, callback);
+module.exports.chkMember = function(orgUId, userObj, callback){
+	Org.findOne({$and : [{userId:orgUId, members : {$elemMatch : userObj}}]}, callback);
 }
 
 module.exports.findInOrg = function(orgname, callback){
@@ -141,14 +174,14 @@ module.exports.findOrgByID = function(orguid, callback){
 	Org.findOne({userId : orguid}, callback);
 }
 
-module.exports.adminOrgs = function(username, callback){
-	Org.find({admin : {$in : [username]}}, callback);
+module.exports.adminOrgs = function(userObj, callback){
+	Org.find({admin : {$elemMatch : userObj}}, callback);
 }
 
-module.exports.memberOrgs = function(username, callback){
-	Org.find({members : {$in : [username]}}, callback);
+module.exports.memberOrgs = function(userObj, callback){
+	Org.find({members : {$elemMatch : userObj}}, callback);
 }
 
-module.exports.pendingOrgs = function(username, callback){
-	Org.find({pendingRequest : {$in : [username]}}, callback);
+module.exports.pendingOrgs = function(userObj, callback){
+	Org.find({pendingRequest : {$elemMatch : userObj}}, callback);
 }

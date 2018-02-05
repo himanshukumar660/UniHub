@@ -13,7 +13,11 @@ router.get('/', ensureAuthentication, function(req, res, next) {
     console.log("Welcome to your homepage!");
     console.log(req.user);
     var username = req.user.username;
-
+    var userObj = {
+              username : req.user.username,
+              name: req.user.name
+    };
+           
     Issue.getIssuesLatest(function(err1, res1){
       if(err1)
         console.log("Could'nt fetch the issues");
@@ -23,15 +27,9 @@ router.get('/', ensureAuthentication, function(req, res, next) {
           if(err2) throw err2;
           else
           {
-            Org.adminOrgs(username, function(err3, res3){
-              if(err3) throw err3;
-              else{
-                Org.memberOrgs(username, function(err4, res4){
+                Org.memberOrgs(userObj, function(err4, res4){
                  if(err4) throw err4;
                  else{
-                  Org.pendingOrgs(username, function(err5, res5){
-                    if(err5) throw err5;
-                    else{
                         var userOrgs = [];
 
                         for(each in res4){
@@ -43,25 +41,19 @@ router.get('/', ensureAuthentication, function(req, res, next) {
                           title: 'Home',
                           username: req.user.username,
                           name: req.user.name,
-                          adminctrlorgs: res3,
                           memberctrlorgs: res4,
-                          pendingctrlorgs: res5,
                           userDetails: res2,
                           issues: res1,
                           userOrgs: userOrgs,
                         })
                     }
                   }) 
-                  } 
-                }); 
-              }
-            });
-          }
-        });        
-      }
-    });    
-});
-
+            }
+          }); 
+        }
+      });
+    });        
+      
 //Asynchronously get the Issues and populate the issue division
 router.get('/getIssues/:date', ensureAuthentication, function(req,res, next){
   console.log("Fteching More Issues");
@@ -188,6 +180,7 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
           issueDesc: desc,
           anonymity: anonymity,
         });
+
         Org.findOrgByUID(orgId, function(err1, res1){
           if(err1) throw err1;
           else{
@@ -276,7 +269,11 @@ router.post('/joinOrg/:orgUId', ensureAuthentication, function(req, res, next) {
     var orgUId = req.params.orgUId;
     var username = req.user.username;
     console.log(orgUId);
-    Org.enterOrg(orgUId, username, function(err2, res2){
+    var userObj = {
+              username : req.user.username,
+              name: req.user.name
+    };
+    Org.enterOrg(orgUId, userObj, function(err2, res2){
       if(err2) throw err2;
       else
       {
@@ -294,22 +291,29 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
     var alert = req.body.orgAlert;
     
 
+    var userObj = {
+              username : req.user.username,
+              name: req.user.name
+    };
+
     var orgDtl = new Org({
       name:name,
       alert:alert,
       aboutUs: aboutUs,
-      admin: [req.user.username],
-      members: [req.user.username]
+      admin: [userObj],
+      members: [userObj]
     });
-    orgDtl.userId = shortId(orgDtl._id.toString()),
-      
-    console.log(orgDtl);
+
+    orgDtl.userId = shortId(orgDtl._id.toString());
 
     Org.makeOrg(orgDtl, function(err1, res1){
       if(err1) {
-        Org.adminOrgs(req.user.username, function(err2, res2){
+        console.log(res1);
+        Org.adminOrgs(userObj, function(err2, res2){
           if(err2) throw err2;
           else{
+            console.log("Hi wkskskksksks\n");
+            console.log(res2);
             res.render('myorg', {
               title: 'My Organisations',
               orgs: res2,
@@ -326,42 +330,80 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
     res.redirect('/myorg');
 });
 
-router.get('/myorg', ensureAuthentication, function(req, res, next) {
+router.get('/pendingreq/:orguid', ensureAuthentication, function(req, res, next) {
     console.log("loading organisation add page");
+    var orgUId = req.params.orguid;
     var username = req.user.username;
+    console.log("Fetchgin the organisation pending requests");
+    console.log(orgUId);
 
-    User.getUserByUsername(username, function(err2, res2){
-      if(err2) throw err2;
+    Org.findOrgByUID(orgUId, function(err1, res1){
+      if(err1) throw err1;
       else{
-        Org.adminOrgs(username, function(err3, res3){
-          if(err3) throw err3;
+          console.log(res1);
+          Issue.getOpenIssueByOrgUserId(orgUId, function(err2, res2){
+          if(err2) throw err2;
           else{
-            Org.memberOrgs(username, function(err4, res4){
-              if(err4) throw err4;
-              else{
-                Org.pendingOrgs(username, function(err5, res5){
-                  if(err5) throw err5;
-                  else{
-                      res.render('myorg',{
-                        title: 'My Organisations',
-                        adminctrlorgs: res3,
-                        memberctrlorgs: res4,
-                        pendingctrlorgs: res5,
-                        userDetails: res2
-                      })
+              console.log(res2);
+              Issue.getClosedIssueByOrgUserId(orgUId, function(err3, res3){
+                if(err3) throw err3;
+                else{
+                      res.render('indorgpendingreq',{
+                        title: res1.name+" : ",
+                        username: username,
+                        orgDtl : res1,
+                        openIssues: res2,
+                        closedIssues: res3,  
+                      });
                   }
-                })
-              }
-            })    
+            });
           }
         });
       }
-    })
+    });
+});
+
+router.post('/acceptreq/', ensureAuthentication, function(req, res, next){
+
+});
+
+router.post('/declinereq/', ensureAuthentication, function(req, res, next){
+  
+});
+
+router.get('/myorg', ensureAuthentication, function(req, res, next) {
+      console.log("loading organisation add page");
+      var username = req.user.username;
+      var userObj = {
+                username : req.user.username,
+                name: req.user.name
+      };
+  User.getUserByUsername(username, function(err1, res1){
+    if(err1) throw err1;
+    else{
+      Org.memberOrgs(userObj, function(err2, res2){
+        if(err2) throw err2;
+        else{
+                console.log(res2);
+                res.render('myorg',{
+                  title: 'My Organisations',
+                  memberctrlorgs: res2,
+                  userDetails: res1
+                })
+            }
+          })
+        }
+    })    
 });
 
 router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next) {
     console.log("loading organisation add page");
     var username = req.user.username;
+    var userObj = {
+      username : req.user.username,
+      name: req.user.name
+    };
+
       User.getUserByUsername(username, function(err2,res2){
         if(err2) throw err2;
         else
@@ -384,19 +426,20 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
               orgname = req.query.suborgquery;
 
             console.log(orgname);
-            Org.adminOrgs(username, function(err3, res3){
+            Org.adminOrgs(userObj, function(err3, res3){
               if(err3) throw res3;
               else
               {
-                Org.memberOrgs(username, function(err4, res4){
+                Org.memberOrgs(userObj, function(err4, res4){
                   if(err4) throw res4;
                   else{
-                    Org.pendingOrgs(username, function(err5, res5){
+                    Org.pendingOrgs(userObj, function(err5, res5){
                       if(err5) throw err5;
                       else{
                         Org.findInOrg(orgname, function(err6, res6){
                           if(err6) throw err6;
                           else{
+                            console.log(res3);
                             res.render('joinorg',{
                               title: 'Explore Orgs',
                               username: req.user.username,
@@ -423,7 +466,11 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
 router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
   var orgUId = req.params.orgUId;
   var username = req.user.username;
-  Org.exitOrgAll(orgUId, username, function(err1, res1){
+  var userObj = {
+              username : req.user.username,
+              name: req.user.name
+  };
+  Org.exitOrgAll(orgUId, userObj, function(err1, res1){
     if(err1) throw err1;
     else{
         //We have equated the following to 1 becuase of async nature of javascript. 
@@ -465,7 +512,7 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
           else if(res1.admin.length>1)
           {
             console.log("Admin already exists.. We are saved. ");
-            Org.exitOrgMember(orgUId, username, function(err2, res2){
+            Org.exitOrgMember(orgUId, userObj, function(err2, res2){
               if(err2) throw err2;
               else
                 res.redirect('/myorg');
