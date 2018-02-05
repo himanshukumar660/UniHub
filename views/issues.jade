@@ -31,21 +31,6 @@ block issues
                     div(style="text-align:center;float:right")
                       input( value="Post" type="submit" name="issuePost" id="issuePost")        
       
-      li.postIssuePart(style="border-radius:3px")
-        form(method='POST', id="postIssueForm", action="/issues/")   
-          .issuePart1D(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px")
-            div(style="width:33.33%;border:none;border-right:1px solid black;" id="recentBtn" )
-              button(style="font-size:14pt;border:none;background-color:unset" ) Recent
-            
-            div(style="width:33.33%;border-right:1px solid black" id="openBtn")
-              button(style="background-color:unset;font-size:14pt;border:none" )
-                i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;")
-                | Open           
-            
-            div(style="width:33.33%" id="closedBtn")
-              button(style="font-size:14pt;border:none;background-color:unset")
-                i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:black;font-size:14pt;") 
-                | Closed           
         
       if(userOrgs.length!=0)
         if (issues.length!=0)
