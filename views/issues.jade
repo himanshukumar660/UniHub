@@ -30,63 +30,72 @@ block issues
                       span(style="color:black;width:150px") Be Anonymous
                     div(style="text-align:center;float:right")
                       input( value="Post" type="submit" name="issuePost" id="issuePost")        
-      if issues
-        for each in issues  
-          li.issuePart
-            .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-              div(style="float:left;")
-                if (each.anonymity==="on")
-                  span(style='font-weight:900') Anonymous
-                else if(each.anonymity==="off")
-                  a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
-                
-                span(style='color:gray')  
-                  i.glyphicon.glyphicon-play(style="font-size:10pt")  
-                  a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
-                p(id="date") #{each.datePosted}
+      if(userDetails.orgs.length!=0)
+        if issues
+          for each in issues  
+            if(userDetails.orgs.indexOf(each.orgname)>-1)  
+              li.issuePart
+                .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+                  div(style="float:left;")
+                    if (each.anonymity==="on")
+                      span(style='font-weight:900') Anonymous
+                    else if(each.anonymity==="off")
+                      a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
+                    
+                    span(style='color:gray')  
+                      i.glyphicon.glyphicon-play(style="font-size:10pt")  
+                      a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
+                    p(id="date") #{each.datePosted}
 
-              div(style="float:right")
-                if trending
-                  i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
+                  div(style="float:right")
+                    if trending
+                      i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
+                      
+                    if (each.status==="open")
+                      i(class="mega-octicon octicon-issue-opened" )
+                        span  Open
+                    else
+                      i(class="mega-octicon octicon-issue-closed")
+                        span  Closed
                   
-                if (each.status==="open")
-                  i(class="mega-octicon octicon-issue-opened" )
-                    span  Open
-                else
-                  i(class="mega-octicon octicon-issue-closed")
-                    span  Closed
+                .main.issueBlock
+                  #nextBtn
+                    div(style="margin-left:10px")
+                      a#issueTopic(href="/indpost/"+each._id) #{each.issueTopic}
+                    #issueDesc #{each.issueDesc}
               
-            .main.issueBlock
-              #nextBtn
-                div(style="margin-left:10px")
-                  a#issueTopic(href="/indpost/"+each._id) #{each.issueTopic}
-                #issueDesc #{each.issueDesc}
-          
-            div
-              ul(style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
-                li
-                  a(href="#" ) 
-                    span(id="num_of_likes") #{each.supporters.length}
-                    |  Likes
-                li
-                  h(style="margin-right:5px;margin-left:5px") -
-                li
-                  a(href="#")
-                    span(id="num_of_comments") #{each.comments.length}
-                    |  Comments
-             
-              .issueCommentPart
-                button(id="likeBtn")
-                  if (each.supporters.indexOf(username)==-1)
-                    i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                    |  Like
-                  else
-                    i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                    |  Like
+                div
+                  ul(style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
+                    li
+                      a(href="#" ) 
+                        span(id="num_of_likes") #{each.supporters.length}
+                        |  Likes
+                    li
+                      h(style="margin-right:5px;margin-left:5px") -
+                    li
+                      a(href="#")
+                        span(id="num_of_comments") #{each.comments.length}
+                        |  Comments
+                 
+                  .issueCommentPart
+                    button(id="likeBtn")
+                      if (each.supporters.indexOf(username)==-1)
+                        i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                        |  Like
+                      else
+                        i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
+                        |  Like
 
-                button(id="commentBtn")
-                  i(class="mega-octicon octicon-comment" style="font-size:18px")
-                  |  Comment
+                    button(id="commentBtn")
+                      i(class="mega-octicon octicon-comment" style="font-size:18px")
+                      |  Comment
+
+      else if(userDetails.orgs.length==0)
+        div(style="text-align:center!important;padding-top:100px")
+            img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
+            br
+            br
+            h(style="font-weight:500; font-size:25pt; color:grey") Organisation issues appears here
 
   script.
     //- ////////////////////////// Coded from W3schools for options /////////////////////////////////////////////////
