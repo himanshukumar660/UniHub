@@ -1,6 +1,8 @@
 extends home
 block issues
 	.gridbox.gridmain
+	
+
 		ul(id="issues")
 			li.postIssuePart
 				form(method='POST', id="addMyOrg", action="/addmyorg")		
@@ -21,6 +23,7 @@ block issues
 									
 									div(style="width:100%;text-align:center;")
 										input( value="Add" type="submit" name="orgSubmit" id="orgSubmit" style="max-width:71.77px;")
+
 
 			if adminctrlorgs || memberctrlorgs
 				for each in Object.assign({}, adminctrlorgs, memberctrlorgs)

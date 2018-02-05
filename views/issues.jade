@@ -1,6 +1,29 @@
 extends home
 block issues
   .gridbox.gridmain
+    if(error)  
+      .jumbotron.text-center.addIssueFormbackground
+      .addIssueForm
+        div(style="text-align:right!important")
+          i.fa.fa-times-circle-o.closeAddIssueBox(style="font-size:30px;")
+        .card
+        .card-body
+          .form-header(style="color:black;margin:0px;padding:0px;")
+            h3(style="margin-top:10px")
+              span.fa.fa-pencil
+              |  Add issue
+
+          form(method='POST', action="/users/login" style="text-align:left;")
+            input(type='text' id="issueDept" name="issueDept" placeholder="Enter your department..." required style="margin-left:0px !important;margin-right:0px !important")
+            input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required style="margin-left:0px !important;margin-right:0px !important")
+            textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
+            div(style="display:inline-flex;width:auto")
+              input(type="checkbox" id="identity" style="width:15px!important")
+              span(style="color:black;width:150px") Be Anonymous
+            div(style="text-align:center;padding:15px !important")
+              input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Post" type="submit" name="issuePost" id="issuePost")
+
+
     ul(id="issues")
       li.postIssuePart
         form(method='POST', id="postIssueForm", action="/post")   
@@ -66,7 +89,7 @@ block issues
                       a#issueTopic(href="/indpost/"+each._id) #{each.issueTopic}
                     #issueDesc #{each.issueDesc}
               
-                div
+                div(id="feed_details")
                   ul(style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
                     li
                       a(href="#" ) 
@@ -185,14 +208,16 @@ block issues
 
       $('button#likeBtn').click(function(e){
 
-        if( $('i#likeBtnLogo').hasClass("fa-thumbs-up") )
+        if( $(this).find('i#likeBtnLogo').hasClass("fa-thumbs-up") )
           { 
-            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])-1);
+           console.log("Executed 1");
+            $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])-1);
           }
         
-        else if( $('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
+        else if( $(this).find('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
           {
-            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])+1);
+           console.log("Executed 2");
+            $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])+1);
           }
 
           e.preventDefault();
