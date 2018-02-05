@@ -30,10 +30,11 @@ block issues
                       span(style="color:black;width:150px") Be Anonymous
                     div(style="text-align:center;float:right")
                       input( value="Post" type="submit" name="issuePost" id="issuePost")        
-      if(userDetails.orgs.length!=0)
-        if issues
+      
+      if(userOrgs.length!=0)
+        if (issues.length!=0)
           for each in issues  
-            if(userDetails.orgs.indexOf(each.orgname)>-1)  
+            if(userOrgs.indexOf(each.orgname)>-1)  
               li.issuePart
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
                   div(style="float:left;")
@@ -89,9 +90,16 @@ block issues
                     button(id="commentBtn")
                       i(class="mega-octicon octicon-comment" style="font-size:18px")
                       |  Comment
+        else
+          div(style="text-align:center!important;")
+            img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
+            br
+            br
+            h(style="font-weight:500; font-size:25pt; color:grey") Write your issues
+  
 
-      else if(userDetails.orgs.length==0)
-        div(style="text-align:center!important;padding-top:100px")
+      else if(userOrgs.length==0)
+        div(style="text-align:center!important;")
             img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
             br
             br

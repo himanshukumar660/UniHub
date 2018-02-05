@@ -32,6 +32,13 @@ router.get('/', ensureAuthentication, function(req, res, next) {
                   Org.pendingOrgs(username, function(err5, res5){
                     if(err5) throw err5;
                     else{
+                        var userOrgs = [];
+
+                        for(each in res4){
+                          userOrgs.push(res4[each].name);
+                        }
+                        console.log(userOrgs);
+
                         res.render('issues',{
                           title: 'Home',
                           username: req.user.username,
@@ -40,7 +47,8 @@ router.get('/', ensureAuthentication, function(req, res, next) {
                           memberctrlorgs: res4,
                           pendingctrlorgs: res5,
                           userDetails: res2,
-                          issues: res1
+                          issues: res1,
+                          userOrgs: userOrgs,
                         })
                     }
                   }) 
