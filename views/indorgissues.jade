@@ -2,6 +2,20 @@ extends org
 block issues
   .gridbox.gridmain
     ul(id="issues")
+      li.postIssuePart(style="border-radius:3px")
+        .issuePart1D(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px")
+          div(style="width:50%;border-right:1px solid black" id="openBtn")
+            button(style="background-color:unset;font-size:14pt;border:none" )
+              i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;")
+              | #{openIssues.length}
+              | Open           
+          
+          div(style="width:50%" id="closedBtn")
+            button(style="font-size:14pt;border:none;background-color:unset")
+              i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:black;font-size:14pt;") 
+              | #{closedIssues.length}
+              | Closed           
+
       if(orgDtl.members.indexOf(username)>-1)    
         if openIssues
           for each in openIssues  
