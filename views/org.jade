@@ -31,10 +31,10 @@ block content
 							a(#) Member List
 								span(class="badge info" style="margin-left:5px;background-color:#369a21") #{orgDtl.members.length}
 
-						form(method="post" action="/exitOrg/"+orgDtl.userId)
-							div(id="manageOrg" style="padding:10px")
-								button(style="border:none;background-color:unset") 
-									a() Exit Organisation
+						form(method="post" action="/exitOrg/"+orgDtl.userId id="exitForm")
+						div(id="manageOrg" style="padding:10px")
+							button#exit(style="border:none;background-color:unset") 
+								a() Exit Organisation
 
 						
 
@@ -55,9 +55,37 @@ block content
 			.gridbox.gridright(data-spy="affix" )
 				.right(style="background-color:unset!important")
 	
+		.jumbotron.text-center.addOrgExitAlertbackground
+			.addOrgExitAlert(style='margin:200px auto;padding:20px;max-width:400px')
+				div
+					p Sure to exit this organisation ?
+				div(style='display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px')
+					#exitYes(style='width:50%;float:left;border-right:1px solid lightgray')
+						button(style='margin-bottom:0px;border:none;background-color:unset')
+								p(style='margin-bottom:0px')
+									a Yes
+					#exitNo(style='width:50%;float:right')
+						button(style='margin-bottom:0px;border:none;background-color:unset')
+							p(style='margin-bottom:0px') No
 
 
 	script.
+		$('button#exit').click(function(){
+			$('.addOrgExitAlertbackground').toggle();
+		});
+
+		$('#exitYes').click(function(){
+			$('#exitForm').submit();
+		});
+
+		$('#exitNo').click(function(){
+			$('.addOrgExitAlertbackground').toggle();
+		});
+
+		$('.glyphicon.glyphicon-remove#close_error').click(function(){
+			$(this).parents('.alert.alert-danger#err').remove();
+		});
+
 		var issuedate = $('p#date').each(function(){
 			console.log($(this).text());
 			var modDate = $(this).text().substring(0,21);

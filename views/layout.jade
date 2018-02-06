@@ -60,10 +60,10 @@ html(lang='en')
           #myNavbar.collapse.navbar-collapse
             if user
               .col-lg-6
-               form.input-group(id="searchorgform" method='get')
+                form.input-group(id="searchorgform" method='get')
                   input.form-control(type='text', placeholder='Enter organisation UID or name' id="orgquery")
                   span.input-group-btn
-                    button.btn.btn-secondary#searchorg(type='button')
+                    button.btn.btn-secondary#searchorg(type='button' style="height:100%")
                       i(class="fa fa-search")
               .col-lg-6
                 ul.nav.navbar-nav.navbar-right(style="font-size:12pt!important;font-weight:500;")
@@ -96,12 +96,35 @@ html(lang='en')
                       a(href='/settings/')
                         i(class="ionicons ion-help-circled" style="font-size:20pt!important;")
               
-                  li(class=(title == 'Logout' ? 'active' : ''))
-                    a(href='/users/logout')
+                  li(class=(title == 'Logout' ? 'active' : '') style="cursor:pointer")
+                    a(id="logout")
                       i(class="ionicons ion-log-out" style="font-size:20pt!important;")        
     block content
 
+    .jumbotron.text-center.addLogoutAlertbackground(style="top:40px")
+      .addLogoutAlert(style="margin:200px auto;padding:20px;max-width:400px")
+        div
+         p Are You Sure to Logout ?
+        div(style="display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px")
+          div(style="width:50%;float:left;border-right:1px solid lightgray"  id="logoutYes")
+            button(style="margin-bottom:0px;border:none;background-color:unset")
+              a(href="/users/logout")
+                p(style="margin-bottom:0px") Yes
+          div(style="width:50%;float:right" id="logoutNo")
+            button(style="margin-bottom:0px;border:none;background-color:unset" )
+              p(style="margin-bottom:0px") No
+
+
+
+          
     script.
+      $('a#logout').click(function(){
+        $('.addLogoutAlertbackground').toggle();
+      });
+      $('#logoutNo').click(function(){
+          $('.addLogoutAlertbackground').toggle()
+      });
+        
       $('input').attr('autocomplete', 'off'); 
       $('#searchorg').click(function(){
         $('#searchorgform').submit();

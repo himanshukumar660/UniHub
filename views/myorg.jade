@@ -43,9 +43,9 @@ block issues
 								p(id="date") #{each.dateMade}
 
 							div(style="float:right;display:inline-flex" id="postDelBtn")
-									form(method="post" action="/exitOrg/"+each.userId)
-										button(type="submit" id="exit" title="Exit organisation" style="color:#42B72B!important;background-color:unset;border:none;font-size:19pt")
-											i(class="fa fa-sign-out")
+									form(method="post" action="/exitOrg/"+each.userId id="exitForm")
+									button(id="exit" title="Exit organisation" style="color:#42B72B!important;background-color:unset;border:none;font-size:19pt")
+										i(class="fa fa-sign-out")
 
 						.main.issueBlock
 							#prevBtn
@@ -61,11 +61,38 @@ block issues
 								
 								#issueDesc(style="border-top:none") #{each.aboutUs}
 
+	.jumbotron.text-center.addOrgExitAlertbackground
+		.addOrgExitAlert(style='margin:200px auto;padding:20px;max-width:400px')
+			div
+				p Sure to exit this organisation ?
+			div(style='display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px')
+				#exitYes(style='width:50%;float:left;border-right:1px solid lightgray')
+					button(style='margin-bottom:0px;border:none;background-color:unset')
+							p(style='margin-bottom:0px')
+								a Yes
+				#exitNo(style='width:50%;float:right')
+					button(style='margin-bottom:0px;border:none;background-color:unset')
+						p(style='margin-bottom:0px') No
+
+
 	script.
+		$('button#exit').click(function(){
+			$('.addOrgExitAlertbackground').toggle();
+		});
+
+		$('#exitYes').click(function(){
+			$('#exitForm').submit();
+		});
+
+		$('#exitNo').click(function(){
+			$('.addOrgExitAlertbackground').toggle();
+		});
+
 		$('.glyphicon.glyphicon-remove#close_error').click(function(){
 			$(this).parents('.alert.alert-danger#err').remove();
 		});
 
+		
 		$('#expandMakeOrg').click(function(){
 				$('#nextBtn').toggle();
 				$(this).toggleClass('glyphicon-plus glyphicon-minus');
