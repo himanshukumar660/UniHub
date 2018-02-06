@@ -14,8 +14,8 @@ router.get('/', ensureAuthentication, function(req, res, next) {
     console.log(req.user);
     var username = req.user.username;
     var userObj = {
-              username : req.user.username,
-              name: req.user.name
+              name: req.user.name,
+              username : req.user.username
     };
            
     Issue.getIssuesLatest(function(err1, res1){
@@ -270,8 +270,8 @@ router.post('/joinOrg/:orgUId', ensureAuthentication, function(req, res, next) {
     var username = req.user.username;
     console.log(orgUId);
     var userObj = {
-              username : req.user.username,
-              name: req.user.name
+              name: req.user.name,
+              username : req.user.username  
     };
     Org.enterOrg(orgUId, userObj, function(err2, res2){
       if(err2) throw err2;
@@ -292,8 +292,8 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
     
 
     var userObj = {
-              username : req.user.username,
-              name: req.user.name
+              name: req.user.name,
+              username : req.user.username  
     };
 
     var orgDtl = new Org({
@@ -379,10 +379,9 @@ router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
   console.log(adminObj);
 
   var reqUserObj = {
+    name: JSON.stringify(req.body.reqUserName).replace(/"/g,''),
     username: JSON.stringify(req.body.reqUserUsername).replace(/"/g,''),
-    name: JSON.stringify(req.body.reqUserName).replace(/"/g,'')
   };
-
   console.log(reqUserObj);
   console.log("Hi am");
 
@@ -443,9 +442,10 @@ router.post('/declineReq/', ensureAuthentication, function(req, res, next){
 
   console.log(adminObj);
 
+  
   var reqUserObj = {
+    name: JSON.stringify(req.body.reqUserName).replace(/"/g,''),
     username: JSON.stringify(req.body.reqUserUsername).replace(/"/g,''),
-    name: JSON.stringify(req.body.reqUserName).replace(/"/g,'')
   };
 
   console.log(reqUserObj);
@@ -484,8 +484,8 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
       console.log("loading organisation add page");
       var username = req.user.username;
       var userObj = {
-                username : req.user.username,
-                name: req.user.name
+                name: req.user.name,
+                username : req.user.username
       };
   User.getUserByUsername(username, function(err1, res1){
     if(err1) throw err1;
@@ -514,11 +514,10 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
 router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next) {
     console.log("loading organisation add page");
     var username = req.user.username;
-    var userObj = {
-      username : req.user.username,
-      name: req.user.name
-    };
-
+     var userObj = {
+                name: req.user.name,
+                username : req.user.username
+      };
       User.getUserByUsername(username, function(err2,res2){
         if(err2) throw err2;
         else
@@ -526,6 +525,7 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
           var orgname = req.params.orgname;
           if(orgname=="q")
           {
+            //The abouve getUserByUsername is required because to render the search dash in laptop, we are showing the userdetais
             res.render('joinorg', {
               title: 'Explore Orgs',
               username: req.user.username,
@@ -581,63 +581,57 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
 router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
   var orgUId = req.params.orgUId;
   var username = req.user.username;
-  var userObj = {
-              username : req.user.username,
-              name: req.user.name
-  };
-  Org.exitOrgAll(orgUId, userObj, function(err1, res1){
+   var userObj = {
+                name: req.user.name,
+                username : req.user.username
+      };
+  Org.exitOrgAdmin(orgUId, userObj, function(err1, res1){
     if(err1) throw err1;
     else{
         //We have equated the following to 1 becuase of async nature of javascript. 
         // The Fact is that even after calling the exitOrgAdmin , the fucntion sees the previus state result.
         //So we need to make sure that we are not including the results of previous state of the database.
-          if(res1.admin.length==1)
-          {
-            console.log("No one is Admin Now. Do somehting..");
-            if(res1.members.length==1)
-            {   
-              //If no one is present in the organisation, just delete the organisation
-              console.log("No one is member.. Finally delete the organisation");
-              Issue.deleteIssueByOrgUserId(orgUId, function(err2, res2){
-                if(err2) throw err2;
-                else
-                {
-                  console.log('Deletion of issues successfull');
-                  Org.deleteOrgEmptyMember(orgUId, function(err3, res3){
-                    if(err3) throw err3;
-                    else
-                    {
-                      res.redirect('/myorg');
-                    }
-                  })
-                }
-              });
-            }
-            else if(res1.members.length>1)
+          console.log("After Exiting the org Admin");
+          console.log(res1);
+          Org.exitOrgMember(orgUId, userObj, function(err2, res2){
+            console.log("After Exiting the org Member");
+            console.log(res2);
+            if(res2.admin.length==0)
             {
-              console.log("Found one member.. Make him the admin of the organisation");
-              Org.makeUserAdmin(orgUId, res1.members[1], function(err2, res2){
-                if(err2) throw err2;
-                else{
-                  res.redirect('/myorg');
-                }
-              });
+              console.log("No one is Admin Now. Do somehting..");
+              console.log(res1);
+              if(res1.members.length==1)
+              {   
+                //If no one is present in the organisation, just delete the organisation
+                console.log("No one is member.. Finally delete the organisation");
+                Issue.deleteIssueByOrgUserId(orgUId, function(err3, res3){
+                  if(err3) throw err3;
+                  else
+                  {
+                    console.log('Deletion of issues successfull');
+                    Org.deleteOrgEmptyMember(orgUId, function(err4, res4){
+                      if(err4) throw err4;
+                      else
+                      {
+                        res.redirect('/myorg');
+                      }
+                    })
+                  }
+                });
+              }
+              else if(res1.members.length>1)
+              {
+                console.log("Found one member.. Make him the admin of the organisation");
+                console.log(res1.members[1])
+                Org.makeUserAdmin(orgUId, res1.members[1], function(err3, res3){
+                  if(err3) throw err3;
+                  else{
+                    res.redirect('/myorg');
+                  }
+                });
+              }
             }
-          }
-          else if(res1.admin.length>1)
-          {
-            console.log("Admin already exists.. We are saved. ");
-            Org.exitOrgAll(orgUId, userObj, function(err2, res2){
-              if(err2) throw err2;
-              else
-                res.redirect('/myorg');
-            });     
-          }
-          else
-          {
-            //This is the case when the admin equals to zero. In that case we would just delete the organisation.
-            // The matter of fact is that the function never will execute this else condition.
-          }
+          })
         }
       });
 });

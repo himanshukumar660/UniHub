@@ -112,16 +112,14 @@ module.exports.declinePendingReq = function(orgUId, userObj, callback){
 	//Add to the members field
 }
 
-
-module.exports.exitOrgAll = function(orgUId, userObj, callback){
-	//find the Admin from Admin list and remove him
-	// When someone is admin and leaves a gorup, exit him from the member group as well.
-	Org.findOneAndUpdate({userId: orgUId}, {$pull : {admin : userObj, members: userObj}}, callback);
-}
-
 module.exports.exitOrgAdmin = function(orgUId, userObj, callback){
 	//find the member from member list and remove him
 	Org.findOneAndUpdate({userId: orgUId}, {$pull : {admin : userObj}}, callback);
+}
+
+module.exports.exitOrgMember = function(orgUId, userObj, callback){
+	//find the member from member list and remove him
+	Org.findOneAndUpdate({userId: orgUId}, {$pull : {members : userObj}}, callback);
 }
 
 module.exports.deleteOrg = function(orgUId, userObj, callback){
