@@ -15,18 +15,17 @@ block issues
           for each in orgDtl.pendingRequest  
             li.issuePart(style="background-color:unset;border:none")
               .issuePart1D(style="display:inline-block;width:100%;padding-left:13px;background-color:#d4e8ff;box-shadow: 0 2px 4px 0 lightgray,0 2px 10px 0 #d4e8ff!important;")
-                div(style="float:left;")
+                div(style="float:left;" id="reqUserDetails")
                   a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
-                  -var date = new Date(each.DateIntraction)
-                  -function convertDate(date){ return date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();}
-                  p Requested On : #{convertDate(each.DateIntraction)}
 
-                div(style="float:right")  
-                        i(class="mega-octicon octicon-issue-opened" style="margin-right:5px")
-                          span  Accept
+                div(style="float:right;display:inline-flex" id="choiceJoinBtn")  
+                  div(style="cursor:pointer;margin-right:5px" id="choiceAcceptBtn")
+                    i(class="mega-octicon octicon-issue-opened" )
+                      span  Accept
 
-                        i(class="mega-octicon octicon-issue-closed" style="margin-left:5px")
-                          span  Decline
+                  div(style="cursor:pointer;margin-right:5px" id="choiceDeclineBtn")
+                    i(class="mega-octicon octicon-issue-closed")
+                      span  Decline
                   
       else
         div(style="text-align:center!important;padding-top:100px")
@@ -35,29 +34,58 @@ block issues
             br
             h(style="font-weight:500; font-size:25pt; color:grey") Accept Pending requests
   script.
-      $('button#likeBtn').click(function(e){
+    $('#choiceAcceptBtn').click(function(e){
+        e.preventDefault();
+        console.log();
 
-        if( $('i#likeBtnLogo').hasClass("fa-thumbs-up") )
-          { 
-            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])-1);
-          }
+        var reqUserUsername = $(this).parents('.issuePart1D').find('div#reqUserDetails').find('a#linkProfile').attr('href').substring(9);
+        console.log(reqUserUsername);
+        var reqUserName = $(this).parents('.issuePart1D').find('div#reqUserDetails').find('a#linkProfile').text();
+        console.log(reqUserName);
+
+
+        $(this).parents('#choiceJoinBtn').html($('<div style="background-color:#42b72ab8;padding:5px;color:white;border-radius:3px;"><i class="ionicons ion-android-done-all"></i><span> Accepted</span></div>'));
         
-        else if( $('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
-          {
-            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])+1);
-          }
+        var data = {};
+        data.orgDtl = "#{orgDtl.userId}";
+        data.reqUserUsername = reqUserUsername;
+        data.reqUserName = reqUserName;
+        console.log(data);
 
-          e.preventDefault();
-          $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
-          var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
-          console.log(id);
-          
-          id = id.substring(9);
-          console.log(id);
-          
-          var _url = "/likepost/"+id;
-          console.log(_url);
-          $.post({
-          url: _url,
-        });
-      });
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(data),
+        url: '/acceptReq/',
+        contentType: 'application/json',            
+        success: function(data) {
+            console.log('success');
+        }
+      })
+    });
+
+    $('#choiceDeclineBtn').click(function(e){
+      e.preventDefault();
+     
+      var reqUserUsername = $(this).parents('.issuePart1D').find('div#reqUserDetails').find('a#linkProfile').attr('href').substring(9);
+
+      var reqUserName = $(this).parents('.issuePart1D').find('div#reqUserDetails').find('a#linkProfile').text();
+
+     
+      $(this).parents('#choiceJoinBtn').html($('<div style="background-color:#ff0000b8;padding:5px;color:white;border-radius:3px;"><i class="ionicons ion-ios-trash-outline"></i><span> Declined</span></div>'));
+        
+      var data = {};
+      data.orgDtl = "#{orgDtl.userId}";
+      data.reqUserUsername = reqUserUsername;
+      data.reqUserName = reqUserName;
+      console.log(data);
+
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(data),
+        url: '/declineReq/',
+        contentType: 'application/json',            
+        success: function(data) {
+            console.log('success');
+        }
+      })
+    });

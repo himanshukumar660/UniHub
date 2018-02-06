@@ -9,6 +9,15 @@ var db = mongoose.connection;
 
 var Schema = mongoose.Schema;
 
+var memberSchema = new Schema({
+		username : {
+			type: String,
+		},
+		name:{
+			type:String
+		}
+	},{_id : false});
+
 var orgSchema = new Schema({
 	//userID is the organisation user id
 	userId:{
@@ -36,44 +45,11 @@ var orgSchema = new Schema({
 		type: String,
 	},
 	//Listing of all the members
-	members: [{
-		username :{
-			type: String,
-		},
-		name:{
-			type:String
-		},
-		DateIntraction:{
-			type: Date,
-			default: Date.now()
-		}
-	}],
+	members: [memberSchema],
 	//Listing of Admins
-	admin: [{
-		username : {
-			type: String,
-		},
-		name:{
-			type:String
-		},
-		DateIntraction:{
-			type: Date,
-			default: Date.now()
-		}
-	}],
+	admin: [memberSchema],
 	//The users those have requested to join
-	pendingRequest : [{
-		username : {
-			type: String,
-		},
-		name:{
-			type:String
-		},
-		DateIntraction:{
-			type: Date,
-			default: Date.now()
-		}
-	}],
+	pendingRequest : [memberSchema],
 });
 
 orgSchema.index({'$**' : 'text'},{default_language : "none"});
@@ -122,12 +98,20 @@ module.exports.enterOrg = function(orgUId,  userObj, callback){
 
 module.exports.acceptPendingReq = function(orgUId, userObj, callback){
 	//Accepting Pending requests can be only performed by the admins.
-
+	console.log("Entered the orgs database");
 	//Remove from the pending request fields
-	Org.findOneAndUpdate({userId: orgUId}, {$pull: {pendingRequest : userObj}});
+	Org.findOneAndUpdate({userId: orgUId}, {$pull: {pendingRequest : userObj}}).exec(Org.findOneAndUpdate({userId: orgUId}, {$addToSet : {members : userObj}}, callback));
 	//Add to the members field
-	Org.findOneAndUpdate({userId: orgUId}, {$addToSet: {members : userObj}}, callback);
 }
+
+module.exports.declinePendingReq = function(orgUId, userObj, callback){
+	//Accepting Pending requests can be only performed by the admins.
+	console.log("Entered the orgs database");
+	//Remove from the pending request fields
+	Org.findOneAndUpdate({userId: orgUId}, {$pull: {pendingRequest : userObj}}, callback);
+	//Add to the members field
+}
+
 
 module.exports.exitOrgAll = function(orgUId, userObj, callback){
 	//find the Admin from Admin list and remove him

@@ -31,6 +31,8 @@ block issues
 						.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
 							div(style="float:left;")
 								span(style='color:gray')
+									if(search(username, adminctrlorgs))
+										i(class="fa fa-shield" style="color:red" title="Admin")
 									a(href="/orgs/"+each.userId id="linkProfile" style='font-weight:900;')  #{each.name}
 
 								span(style='color:gray')

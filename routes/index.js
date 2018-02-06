@@ -307,26 +307,13 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
     orgDtl.userId = shortId(orgDtl._id.toString());
 
     Org.makeOrg(orgDtl, function(err1, res1){
-      if(err1) {
-        console.log(res1);
-        Org.adminOrgs(userObj, function(err2, res2){
-          if(err2) throw err2;
-          else{
-            console.log("Hi wkskskksksks\n");
-            console.log(res2);
-            res.render('myorg', {
-              title: 'My Organisations',
-              orgs: res2,
-              errorDup: err1
-            });
-          }
-        });
-      }
+      if(err1) throw err1;
       else{
+        console.log("Hi wkskskksksks\n 3");
         console.log(res1);
       }
     });
-
+    console.log("Hi wkskskksksks\n 4");
     res.redirect('/myorg');
 });
 
@@ -363,12 +350,134 @@ router.get('/pendingreq/:orguid', ensureAuthentication, function(req, res, next)
     });
 });
 
-router.post('/acceptreq/', ensureAuthentication, function(req, res, next){
+router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
+  console.log("came here");
+  console.log(typeof(req.body));
+  console.log(typeof(req.body.orgDtl));
+  console.log(req.body.reqUserName);
+  console.log(req.body.reqUserUsername);
 
+  var reqUserUsername = toString(req.body.reqUserUsername);
+  var reqUsername = toString(req.body.reqUserName);
+  var orgUserId = req.body.orgDtl;
+
+  
+  var username = req.user.username;
+  var name = req.user.name;
+
+  console.log(username);
+  console.log(name);
+  console.log(orgUserId);
+  console.log(reqUsername);
+  console.log(reqUserUsername);
+
+  var adminObj = {
+    username: username,
+    name: name
+  };
+
+  console.log(adminObj);
+
+  var reqUserObj = {
+    username: JSON.stringify(req.body.reqUserUsername).replace(/"/g,''),
+    name: JSON.stringify(req.body.reqUserName).replace(/"/g,'')
+  };
+
+  console.log(reqUserObj);
+  console.log("Hi am");
+
+  console.log(orgUserId);
+  console.log(reqUsername);
+  console.log(reqUserUsername);
+  console.log(adminObj);
+  console.log(reqUserObj);
+
+  Org.chkAdmin(orgUserId, adminObj, function(err1, res1){
+    if(err1) throw err1;
+    else{
+      console.log("Going to enter next function");
+      console.log(res1);
+      if(res1.length==0){
+        console.log("Not Enough rights to perform this operation");
+      }
+      else{
+        console.log("Performing accepting");
+          Org.acceptPendingReq(orgUserId, reqUserObj, function(err2, res2){
+            if(err2) throw err2;
+            else{
+              console.log(res2);
+              console.log("Member added to member Group");    
+           }
+        });
+      }
+        console.log("Admin Check Successfull");
+      }
+  });
 });
 
-router.post('/declinereq/', ensureAuthentication, function(req, res, next){
+router.post('/declineReq/', ensureAuthentication, function(req, res, next){
+  console.log("came here");
+  console.log(typeof(req.body));
+  console.log(typeof(req.body.orgDtl));
+  console.log(req.body.reqUserName);
+  console.log(req.body.reqUserUsername);
+
+  var reqUserUsername = toString(req.body.reqUserUsername);
+  var reqUsername = toString(req.body.reqUserName);
+  var orgUserId = req.body.orgDtl;
+
   
+  var username = req.user.username;
+  var name = req.user.name;
+
+  console.log(username);
+  console.log(name);
+  console.log(orgUserId);
+  console.log(reqUsername);
+  console.log(reqUserUsername);
+
+  var adminObj = {
+    username: username,
+    name: name
+  };
+
+  console.log(adminObj);
+
+  var reqUserObj = {
+    username: JSON.stringify(req.body.reqUserUsername).replace(/"/g,''),
+    name: JSON.stringify(req.body.reqUserName).replace(/"/g,'')
+  };
+
+  console.log(reqUserObj);
+  console.log("Hi am");
+
+  console.log(orgUserId);
+  console.log(reqUsername);
+  console.log(reqUserUsername);
+  console.log(adminObj);
+  console.log(reqUserObj);
+
+  Org.chkAdmin(orgUserId, adminObj, function(err1, res1){
+    if(err1) throw err1;
+    else{
+      console.log("Going to enter next function");
+      console.log(res1);
+      if(res1.length==0){
+        console.log("Not Enough rights to perform this operation");
+      }
+      else{
+        console.log("Performing accepting");
+          Org.declinePendingReq(orgUserId, reqUserObj, function(err2, res2){
+            if(err2) throw err2;
+            else{
+              console.log(res2);
+              console.log("Member request is declined");    
+           }
+        });
+      }
+        console.log("Admin Check Successfull");
+      }
+  });
 });
 
 router.get('/myorg', ensureAuthentication, function(req, res, next) {
@@ -384,16 +493,22 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
       Org.memberOrgs(userObj, function(err2, res2){
         if(err2) throw err2;
         else{
-                console.log(res2);
-                res.render('myorg',{
-                  title: 'My Organisations',
-                  memberctrlorgs: res2,
-                  userDetails: res1
-                })
+          Org.adminOrgs(userObj, function(err3, res3){
+            if(err3) throw err3;
+            else{
+              console.log(res2);
+              res.render('myorg',{
+                title: 'My Organisations',
+                adminctrlorgs: res3,
+                memberctrlorgs: res2,
+                userDetails: res1
+              })
             }
           })
         }
-    })    
+      })
+    }
+  })    
 });
 
 router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next) {
@@ -512,7 +627,7 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
           else if(res1.admin.length>1)
           {
             console.log("Admin already exists.. We are saved. ");
-            Org.exitOrgMember(orgUId, userObj, function(err2, res2){
+            Org.exitOrgAll(orgUId, userObj, function(err2, res2){
               if(err2) throw err2;
               else
                 res.redirect('/myorg');
