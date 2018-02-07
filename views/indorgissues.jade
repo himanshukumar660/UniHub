@@ -5,7 +5,7 @@ block issues
       li.postIssuePart(style="border-radius:3px")
         .issuePart1D(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px")
           
-          div(style="width:33.33%;border-right:1px solid lightgray" id="openBtn")
+          div(style="width:33.33%;border-right:1px solid lightgray" id="recentBtn")
             button(style="background-color:unset;font-size:14pt;border:none" )
               | Recent           
           
@@ -59,7 +59,7 @@ block issues
                   li
                     a(href="#" ) 
                       span(id="num_of_likes") #{each.supporters.length}
-                      |  Likes
+                      |  Supports
                   li
                     h(style="margin-right:5px;margin-left:5px") -
                   li
@@ -71,10 +71,9 @@ block issues
                   button(id="likeBtn")
                     if (each.supporters.indexOf(username)==-1)
                       i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                      |  Like
                     else
                       i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                      |  Like
+                    |  I Support
 
                   button(id="commentBtn")
                     i(class="mega-octicon octicon-comment" style="font-size:18px")

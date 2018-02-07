@@ -19,17 +19,16 @@ block content
 									h3 #{closedIssues.length}
 
 					if(search(username, orgDtl.admin))
-						div(id="manageOrg" style="padding:10px;")
-							i(class="fa fa-shield" style="font-size:50pt;color:red")
+						i(class="fa fa-shield" style="font-size:50pt;color:red")
 
 						div(id="manageOrg" style="padding:10px;")
 							a(href="/pendingreq/"+orgDtl.userId) Pending Request
-								span(class="badge info" style="margin-left:5px;background-color:red") #{orgDtl.pendingRequest.length}
+								span(class="badge info" id="badge_pendingReq" style="margin-left:5px;background-color:red") #{orgDtl.pendingRequest.length}
 
 					if(search(username, orgDtl.members))
 						div(id="manageOrg" style="padding:10px")
-							a(#) Member List
-								span(class="badge info" style="margin-left:5px;background-color:#369a21") #{orgDtl.members.length}
+							a(href="/members/"+orgDtl.userId) Member List
+								span(class="badge info" id="badge_members" style="margin-left:5px;background-color:#369a21") #{orgDtl.members.length}
 
 						form(method="post" action="/exitOrg/"+orgDtl.userId id="exitForm")
 						div(id="manageOrg" style="padding:10px")
@@ -37,9 +36,8 @@ block content
 								a() Exit Organisation
 
 						
-
 					else if(search(username, orgDtl.pendingRequest))
-							div(style="color:#42b72a;")
+							div(style="color:#42b72a;margin-bottom:15px!important;padding:10px")
 								i(class="ionicons ion-android-checkmark-circle" style="font-size:15pt;")
 								h  Pending Approval
 					else

@@ -1,8 +1,6 @@
 extends home
 block issues
 	.gridbox.gridmain
-	
-
 		ul(id="issues")
 			li.postIssuePart
 				form(method='POST', id="addMyOrg", action="/addmyorg")		
@@ -23,43 +21,104 @@ block issues
 									
 									div(style="width:100%;text-align:center;")
 										input( value="Add" type="submit" name="orgSubmit" id="orgSubmit" style="max-width:71.77px;")
+			li.postIssuePart(style="border-radius:3px")
+				.issuePart1D(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px;padding:0px")
+					div(style="width:50.0%;border-right:1px solid lightgray;padding:10px;border-bottom:2px solid #42b72a" id="member")
+						button(style="background-color:unset;font-size:14pt;border:none" )
+							| Membership           
+					div(style="width:50.0%;padding:10px" id="pending")
+						button(style="background-color:unset;font-size:14pt;border:none")
+							i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;")
+							| #{pendingctrlorgs.length}
+							| Pending           
+
+			#pendingctrlorgs(style="display:none;cursor:pointer")
+				if (pendingctrlorgs.length!=0)
+						for each in pendingctrlorgs
+							li.issuePart
+								.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+									div(style="float:left;")
+										span(style='color:gray')
+											if(search(username, adminctrlorgs))
+												i(class="fa fa-shield" style="color:red" title="Admin")
+											a(href="/orgs/"+each.userId id="linkProfile" style='font-weight:900;')  #{each.name}
+
+										span(style='color:gray')
+											br
+											span(style="color:black;font-weight:500") UID : 
+											| #{each.userId}
+										
+										p(id="date") #{each.dateMade}
+
+									div(style="float:right;display:inline-flex" id="postDelBtn")
+											form(method="post" action="/cancelpendingreq/"+each.userId id="cancelPendingReqForm")
+											button(id="cancelPendingReqBtn" title="Exit organisation" style="background-color:red;color:white;padding:10px;border-radius:3px;font-size:10pt")
+												p(style="margin-bottom:0px") Cancel Request
+
+								.main.issueBlock
+									#prevBtn
+										#likeBtns
+											i(class="mega-octicon octicon-organization" style="color:gray")  
+											p(style="font-weight:200!important;color:black") #{each.members.length}
+									#nextBtn
+										if each.alert
+											.alert.alert-danger#err(style="padding:10px;margin-bottom:0px;")
+												p(style="text-transform: capitalize;") 
+													b Please Note 
+													| : #{each.alert}
+										
+										#issueDesc(style="border-top:none") #{each.aboutUs}
+				else if(pendingctrlorgs.length==0)
+					div(style="text-align:center!important;")
+						img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
+						br
+						br
+						h(style="font-weight:500; font-size:25pt; color:grey") Your requests'r not pending
 
 
-			if memberctrlorgs
-				for each in memberctrlorgs
-					li.issuePart
-						.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-							div(style="float:left;")
-								span(style='color:gray')
-									if(search(username, adminctrlorgs))
-										i(class="fa fa-shield" style="color:red" title="Admin")
-									a(href="/orgs/"+each.userId id="linkProfile" style='font-weight:900;')  #{each.name}
+			#memberctrlorgs(style="display:block;cursor:pointer")
+				if (memberctrlorgs.length!=0)
+					for each in memberctrlorgs
+						li.issuePart
+							.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+								div(style="float:left;")
+									span(style='color:gray')
+										if(search(username, adminctrlorgs))
+											i(class="fa fa-shield" style="color:red" title="Admin")
+										a(href="/orgs/"+each.userId id="linkProfile" style='font-weight:900;')  #{each.name}
 
-								span(style='color:gray')
-									br
-									span(style="color:black;font-weight:500") UID : 
-									| #{each.userId}
-								
-								p(id="date") #{each.dateMade}
+									span(style='color:gray')
+										br
+										span(style="color:black;font-weight:500") UID : 
+										| #{each.userId}
+									
+									p(id="date") #{each.dateMade}
 
-							div(style="float:right;display:inline-flex" id="postDelBtn")
-									form(method="post" action="/exitOrg/"+each.userId id="exitForm")
-									button(id="exit" title="Exit organisation" style="color:#42B72B!important;background-color:unset;border:none;font-size:19pt")
-										i(class="fa fa-sign-out")
+								div(style="float:right;display:inline-flex" id="postDelBtn")
+										form(method="post" action="/exitOrg/"+each.userId id="exitForm")
+										button(id="exit" title="Exit organisation" style="color:#42B72B!important;background-color:unset;border:none;font-size:19pt")
+											i(class="fa fa-sign-out")
 
-						.main.issueBlock
-							#prevBtn
-								#likeBtns
-									i(class="mega-octicon octicon-organization" style="color:gray")  
-									p(style="font-weight:200!important;color:black") #{each.members.length}
-							#nextBtn
-								if each.alert
-									.alert.alert-danger#err(style="padding:10px;margin-bottom:0px;")
-										p(style="text-transform: capitalize;") 
-											b Please Note 
-											| : #{each.alert}
-								
-								#issueDesc(style="border-top:none") #{each.aboutUs}
+							.main.issueBlock
+								#prevBtn
+									#likeBtns
+										i(class="mega-octicon octicon-organization" style="color:gray")  
+										p(style="font-weight:200!important;color:black") #{each.members.length}
+								#nextBtn
+									if each.alert
+										.alert.alert-danger#err(style="padding:10px;margin-bottom:0px;")
+											p(style="text-transform: capitalize;") 
+												b Please Note 
+												| : #{each.alert}
+									
+									#issueDesc(style="border-top:none") #{each.aboutUs}
+
+				else
+					div(style="text-align:center!important;")
+						img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
+						br
+						br
+						h(style="font-weight:500; font-size:25pt; color:grey") Not a member of any org yet
 
 	.jumbotron.text-center.addOrgExitAlertbackground
 		.addOrgExitAlert(style='margin:200px auto;padding:20px;max-width:400px')
@@ -68,16 +127,51 @@ block issues
 			div(style='display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px')
 				#exitYes(style='width:50%;float:left;border-right:1px solid lightgray')
 					button(style='margin-bottom:0px;border:none;background-color:unset')
-							p(style='margin-bottom:0px')
-								a Yes
+							p(style='margin-bottom:0px;color:red') Yes
 				#exitNo(style='width:50%;float:right')
 					button(style='margin-bottom:0px;border:none;background-color:unset')
-						p(style='margin-bottom:0px') No
-
+						p(style='margin-bottom:0px;color:#337ab7') No
+	
+	.jumbotron.text-center.addCancelPendingReqBackground
+		.addCancelPendingReq(style='margin:200px auto;padding:20px;max-width:400px')
+			div
+				p Cancel request to join this org ?
+			div(style='display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px')
+				#cancelYes(style='width:50%;float:left;border-right:1px solid lightgray')
+					button(style='margin-bottom:0px;border:none;background-color:unset')
+							p(style='margin-bottom:0px;color:red') Yes
+				#cancelNo(style='width:50%;float:right')
+					button(style='margin-bottom:0px;border:none;background-color:unset')
+						p(style='margin-bottom:0px;color:#337ab7') No
 
 	script.
+		$('#member').click(function(){
+			$('#memberctrlorgs').show();
+			$('#member').css({
+				'border-bottom' : '2px solid #42b72a'
+			});
+			$('#pendingctrlorgs').hide();
+			$('#pending').css({
+				'border-bottom' : '2px solid white'
+			});
+		});
+		$('#pending').click(function(){
+			$('#memberctrlorgs').hide();
+			$('#member').css({
+				'border-bottom' : '2px solid white'
+			});
+			$('#pendingctrlorgs').show();
+			$('#pending').css({
+				'border-bottom' : '2px solid #42B72B'
+			});
+		});
+
 		$('button#exit').click(function(){
 			$('.addOrgExitAlertbackground').toggle();
+		});
+
+		$('button#cancelPendingReqBtn').click(function(){
+			$('.addCancelPendingReqBackground').toggle();
 		});
 
 		$('#exitYes').click(function(){
@@ -88,13 +182,21 @@ block issues
 			$('.addOrgExitAlertbackground').toggle();
 		});
 
+		$('#cancelYes').click(function(){
+			$('#cancelPendingReqForm').submit();
+		});
+
+		$('#cancelNo').click(function(){
+			$('.addCancelPendingReqBackground').toggle();
+		});
+
 		$('.glyphicon.glyphicon-remove#close_error').click(function(){
 			$(this).parents('.alert.alert-danger#err').remove();
 		});
 
 		
 		$('#expandMakeOrg').click(function(){
-				$('#nextBtn').toggle();
+				$('#nextBtn').slideToggle();
 				$(this).toggleClass('glyphicon-plus glyphicon-minus');
 			})
 

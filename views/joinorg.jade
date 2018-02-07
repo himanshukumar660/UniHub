@@ -23,17 +23,19 @@ block joinorg
 									
 									p(id="date") #{each.dateMade}
 
-								div(style="float:right" id="postDelBtn")
-									
-
-
-
+								div(style="float:right;display:inline-flex" id="postDelBtn")
 									if (search(username, each.members))
+										div(style="float:left")
 										if (search(username, each.admin))
 											input#join(value="Admin" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
 							
 										else
 											input#join(value="Member" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
+
+										div(style="float:right;display:inline-flex" id="postDelBtn")
+											form(method="post" action="/exitOrg/"+each.userId id="exitForm")
+											button(id="exit" title="Exit organisation" style="color:#42B72B!important;background-color:unset;border:none;font-size:19pt")
+												i(class="fa fa-sign-out")
 
 									else if(search(username, each.pendingRequest))
 										div(style="color:#42b72a;")
@@ -70,8 +72,33 @@ block joinorg
 						br
 						br
 						h(style="font-weight:500; font-size:25pt; color:grey") No results found 
+	.jumbotron.text-center.addOrgExitAlertbackground
+		.addOrgExitAlert(style='margin:200px auto;padding:20px;max-width:400px')
+			div
+				p Sure to exit this organisation ?
+			div(style='display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px')
+				#exitYes(style='width:50%;float:left;border-right:1px solid lightgray')
+					button(style='margin-bottom:0px;border:none;background-color:unset')
+							p(style='margin-bottom:0px')
+								a Yes
+				#exitNo(style='width:50%;float:right')
+					button(style='margin-bottom:0px;border:none;background-color:unset')
+						p(style='margin-bottom:0px') No
+
 	script.
-		
+		$('button#exit').click(function(){
+			$('.addOrgExitAlertbackground').toggle();
+		});
+
+		$('#exitYes').click(function(){
+			$('#exitForm').submit();
+		});
+
+		$('#exitNo').click(function(){
+			$('.addOrgExitAlertbackground').toggle();
+		});
+
+
 		$('input#join').click(function(){
 			this.toggle(function(){
 				this.attr('value', 'Joined');

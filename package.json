@@ -28,6 +28,8 @@
     "serve-favicon": "~2.4.5",
     "randomstring": "*",
     "short-mongo-id": "*",
-    "request": "*"
-  }
+    "request": "*",
+    "socket.io": "*"
+  },
+  "author": "Himanshu Kumar"
 }

@@ -9,12 +9,14 @@ block content
 							span.avatar 
 								img(src='/uploads/'+'#{userDetails.avatarPath}', alt='', width='125px' height="125px" style="border-radius:50%;padding:10px;margin-bottom:10px!important")
 							div
-								a(href="/profile" style="font-size:1.2em;") #{userDetails.name} 
+								a(href="/profile" style="font-size:1.2em;") #{userDetails.name}
+								p @ #{userDetails.username} 
 						
 							blockquote(style="color:#369a21;padding:10px;font-size:12pt;margin-top:15px!important") #{userDetails.moto}
 
 						div(id="myissues" style="padding:10px")
-							a(href="/myorg") My Issues
+							i(class="fa fa-pencil")
+							a(href="/")  Issues
 
 						div(id="manageOrg" style="margin-bottom:15px!important;padding:10px")
 							a(href="/myorg") Manage Organisations

@@ -105,15 +105,10 @@ html(lang='en')
          p Are You Sure to Logout ?
         div(style="display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px")
           div(style="width:50%;float:left;border-right:1px solid lightgray"  id="logoutYes")
-            button(style="margin-bottom:0px;border:none;background-color:unset")
-              a(href="/users/logout")
-                p(style="margin-bottom:0px") Yes
+            a(href="/users/logout")
+              p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:red") Yes
           div(style="width:50%;float:right" id="logoutNo")
-            button(style="margin-bottom:0px;border:none;background-color:unset" )
-              p(style="margin-bottom:0px") No
-
-
-
+              p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:#337ab7;cursor:pointer") No
           
     script.
       $('a#logout').click(function(){

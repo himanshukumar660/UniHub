@@ -1,61 +1,38 @@
 extends home
 block issues
   .gridbox.gridmain
-    if(error)  
-      .jumbotron.text-center.addIssueFormbackground
-      .addIssueForm
-        div(style="text-align:right!important")
-          i.fa.fa-times-circle-o.closeAddIssueBox(style="font-size:30px;")
-        .card
-        .card-body
-          .form-header(style="color:black;margin:0px;padding:0px;")
-            h3(style="margin-top:10px")
-              span.fa.fa-pencil
-              |  Add issue
-
-          form(method='POST', action="/users/login" style="text-align:left;")
-            input(type='text' id="issueDept" name="issueDept" placeholder="Enter your department..." required style="margin-left:0px !important;margin-right:0px !important")
-            input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required style="margin-left:0px !important;margin-right:0px !important")
-            textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
-            div(style="display:inline-flex;width:auto")
-              input(type="checkbox" id="identity" style="width:15px!important")
-              span(style="color:black;width:150px") Be Anonymous
-            div(style="text-align:center;padding:15px !important")
-              input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Post" type="submit" name="issuePost" id="issuePost")
-
-
     ul(id="issues")
-      li.postIssuePart
-        form(method='POST', id="postIssueForm", action="/post")   
-          .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-            div(style="float:left")
-              h(style="font-weight:500;font-size:14pt") Add issue
-            div(style="float:right")
-              i(class="glyphicon glyphicon-plus" id="expandPost")           
-          
-          .main.issueBlock
-            #nextBtn(style="display:none;transition: all .1s ease-in;")
-              div(style="margin-left:5px")
-                  .custom-select(style='width:100%;')
-                    select(name="orguserId")
-                      option Select organisation
-                       for ech in memberctrlorgs
-                        option(value=ech.userId) #{ech.name}
-
-                  
-                  input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required)
-                  
-                  textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
-                  
-                  div(style="display:inline-block;width:100%")
-                    div(style="display:inline-flex;float:left")
-                      input(type="checkbox" id="anonymity" name="anonymity")
-                      span(style="color:black;width:150px") Be Anonymous
-                    div(style="text-align:center;float:right")
-                      input( value="Post" type="submit" name="issuePost" id="issuePost")        
-      
-        
       if(userOrgs.length!=0)
+        li.postIssuePart
+          form(method='POST', id="postIssueForm", action="/post")   
+            .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+              div(style="float:left")
+                h(style="font-weight:500;font-size:14pt") Add issue
+              div(style="float:right")
+                i(class="glyphicon glyphicon-plus" id="expandPost")           
+            
+            .main.issueBlock
+              #nextBtn(style="display:none;transition: all .1s ease-in;")
+                div(style="margin-left:5px")
+                    .custom-select(style='width:100%;')
+                      select(name="orguserId" required)
+                        option(value="not_selected") Select organisation
+                         for ech in memberctrlorgs
+                          option(value=ech.userId) #{ech.name}
+
+                    
+                    input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required)
+                    
+                    textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
+                    
+                    div(style="display:inline-block;width:100%")
+                      div(style="display:inline-flex;float:left")
+                        input(type="checkbox" id="anonymity" name="anonymity")
+                        span(style="color:black;width:150px") Be Anonymous
+                      div(style="text-align:center;float:right")
+                        input( value="Post" type="submit" name="issuePost" id="issuePost")        
+        
+          
         if (issues.length!=0)
           for each in issues  
             if(userOrgs.indexOf(each.orgname)>-1)  
@@ -94,7 +71,7 @@ block issues
                     li
                       a(href="#" ) 
                         span(id="num_of_likes") #{each.supporters.length}
-                        |  Likes
+                        |  Supports
                     li
                       h(style="margin-right:5px;margin-left:5px") -
                     li
@@ -106,10 +83,10 @@ block issues
                     button(id="likeBtn")
                       if (each.supporters.indexOf(username)==-1)
                         i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                        |  Like
+                        |  I Support
                       else
                         i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                        |  Like
+                        |  I Support
 
                     button(id="commentBtn")
                       i(class="mega-octicon octicon-comment" style="font-size:18px")
@@ -119,7 +96,7 @@ block issues
             img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
             br
             br
-            h(style="font-weight:500; font-size:25pt; color:grey") Write your issues
+            h(style="font-weight:500; font-size:25pt; color:grey") Add your issues
   
 
       else if(userOrgs.length==0)
@@ -127,7 +104,7 @@ block issues
             img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
             br
             br
-            h(style="font-weight:500; font-size:25pt; color:grey") Organisation issues appears here
+            h(style="font-weight:500; font-size:25pt; color:grey") Add/Enter any organisation to get started
 
   script.
     //- ////////////////////////// Coded from W3schools for options /////////////////////////////////////////////////
