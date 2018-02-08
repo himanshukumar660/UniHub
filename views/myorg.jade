@@ -21,6 +21,7 @@ block issues
 									
 									div(style="width:100%;text-align:center;")
 										input( value="Add" type="submit" name="orgSubmit" id="orgSubmit" style="max-width:71.77px;")
+			
 			li.postIssuePart(style="border-radius:3px")
 				.issuePart1D(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px;padding:0px")
 
@@ -98,7 +99,7 @@ block issues
 
 								div(style="float:right;display:inline-flex" id="postDelBtn")
 										form(method="post" action="/exitOrg/"+each.userId id="exitForm")
-										input#exit(value="Exit" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px")
+										input#exit(value="Exit" type="submit" style="background-color:red;color:white!important;font-weight:500;border:1px solid red;border-radius:3px;min-width:70px")
 		
 							.main.issueBlock
 								#prevBtn
@@ -199,5 +200,6 @@ block issues
 		$('#expandMakeOrg').click(function(){
 				$('#nextBtn').slideToggle();
 				$(this).toggleClass('glyphicon-plus glyphicon-minus');
-			})
+			});
+		
 

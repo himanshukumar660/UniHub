@@ -456,6 +456,27 @@ router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
   });
 });
 
+router.post('/cancelPendingReq/:orgUserId', ensureAuthentication, function(req, res, next){
+  var username = req.user.username;
+  var name = req.user.name;
+  var orgUserId = req.params.orgUserId;
+
+  var userObj = {
+    username: username,
+    name: name
+  };
+  
+  Org.declinePendingReq(orgUserId, userObj, function(err1, res1){
+    if(err1) throw err1;
+    else{
+      console.log(res1);
+      console.log("Your request is cancelled");
+      res.send('Successfull');
+    }
+  });
+});
+
+
 router.post('/declineReq/', ensureAuthentication, function(req, res, next){
   console.log("came here");
   console.log(typeof(req.body));
