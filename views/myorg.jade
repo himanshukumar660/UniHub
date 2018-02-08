@@ -23,10 +23,12 @@ block issues
 										input( value="Add" type="submit" name="orgSubmit" id="orgSubmit" style="max-width:71.77px;")
 			li.postIssuePart(style="border-radius:3px")
 				.issuePart1D(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px;padding:0px")
-					div(style="width:50.0%;border-right:1px solid lightgray;padding:10px;border-bottom:2px solid #42b72a" id="member")
+
+					div(style="width:50.0%;border-right:1px solid lightgray;padding:10px;border-bottom:2px solid #42b72a;cursor:pointer" id="member")
 						button(style="background-color:unset;font-size:14pt;border:none" )
 							| Membership           
-					div(style="width:50.0%;padding:10px" id="pending")
+					
+					div(style="width:50.0%;padding:10px;cursor:pointer" id="pending")
 						button(style="background-color:unset;font-size:14pt;border:none")
 							i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;")
 							| #{pendingctrlorgs.length}
@@ -73,7 +75,7 @@ block issues
 						img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
 						br
 						br
-						h(style="font-weight:500; font-size:25pt; color:grey") Your requests'r not pending
+						h(style="font-weight:500; font-size:25pt; color:grey") Your requests are not pending
 
 
 			#memberctrlorgs(style="display:block;cursor:pointer")
