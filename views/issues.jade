@@ -177,6 +177,26 @@ block issues
       document.addEventListener("click", closeAllSelect);
 
       //- //////////////////////////////////////////////////////////////////////////////////////////
+      $('.main.issueBlock #issueDesc').each(function(){
+        var descLength = $(this).text().length;
+        var descTrimmed1 = (descLength>250)?("<span id='descTrimmed1'>"+$(this).text().substring(0,250)+"</span><span id='3dots'>...</span>"):($(this).text());
+        var descTrimmed2 = "<span id='descTrimmed2' style='display:none'>"+$(this).text().substring(250)+"</span>"+"<span id='readMore' style='color:#337ab7;cursor:pointer'>Read More</span>";
+        
+        $(this).html(descTrimmed1+descTrimmed2);
+        //- (descTrimmed.length>200)?($(this).append('<span id="readMore" style="color:#337ab7;cursor:pointer">Read More</span>')):1;
+        //- $('#readMore')
+      });
+
+      $('#issueDesc #readMore').click(function(){
+        if($(this).text()=="Read More")
+          {
+            $(this).text('Read Less');
+          }
+        else
+          $(this).text('Read More');
+        $(this).siblings('#descTrimmed2').toggle();
+        $(this).siblings('#3dots').toggle();
+      });
 
       $('#expandPost').click(function(){
         $('#nextBtn').toggle();
