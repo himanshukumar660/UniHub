@@ -53,8 +53,8 @@ block issues
 										p(id="date") #{each.dateMade}
 
 									div(style="float:right;display:inline-flex" id="postDelBtn")
-											form(method="post" action="/cancelpendingreq/"+each.userId id="cancelPendingReqForm")
-											button(id="cancelPendingReqBtn" title="Exit organisation" style="background-color:red;color:white;padding:10px;border-radius:3px;font-size:10pt")
+											form(method="post" action="/cancelPendingReq/"+each.userId id="cancelPendingReqForm")
+											button(id="cancelPendingReqBtn" title="Cancel Pending Request" style="background-color:red;color:white;padding:10px;border-radius:3px;font-size:10pt")
 												p(style="margin-bottom:0px") Cancel Request
 
 								.main.issueBlock
@@ -98,9 +98,8 @@ block issues
 
 								div(style="float:right;display:inline-flex" id="postDelBtn")
 										form(method="post" action="/exitOrg/"+each.userId id="exitForm")
-										button(id="exit" title="Exit organisation" style="color:#42B72B!important;background-color:unset;border:none;font-size:19pt")
-											i(class="fa fa-sign-out")
-
+										input#exit(value="Exit" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px")
+		
 							.main.issueBlock
 								#prevBtn
 									#likeBtns
@@ -168,7 +167,7 @@ block issues
 			});
 		});
 
-		$('button#exit').click(function(){
+		$('input#exit').click(function(){
 			$('.addOrgExitAlertbackground').toggle();
 		});
 

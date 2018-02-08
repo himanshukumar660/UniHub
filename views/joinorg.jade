@@ -25,22 +25,14 @@ block joinorg
 
 								div(style="float:right;display:inline-flex" id="postDelBtn")
 									if (search(username, each.members))
-										div(style="float:left")
-										if (search(username, each.admin))
-											input#join(value="Admin" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
-							
-										else
-											input#join(value="Member" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px;opacity:0.7" disabled)
-
 										div(style="float:right;display:inline-flex" id="postDelBtn")
 											form(method="post" action="/exitOrg/"+each.userId id="exitForm")
-											button(id="exit" title="Exit organisation" style="color:#42B72B!important;background-color:unset;border:none;font-size:19pt")
-												i(class="fa fa-sign-out")
+											input#exit(value="Exit" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px")
 
 									else if(search(username, each.pendingRequest))
-										div(style="color:#42b72a;")
-											i(class="ionicons ion-android-checkmark-circle" style="font-size:15pt")
-											h  Pending
+										form(method="post" action="/cancelPendingReq/"+each.userId id="cancelPendingReqForm")
+										button(id="cancelPendingReqBtn" title="Cancel Pending Request" style="background-color:red;color:white;padding:10px;border-radius:3px;font-size:10pt")
+											p(style="margin-bottom:0px") Cancel Request
 
 									else
 										form(method="post" action="/joinOrg/"+each.userId)
@@ -52,12 +44,22 @@ block joinorg
 										i(class="mega-octicon octicon-organization" style="color:gray")  
 										p(style="font-weight:200!important;color:black") #{each.members.length}
 								#nextBtn
-									if each.alert
+									if(each.alert)
 										.alert.alert-danger#err(style="padding:10px;margin-bottom:0px;")
 											p(style="text-transform: capitalize;") 
 												b Please Note 
 												| : #{each.alert}
 									#issueDesc(style="border-top:none") #{each.aboutUs}
+									
+									if(search(username, each.admin))
+										.alert.alert-success#err(style="padding:10px;margin-bottom:0px;")
+											p(style="text-transform: capitalize;") You'r the admin of this org
+									else if(search(username, each.pendingRequest))
+										.alert.alert-success#err(style="padding:10px;margin-bottom:0px;")
+											p(style="text-transform: capitalize;") Your request to join is pending
+									else if(search(username, each.members))
+										.alert.alert-success#err(style="padding:10px;margin-bottom:0px;")
+											p(style="text-transform: capitalize;") You'r member of this org
 
 				else if(initial=="true")
 					div(style="text-align:center!important;padding-top:100px")
@@ -72,6 +74,19 @@ block joinorg
 						br
 						br
 						h(style="font-weight:500; font-size:25pt; color:grey") No results found 
+	
+	.jumbotron.text-center.addCancelPendingReqBackground
+		.addCancelPendingReq(style='margin:200px auto;padding:20px;max-width:400px')
+			div
+				p Cancel request to join this org ?
+			div(style='display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px')
+				#cancelYes(style='width:50%;float:left;border-right:1px solid lightgray')
+					button(style='margin-bottom:0px;border:none;background-color:unset')
+							p(style='margin-bottom:0px;color:red') Yes
+				#cancelNo(style='width:50%;float:right')
+					button(style='margin-bottom:0px;border:none;background-color:unset')
+						p(style='margin-bottom:0px;color:#337ab7') No
+
 	.jumbotron.text-center.addOrgExitAlertbackground
 		.addOrgExitAlert(style='margin:200px auto;padding:20px;max-width:400px')
 			div
@@ -79,14 +94,13 @@ block joinorg
 			div(style='display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px')
 				#exitYes(style='width:50%;float:left;border-right:1px solid lightgray')
 					button(style='margin-bottom:0px;border:none;background-color:unset')
-							p(style='margin-bottom:0px')
-								a Yes
+							p(style='margin-bottom:0px;color:red') Yes
 				#exitNo(style='width:50%;float:right')
 					button(style='margin-bottom:0px;border:none;background-color:unset')
-						p(style='margin-bottom:0px') No
+						p(style='margin-bottom:0px;color:#337ab7') No
 
 	script.
-		$('button#exit').click(function(){
+		$('input#exit').click(function(){
 			$('.addOrgExitAlertbackground').toggle();
 		});
 
@@ -96,6 +110,18 @@ block joinorg
 
 		$('#exitNo').click(function(){
 			$('.addOrgExitAlertbackground').toggle();
+		});
+
+		$('button#cancelPendingReqBtn').click(function(){
+			$('.addCancelPendingReqBackground').toggle();
+		});
+
+		$('#cancelYes').click(function(){
+			$('#cancelPendingReqForm').submit();
+		});
+
+		$('#cancelNo').click(function(){
+			$('.addCancelPendingReqBackground').toggle();
 		});
 
 

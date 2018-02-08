@@ -26,20 +26,22 @@ block content
 								span(class="badge info" id="badge_pendingReq" style="margin-left:5px;background-color:red") #{orgDtl.pendingRequest.length}
 
 					if(search(username, orgDtl.members))
-						div(id="manageOrg" style="padding:10px")
+						div(id="manageOrg" style="padding:10px;margin-bottom:10px")
 							a(href="/members/"+orgDtl.userId) Member List
 								span(class="badge info" id="badge_members" style="margin-left:5px;background-color:#369a21") #{orgDtl.members.length}
 
 						form(method="post" action="/exitOrg/"+orgDtl.userId id="exitForm")
-						div(id="manageOrg" style="padding:10px")
-							button#exit(style="border:none;background-color:unset") 
-								a() Exit Organisation
+						button#exit(title="Exit Organisation" style="background-color:red;color:white;padding:10px;border-radius:3px;font-size:10pt;margin-bottom:15px!important")
+							p(style="margin-bottom:0px") Exit Organisation
 
-						
+
 					else if(search(username, orgDtl.pendingRequest))
-							div(style="color:#42b72a;margin-bottom:15px!important;padding:10px")
+							div(style="color:#42b72a;padding:10px")
 								i(class="ionicons ion-android-checkmark-circle" style="font-size:15pt;")
 								h  Pending Approval
+							form(method="post" action="/cancelPendingReq/"+each.userId id="cancelPendingReqForm" )
+							button(id="cancelPendingReqBtn" title="Cancel Pending Request" style="background-color:red;color:white;padding:10px;border-radius:3px;font-size:10pt;margin-bottom:15px!important")
+								p(style="margin-bottom:0px") Cancel Request
 					else
 						form(method="post" action="/joinOrg/"+orgDtl.userId)
 							div(id="joinOrg" style="margin-bottom:15px!important;padding:10px")
@@ -52,7 +54,19 @@ block content
 		
 			.gridbox.gridright(data-spy="affix" )
 				.right(style="background-color:unset!important")
-	
+		
+		.jumbotron.text-center.addCancelPendingReqBackground
+			.addCancelPendingReq(style='margin:200px auto;padding:20px;max-width:400px')
+				div
+					p Cancel request to join this org ?
+				div(style='display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px')
+					#cancelYes(style='width:50%;float:left;border-right:1px solid lightgray')
+						button(style='margin-bottom:0px;border:none;background-color:unset')
+								p(style='margin-bottom:0px;color:red') Yes
+					#cancelNo(style='width:50%;float:right')
+						button(style='margin-bottom:0px;border:none;background-color:unset')
+							p(style='margin-bottom:0px;color:#337ab7') No
+
 		.jumbotron.text-center.addOrgExitAlertbackground
 			.addOrgExitAlert(style='margin:200px auto;padding:20px;max-width:400px')
 				div
@@ -60,14 +74,26 @@ block content
 				div(style='display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px')
 					#exitYes(style='width:50%;float:left;border-right:1px solid lightgray')
 						button(style='margin-bottom:0px;border:none;background-color:unset')
-								p(style='margin-bottom:0px')
-									a Yes
+								p(style='margin-bottom:0px;color:red') Yes
 					#exitNo(style='width:50%;float:right')
 						button(style='margin-bottom:0px;border:none;background-color:unset')
-							p(style='margin-bottom:0px') No
+							p(style='margin-bottom:0px;color:#337ab7') No
 
 
 	script.
+		$('button#cancelPendingReqBtn').click(function(){
+			$('.addCancelPendingReqBackground').toggle();
+		});
+
+		$('#cancelYes').click(function(){
+			$('#cancelPendingReqForm').submit();
+		});
+
+		$('#cancelNo').click(function(){
+			$('.addCancelPendingReqBackground').toggle();
+		});
+
+
 		$('button#exit').click(function(){
 			$('.addOrgExitAlertbackground').toggle();
 		});
