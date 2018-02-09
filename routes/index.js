@@ -33,7 +33,7 @@ router.get('/', ensureAuthentication, function(req, res, next) {
             var userOrgs = [];
 
             for(each in res4){
-              userOrgs.push(res4[each].name);
+              userOrgs.push(res4[each].userId);
             }
             console.log(userOrgs);
 
@@ -617,6 +617,7 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
                   console.log(res2);
                   res.render('myorg',{
                     title: 'My Organisations',
+                    username: req.user.username,
                     pendingctrlorgs: res4,
                     adminctrlorgs: res3,
                     memberctrlorgs: res2,

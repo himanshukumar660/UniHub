@@ -9,6 +9,14 @@ var db = mongoose.connection;
 
 var Schema = mongoose.Schema;
 
+var orgDetailScehma = new Schema({
+	orgname: {
+		type : String
+	},
+	orguid: {
+		type : String
+	}
+});
 var userSchema = new Schema({
 	name: {
 		type: String
@@ -31,7 +39,8 @@ var userSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	orgs: [String],
+
+	//orgs: [orgDetailScehma],
 	
 	avatarPath: {
 		type: String,

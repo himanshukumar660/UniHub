@@ -586,7 +586,7 @@ li#iRD{
   border-right: 1px solid #d4dbe0;
 }
 
-#commentBtn, #likeBtn{
+#commentBtn, #likeBtn, #updateEditBtn, #cancelEditBtn{
   color:#000000;
   font-weight:500;
   font-size:12pt;
@@ -597,7 +597,7 @@ li#iRD{
   transition: background-color 0.2s ease-in-out;
 }
 
-#commentBtn:hover, #likeBtn:hover{
+#commentBtn:hover, #likeBtn:hover, #updateEditBtn:hover, #cancelEditBtn:hover{
   background-color: #e8f3ff;
 }
 .issueCommentPart{
@@ -660,10 +660,7 @@ a#linkProfile:hover {
 #issueDept, #orgName, #orgUserId{
   border:1px solid #e8f3ff;
 }
-#issueDescriptionTopic, #orgAlert{
- border:1px solid #e8f3ff; 
-}
-#issueDescriptionText, #orgAbout{
+#issueDescriptionTopic, #orgAlert, #issueDescriptionText, #orgAbout{
  border:1px solid #e8f3ff; 
 }
 

@@ -42,8 +42,6 @@ block issues
 								.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
 									div(style="float:left;")
 										span(style='color:gray')
-											if(search(username, adminctrlorgs))
-												i(class="fa fa-shield" style="color:red" title="Admin")
 											a(href="/orgs/"+each.userId id="linkProfile" style='font-weight:900;')  #{each.name}
 
 										span(style='color:gray')
@@ -71,6 +69,9 @@ block issues
 													| : #{each.alert}
 										
 										#issueDesc(style="border-top:none") #{each.aboutUs}
+
+										
+					
 				else if(pendingctrlorgs.length==0)
 					div(style="text-align:center!important;")
 						img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
@@ -86,7 +87,7 @@ block issues
 							.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
 								div(style="float:left;")
 									span(style='color:gray')
-										if(search(username, adminctrlorgs))
+										if(search(username, each.admin))
 											i(class="fa fa-shield" style="color:red" title="Admin")
 										a(href="/orgs/"+each.userId id="linkProfile" style='font-weight:900;')  #{each.name}
 
@@ -115,6 +116,7 @@ block issues
 									
 									#issueDesc(style="border-top:none") #{each.aboutUs}
 
+									
 				else
 					div(style="text-align:center!important;")
 						img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
