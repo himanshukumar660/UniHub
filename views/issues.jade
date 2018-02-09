@@ -9,10 +9,10 @@ block issues
               div(style="float:left")
                 h(style="font-weight:500;font-size:14pt") Add issue
               div(style="float:right")
-                i(class="glyphicon glyphicon-plus" id="expandPost")           
+                i(class="glyphicon glyphicon-minus" id="expandPost")           
             
             .main.issueBlock
-              #nextBtn(style="display:none;transition: all .1s ease-in;")
+              #nextBtn(style="transition: all .1s ease-in;")
                 div(style="margin-left:5px")
                     .custom-select(style='width:100%;')
                       select(name="orguserId" required)
@@ -21,7 +21,7 @@ block issues
                           option(value=ech.userId) #{ech.name}
 
                     
-                    input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic..." required)
+                    input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic" required maxlength="60")
                     
                     textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
                     
@@ -36,18 +36,21 @@ block issues
         if (issues.length!=0)
           for each in issues  
             if(userOrgs.indexOf(each.orgname)>-1)  
-              li.issuePart
+              li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-                  div(style="float:left;")
-                    if (each.anonymity==="on")
-                      span(style='font-weight:900') Anonymous
-                    else if(each.anonymity==="off")
-                      a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
-                    
-                    span(style='color:gray')  
-                      i.glyphicon.glyphicon-play(style="font-size:10pt")  
-                      a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
-                    p(id="date") #{each.datePosted}
+                  div(style="float:left;display:inline-flex")
+                    div(style="float:left")
+                      img(src='/uploads/'+'#{userDetails.avatarPath}', alt='' style="border-radius:10%;width:40px;margin-right:10px")
+                    div(style="float:right")
+                      if (each.anonymity==="on")
+                        span(style='font-weight:900') Anonymous
+                      else if(each.anonymity==="off")
+                        a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
+                      
+                      span(style='color:gray')  
+                        i.glyphicon.glyphicon-play(style="font-size:10pt")  
+                        a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
+                      p(id="date") #{each.datePosted}
 
                   div(style="float:right")
                     if trending
@@ -59,6 +62,26 @@ block issues
                     else
                       i(class="mega-octicon octicon-issue-closed")
                         span  Closed
+
+                    if(each.username===username)
+                      .dropdown(style="width:auto!important;float:right")
+                        button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
+                          i(class="ionicons ion-android-more-vertical" style="font-weight:500;font-size:20pt;margin-left:5px")
+                        
+                        ul.dropdown-menu(role='menu', aria-labelledby='menu1' style="font-size:12pt;font-weight:500;")
+                          li(role='presentation')
+                            if each.status==="open"
+                              a(role='menuitem', tabindex='-1', href='#') Close Issue
+                            else
+                              a(role='menuitem', tabindex='-1', href='#') Open Issue
+                          li(role='presentation')
+                            a(role='menuitem', tabindex='-1', href='#') Delete Issue
+                          li(role='presentation')
+                            a(role='menuitem', tabindex='-1', href='#') Edit
+                          li(role='presentation')
+                            if each.anonymity=="on"
+                              a(role='menuitem', tabindex='-1', href='#') Report
+
                   
                 .main.issueBlock
                   #nextBtn
@@ -80,7 +103,7 @@ block issues
                         |  Comments
                  
                   .issueCommentPart
-                    button(id="likeBtn")
+                    button(id="likeBtn" )
                       if (each.supporters.indexOf(username)==-1)
                         i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
                         |  I Support
@@ -88,7 +111,7 @@ block issues
                         i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
                         |  I Support
 
-                    button(id="commentBtn")
+                    button(id="commentBtn" )
                       i(class="mega-octicon octicon-comment" style="font-size:18px")
                       |  Comment
         else
@@ -180,7 +203,7 @@ block issues
       $('.main.issueBlock #issueDesc').each(function(){
         var descLength = $(this).text().length;
         var descTrimmed1 = (descLength>250)?("<span id='descTrimmed1'>"+$(this).text().substring(0,250)+"</span><span id='3dots'>...</span>"):($(this).text());
-        var descTrimmed2 = "<span id='descTrimmed2' style='display:none'>"+$(this).text().substring(250)+"</span>"+"<span id='readMore' style='color:#337ab7;cursor:pointer'>Read More</span>";
+        var descTrimmed2 = (descLength>250)?("<span id='descTrimmed2' style='display:none'>"+$(this).text().substring(250)+"</span>"+"<span id='readMore' style='color:#337ab7;cursor:pointer'>Read More</span>"):"";
         
         $(this).html(descTrimmed1+descTrimmed2);
         //- (descTrimmed.length>200)?($(this).append('<span id="readMore" style="color:#337ab7;cursor:pointer">Read More</span>')):1;
@@ -199,7 +222,7 @@ block issues
       });
 
       $('#expandPost').click(function(){
-        $('#nextBtn').toggle();
+        $('#nextBtn').slideToggle();
         $(this).toggleClass('glyphicon-plus glyphicon-minus');
       })
 

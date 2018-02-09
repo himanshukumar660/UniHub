@@ -250,7 +250,7 @@ li.issuePart{
 }
 
 .gridmain {
-    width: 62.57854251012145748987854251012%;
+    width: 60.57854251012145748987854251012%;
     overflow: scroll;
     float: left;
     position: absolute;
@@ -314,11 +314,11 @@ li.issuePart{
       font-size: 12pt;
     }
     button#likeBtn{
-      background-color: unset;
+      background-color: white;
     }
 
     button#commentBtn{
-      background-color: unset;
+      background-color: white;
     }
 
     #issueDesc{
@@ -799,3 +799,7 @@ html {
     background: transparent;
 }
 
+.dropdown-menu{
+    left: -620% !important;
+    top:120%!important;
+}

@@ -21,7 +21,7 @@ block issues
         div#openIssues(style="display:block;")
           if openIssues.length!=0
             for each in openIssues  
-              li.issuePart
+              li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
                   div(style="float:left;")
                     if (each.anonymity==="on")
@@ -44,7 +44,7 @@ block issues
                     else
                       i(class="mega-octicon octicon-issue-closed")
                         span  Closed
-                  
+                    
                 .main.issueBlock
                   #nextBtn
                     div(style="margin-left:10px")
@@ -85,7 +85,7 @@ block issues
         div#closedIssues(style="display:none")
           if closedIssues.length!=0
             for each in closedIssues  
-              li.issuePart
+              li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
                   div(style="float:left;")
                     if (each.anonymity==="on")
