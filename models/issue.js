@@ -103,6 +103,22 @@ module.exports.getIssueById = function(id, callback){
 	Issue.findOne(query, callback);
 };
 
+module.exports.delIssueById = function(id, username, callback){
+	var query = {
+		_id : id,
+		username: username
+	}
+	Issue.remove(query, callback);
+};
+
+module.exports.openIssueById = function(id, username, callback){
+	Issue.findOneAndUpdate({$and: [{_id:id}, {username:username}]},{status: "open"}, callback);
+};
+
+module.exports.closeIssueById = function(id, username, callback){
+	Issue.findOneAndUpdate({$and: [{_id:id}, {username:username}]},{status: "closed"}, callback);
+};
+
 module.exports.chkWholeIssuesForLiked = function(username, callback){
 	Issue.find({ supporters : username}, callback);
 }

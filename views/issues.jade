@@ -55,12 +55,12 @@ block issues
                   div(style="float:right")
                     if trending
                       i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
-                      
+                    
                     if (each.status==="open")
-                      i(class="mega-octicon octicon-issue-opened" )
+                      i(class="mega-octicon octicon-issue-opened issueStatus" )
                         span  Open
                     else
-                      i(class="mega-octicon octicon-issue-closed")
+                      i(class="mega-octicon octicon-issue-closed issueStatus")
                         span  Closed
 
                     if(each.username===username)
@@ -71,16 +71,19 @@ block issues
                         ul.dropdown-menu(role='menu', aria-labelledby='menu1' style="font-size:12pt;font-weight:500;")
                           li(role='presentation')
                             if each.status==="open"
-                              a(role='menuitem', tabindex='-1', href='#') Close Issue
+                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
+                              button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Open Issue
                             else
-                              a(role='menuitem', tabindex='-1', href='#') Open Issue
+                              button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
+                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Open Issue
                           li(role='presentation')
-                            a(role='menuitem', tabindex='-1', href='#') Delete Issue
+                            button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit Issue
+                          li(role="presentation" class="divider")
                           li(role='presentation')
-                            a(role='menuitem', tabindex='-1', href='#') Edit
+                            button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOption") Delete Issue
                           li(role='presentation')
                             if each.anonymity=="on"
-                              a(role='menuitem', tabindex='-1', href='#') Report
+                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="reportIssueOption") Report Spam
 
                   
                 .main.issueBlock
@@ -217,14 +220,72 @@ block issues
           }
         else
           $(this).text('Read More');
-        $(this).siblings('#descTrimmed2').toggle();
-        $(this).siblings('#3dots').toggle();
+          $(this).siblings('#descTrimmed2').toggle();
+          $(this).siblings('#3dots').toggle();
       });
 
       $('#expandPost').click(function(){
         $('#nextBtn').slideToggle();
         $(this).toggleClass('glyphicon-plus glyphicon-minus');
       })
+
+      $('button#delIssueOption').click(function(){
+        var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href').substring(9);
+        var delPost = $(this);
+
+        $.ajax({
+          method : 'POST',
+          url : 'delpost/'+id,
+          success: function(data){
+            if(data=="1")
+              {
+                delPost.closest('li.issuePart').remove();
+              }
+          }
+        });
+      });
+
+      $('button#openIssueOption').click(function(){
+        var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href').substring(9);
+        var thisPost = $(this);
+
+        $.ajax({
+          method : 'POST',
+          url : 'openIssue/'+id,
+          success: function(data){
+            if(data=="1")
+              {
+                thisPost.parents('li.issuePart').find('i.issueStatus').removeClass("octicon-issue-closed");
+                thisPost.parents('li.issuePart').find('i.issueStatus').addClass("octicon-issue-opened");
+                thisPost.parents('li.issuePart').find('i.issueStatus span').text(" Open");
+                thisPost.siblings('#closeIssueOption').show();
+                thisPost.hide();
+              }
+          }
+        });
+      });
+
+      $('button#closeIssueOption').click(function(){
+        console.log("Close Issue Option Select");
+        var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href').substring(9);
+        var thisPost = $(this);
+
+        $.ajax({
+          method : 'POST',
+          url : 'closeIssue/'+id,
+          success: function(data){
+            if(data=="1")
+              {
+                
+                thisPost.parents('li.issuePart').find('i.issueStatus').removeClass("octicon-issue-opened");
+                thisPost.parents('li.issuePart').find('i.issueStatus').addClass("octicon-issue-closed");
+                thisPost.parents('li.issuePart').find('i.issueStatus span').text(" Closed");
+                thisPost.siblings('#openIssueOption').show();
+                thisPost.hide(); 
+              }
+          }
+        });
+      });
 
       $('button#likeBtn').click(function(e){
 

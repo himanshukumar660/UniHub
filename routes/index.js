@@ -130,6 +130,55 @@ router.get('/indpost/:id', ensureAuthentication, function(req,res, next){
   })
 });
 
+router.post('/delpost/:id', ensureAuthentication, function(req,res, next){
+  console.log("Fteching the post details");
+  var postId = req.params.id;
+  console.log(postId);
+  var username = req.user.username;
+  console.log(username);
+  
+  Issue.delIssueById(postId, username, function(err, result){
+    if(err) throw err
+    else
+    {
+      console.log(result);
+      res.send("1");
+    }
+  })
+});
+
+router.post('/openIssue/:id', ensureAuthentication, function(req,res, next){
+  var postId = req.params.id;
+  var username = req.user.username;
+  
+  Issue.openIssueById(postId, username, function(err, result){
+    if(err) throw err
+    else
+    {
+      console.log(result);
+      res.send("1");
+    }
+  })
+});
+
+router.post('/closeIssue/:id', ensureAuthentication, function(req,res, next){
+  console.log("Fteching the post details");
+  var postId = req.params.id;
+  console.log(postId);
+  var username = req.user.username;
+  console.log(username);
+  
+  Issue.closeIssueById(postId, username, function(err, result){
+    if(err) throw err
+    else
+    {
+      console.log(result);
+      res.send("1");
+    }
+  })
+});
+
+
 //Trending Posts : Fetch the issues with maximum number of Likes
 router.get('/trending', ensureAuthentication, function(req, res, next) {
   console.log("Welcome to trending page!");
