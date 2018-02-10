@@ -116,16 +116,6 @@ a:hover {
     opacity: 0.8;
 }
 
-.form-control {
- background-color: #3f4448 !important; 
- border: none !important;
- color: white !important;
- font-weight: 500;
-}
-.form-control::placeholder{
-  color: red;
-}
-
 @media (min-width: 992px)
 {
   #myNavbar{

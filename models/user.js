@@ -61,11 +61,13 @@ module.exports.createUser = function(newUser, callback) {
     });
 }
 
-module.exports.getUserByUsername = function(username, callback) {
-	var query = {
-		username: username
-	}
-	User.findOne(query, callback);
+module.exports.getUserByUsername = function(type, credential, callback) {
+	console.log(type);
+	
+	if(type=="email")
+		User.findOne({email:credential}, callback);
+	else if(type=="username")
+		User.findOne({username:credential}, callback);
 }
 
 module.exports.comparePassword = function(candidatePassowrd, hash, callback){

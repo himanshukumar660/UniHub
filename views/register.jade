@@ -1,7 +1,7 @@
 extends layout
 
 block content	
-	.card
+	.card(style="margin:50px auto")
 		.form-header
 			h3
 				span.glyphicon.glyphicon-user
@@ -15,21 +15,84 @@ block content
 					.glyphicon.glyphicon-remove(style="float:right" id="close_error")
 		
 					
-		form(method='POST', action="/users/register" style="margin-top:70px !important" enctype="multipart/form-data")
+		form(method='POST', action="/users/register" enctype="multipart/form-data")
 			input(id='name', type='text', placeholder="Your Name", name="name", value= '#{name}')
 			textarea#moto(rows='2', placeholder='What is your principle ?', name="moto" style="width:100%!important") #{moto}
-			input(id='username', type='text', name='username', placeholder='Choose Username' value='#{username}')     
-			input(id='email', type='text', name='email', placeholder='Email Address' value='#{email}')
+			.form-group.has-success.has-feedback#usernameFeild(style="margin-bottom:0px")
+				input(id='username', type='text', name='username', placeholder='Choose Username' value='#{username}')     
+				span.glyphicon.glyphicon-ok.form-control-feedback(style="margin-top:8px;color:#42b72a;display:none")
+				span.glyphicon.glyphicon-remove.form-control-feedback(style="margin-top:8px;color:red;display:none")
+			.form-group.has-success.has-feedback#emailFeild(style="margin-bottom:0px")
+				input(id='email', type='text', name='email', placeholder='Email Address' value='#{email}')
+				span.glyphicon.glyphicon-ok.form-control-feedback(style="margin-top:8px;color:#42b72a;display:none")
+				span.glyphicon.glyphicon-remove.form-control-feedback(style="margin-top:8px;color:red;display:none")
 			input(id='password', type='password', name='password', placeholder='Password')
 			input(id='cnfpassword', type='password', name='cnfpassword', placeholder='Confirm Password')
 			input(id='avatar', type='file', name='avatar', placeholder='Upload Profile Pic')
 			div(style="text-align:center;padding:15px!important")
 				input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Register" type="submit" name="submit" id="submit")
 		script.
-			document.getElementById('close_error').addEventListener("click", function(){
-				//console.log("Ho");
-				$('#err').remove();
-			})
+
+			$('#username').on('input', function(){
+				var usernameFeild = $(this);
+				setTimeout(function(){
+					$.ajax({
+						method : "POST",
+						url: '/users/check_creadentials/',
+						data: {
+							type: "username",
+							credential: $(usernameFeild).val()
+						},
+						success: function(data){
+							if(data=="Empty"){
+								$(usernameFeild).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').hide();
+								$(usernameFeild).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').hide();
+							}
+							else if(data=="Found"){
+								$(usernameFeild).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').hide();
+								$(usernameFeild).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').show();
+							}
+							else{
+								$(usernameFeild).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').show();
+								$(usernameFeild).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').hide();
+							}
+						}
+					})
+				}, 500);
+			});
+
+				$('#email').on('input', function(){
+					var emailFeild = $(this);
+					setTimeout(function(){
+					var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+					if (testEmail.test($(emailFeild).val())){
+						$.ajax({
+							method : "POST",
+							url: '/users/check_creadentials/',
+							data: {
+								type: "email",
+								credential: $(emailFeild).val()
+							},
+							success: function(data){
+								if(data=="Empty"){
+									$(emailFeild).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').hide();
+									$(emailFeild).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').hide();
+								}
+								else if(data=="Found"){
+									$(emailFeild).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').hide();
+									$(emailFeild).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').show();
+								}
+								else{
+									$(emailFeild).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').show();
+									$(emailFeild).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').hide();
+								}
+							}
+						})
+					}
+				else{
+					console.log("Not Valid");
+				}},500)
+			});
 
 		if errors
 			for error,i in errors 
@@ -41,4 +104,10 @@ block content
 					css.type = "text/css";
 					css.innerHTML = "input[id='#{error.param}']::placeholder { color: red;opacity: 0.7;}";
 					document.body.appendChild(css);
-	
+
+
+					$('#close_error').click(function(){
+						//console.log("Ho");
+						$('#err').remove();
+					});
+

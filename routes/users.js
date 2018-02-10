@@ -80,6 +80,24 @@ router.get('/register' ,ensureNotAuthenticated, function(req, res, next) {
 	// 	console.log();
 	// }
 });
+
+router.post('/check_creadentials/', function(req, res, next){
+	var credential = req.body.credential;
+	var type = req.body.type;
+	
+	User.getUserByUsername(type, credential, function(err1, res1){
+		if(err1) throw err1;
+		else{
+			if(credential == "")
+				res.send('Empty');
+			else if(res1==null)
+				res.send('Not Found');
+			else
+				res.send('Found');
+		}
+	});
+});
+
 router.post('/register', upload.single('avatar'), function(req, res, next) {
 	console.log(req.body);
 	var name = req.body.name;
