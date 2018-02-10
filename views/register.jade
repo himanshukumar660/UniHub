@@ -90,6 +90,8 @@ block content
 						})
 					}
 				else{
+					$(emailFeild).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').hide();
+					$(emailFeild).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').hide();
 					console.log("Not Valid");
 				}},500)
 			});

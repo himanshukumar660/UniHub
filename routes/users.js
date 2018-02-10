@@ -81,11 +81,11 @@ router.get('/register' ,ensureNotAuthenticated, function(req, res, next) {
 	// }
 });
 
-router.post('/check_creadentials/', function(req, res, next){
+router.post('/check_creadentials/', ensureNotAuthenticated, function(req, res, next){
 	var credential = req.body.credential;
 	var type = req.body.type;
-	
-	User.getUserByUsername(type, credential, function(err1, res1){
+
+	User.getCredentialDetails(type, credential, function(err1, res1){
 		if(err1) throw err1;
 		else{
 			if(credential == "")
