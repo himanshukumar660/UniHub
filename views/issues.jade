@@ -53,9 +53,6 @@ block issues
                       p(id="date") #{each.datePosted}
                   
                   div(style="float:right")
-                    if trending
-                      i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
-                    
                     if (each.status==="open")
                       i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
                         span  Open
@@ -89,6 +86,8 @@ block issues
                 .main.issueBlock
                   #nextBtn
                     div#issueTopic(style="margin-left:10px;width:auto!important")
+                      if each.supporters.length>=(0.5*memberctrlorgs[0].members.length)
+                        i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
                       a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
                     div#issueDesc #{each.issueDesc}
               
@@ -289,7 +288,7 @@ block issues
           'padding':'0px',
           'padding-left': '10px'
         });
-        issueDesc.html('<textarea style="width:100%;min-height:150px" id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required>'+issueDesc.text()+'</textarea>');
+        issueDesc.html('<textarea style="width:100%;min-height:100px" id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required>'+issueDesc.text()+'</textarea>');
         $(feed_details).find('ul#feed_numbers').hide();
         
         $(feed_details).find('.issueCommentPart').html('\

@@ -280,6 +280,13 @@ li.issuePart{
     display: none;
   }
 
+  #orgquery{
+    background-color: #3f4448;
+    border-color: #3f4448;
+    color: white!important;
+    font-weight:500; 
+  }
+
 @media only screen and (max-width: 500px) {
 
   #nav_search_form{
