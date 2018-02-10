@@ -1,106 +1,307 @@
-extends layout
-block content
-	.gridcontainer
-		.gridwrapper
-			.gridbox.gridmenu(data-spy="affix" )		
-				#wrapper(class="pro_info")
-					section#main
-						div
-							span.avatar 
-								img(src='/uploads/'+'#{profile.avatar}', alt='', width='50%' style="border-radius:50%")
-							h1 #{profile.name} 
-							p
-								blockquote(style="color:#369a21;")
-									| #{profile.moto}
-							ul(style="list-style:none;text-align:center;padding:0px")
-									p #{profile.claps}
-									img(src='/images/clap.png' style="border-radius:50%;border:1px solid #474b4f" width='60px')
-								
-								li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
-									| Issues Raised
-									h3 #{profile.issues}
+extends home
+block issues
+  .gridbox.gridmain
+    ul(id="issues")  
+        if (issues.length!=0)
+          for each in issues  
+            li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
+              .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+                div(style="float:left;display:inline-flex")
+                  div(style="float:right")
+                    if (each.anonymity==="on")
+                      span(style='font-weight:900') Anonymous
+                    else if(each.anonymity==="off")
+                      a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
+                    
+                    span(style='color:gray')  
+                      i.glyphicon.glyphicon-play(style="font-size:10pt")  
+                      a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
 
-								li(style="display: inline-block;padding: 0 10px")
-									| Supporters
-									h3 #{profile.supporters}
+                    if each.edited
+                     p(id="date") Edited on #{each.datePosted}
+                    else
+                     p(id="date") Posted on #{each.datePosted}
+                       
+                
+                div(style="float:right")
+                  if (each.status==="open")
+                    i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
+                      span  Open
+                  else
+                    i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
+                      span  Closed
+
+                  if each.username==username
+                    .dropdown(style="width:auto!important;float:right")
+                      button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
+                        i(class="ionicons ion-android-more-vertical" style="font-weight:500;font-size:20pt;margin-left:5px")
+                      
+                      ul.dropdown-menu(role='menu', aria-labelledby='menu1' style="font-size:12pt;font-weight:500;")
+                        li(role='presentation' style="padding:5px;margin-bottom:2px")
+                          if each.status==="open"
+                            button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
+                            button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
+                          else
+                            button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
+                            button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
+                        li(role='presentation' style="padding:5px;margin-bottom:2px")
+                          button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit Issue
+                        li(role="presentation" class="divider")
+                        li(role='presentation' style="padding:5px;margin-bottom:2px")
+                          button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOption") Delete Issue
+                
+              .main.issueBlock
+                #nextBtn
+                  div#issueTopic(style="margin-left:10px;width:auto!important")
+                    a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
+                  div#issueDesc #{each.issueDesc}
+            
+              div(id="feed_details")
+                ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
+                  li
+                    a(href="#" ) 
+                      span(id="num_of_likes") #{each.supporters.length}
+                      |  Supports
+                  li
+                    h(style="margin-right:5px;margin-left:5px") -
+                  li
+                    a(href="#")
+                      span(id="num_of_comments") #{each.comments.length}
+                      |  Comments
+               
+                .issueCommentPart
+                  button(id="likeBtn" )
+                    if (each.supporters.indexOf(username)==-1)
+                      i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                      |  I Support
+                    else
+                      i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
+                      |  I Support
+
+                  button(id="commentBtn" )
+                    i(class="mega-octicon octicon-comment" style="font-size:18px")
+                    |  Comment
+        else
+          div(style="text-align:center!important;")
+            img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
+            br
+            br
+            h(style="font-weight:500; font-size:25pt; color:grey") You have not posted any issues
+
+  .jumbotron.text-center.addLogoutAlertbackground(style="top:40px")
+      .addLogoutAlert(style="margin:200px auto;padding:20px;max-width:400px")
+        div
+         p Confirm to Delete Issue ?
+        div(style="display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px")
+          div(style="width:50%;float:left;border-right:1px solid lightgray"  id="logoutYes")
+            a(href="/users/logout")
+              p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:red") Yes
+          div(style="width:50%;float:right" id="logoutNo")
+              p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:#337ab7;cursor:pointer") No
+  
+  script.
+      $('.main.issueBlock #issueDesc').each(function(){
+        var descLength = $(this).text().length;
+        var descTrimmed1 = (descLength>250)?("<span id='descTrimmed1'>"+$(this).text().substring(0,250)+"</span><span id='3dots'>...</span>"):($(this).text());
+        var descTrimmed2 = (descLength>250)?("<span id='descTrimmed2' style='display:none'>"+$(this).text().substring(250)+"</span>"+"<span id='readMore' style='color:#337ab7;cursor:pointer'>Read More</span>"):"";
+        
+        $(this).html(descTrimmed1+descTrimmed2);
+        //- (descTrimmed.length>200)?($(this).append('<span id="readMore" style="color:#337ab7;cursor:pointer">Read More</span>')):1;
+        //- $('#readMore')
+      });
+
+      $('#issueDesc #readMore').click(function(){
+        if($(this).text()=="Read More")
+          {
+            $(this).text('Read Less');
+          }
+        else
+          $(this).text('Read More');
+          $(this).siblings('#descTrimmed2').toggle();
+          $(this).siblings('#3dots').toggle();
+      });
+
+      $('#expandPost').click(function(){
+        $('#nextBtn').slideToggle();
+        $(this).toggleClass('glyphicon-plus glyphicon-minus');
+      })
+
+      $('button#delIssueOption').click(function(){
+        var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
+        var delPost = $(this);
+
+        $.ajax({
+          method : 'POST',
+          url : 'delpost/'+id,
+          success: function(data){
+            if(data=="1")
+              {
+                delPost.closest('li.issuePart').remove();
+              }
+          }
+        });
+      });
+
+      $('button#openIssueOption').click(function(){
+        var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
+        var thisPost = $(this);
+
+        $.ajax({
+          method : 'POST',
+          url : 'openIssue/'+id,
+          success: function(data){
+            if(data=="1")
+              {
+                thisPost.parents('li.issuePart').find('i.issueStatus').removeClass("octicon-issue-closed");
+                thisPost.parents('li.issuePart').find('i.issueStatus').addClass("octicon-issue-opened");
+                thisPost.parents('li.issuePart').find('i.issueStatus span').text(" Open");
+                thisPost.siblings('#closeIssueOption').show();
+                thisPost.hide();
+              }
+          }
+        });
+      });
+
+      $('button#editIssueOption').click(function(){
+        var editIssueOption = $(this);
+        $(this).prop('disabled',true);
+        $(this).css({
+          'opacity':'0.5'
+        });
+        var issueTopic = $(this).closest('li.issuePart').find('#issueTopic');
+        var issueDesc = $(issueTopic).siblings('#issueDesc');
+        
+        var issueTopicText = $(issueTopic).html();
+        var issueDescriptionText = $(issueDesc).html();
+
+        var feed_details = $(this).closest('li.issuePart').find('#feed_details');
+        var feed_details_issueCommentPart = $(feed_details).find('.issueCommentPart').html();
+        
+        var issueId = $(this).closest('.dropdown.open').siblings('i.issueStatus').attr('id');
+        console.log(issueId);
+        
+        issueTopic.html('<input type="text" id="issueDescriptionTopic" name="issueDescriptionTopic" value="'+issueTopic.text()+'" placeholder="Issue Topic" required maxlength="60"/>');
+        $(issueDesc).css({
+          "margin" : "0px",
+          'padding':'0px',
+          'padding-left': '10px'
+        });
+        issueDesc.html('<textarea style="width:100%;min-height:100px" id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required>'+issueDesc.text()+'</textarea>');
+        $(feed_details).find('ul#feed_numbers').hide();
+        
+        $(feed_details).find('.issueCommentPart').html('\
+        <button id="cancelEditBtn">\
+        <i style="font-size:18px;" id="likeBtnLogo" class="ionicons ion-android-cancel"></i> Cancel\
+        </button>\
+        <button id="updateEditBtn">\
+        <i style="font-size:18px" class="ionicons ion-android-done">\
+        </i> Update</button>');
+
+        $('#cancelEditBtn').click(function(){
+          $(editIssueOption).prop('disabled',false);
+          $(editIssueOption).css({
+            'opacity':'1'
+          });
+          
+          $(issueDesc).css({
+            "margin" : "5px",
+            'padding':'10px',
+            'padding-left': '5px'
+          });
+          console.log(feed_details_issueCommentPart);
+          $(issueTopic).html(issueTopicText);
+          $(issueDesc).html(issueDescriptionText);
+          $(feed_details).find('ul#feed_numbers').show();
+          $(feed_details).find('.issueCommentPart').html(feed_details_issueCommentPart);
+        });
+
+        $('#updateEditBtn').click(function(){
+                
+          $(editIssueOption).prop('disabled',false);
+          $(editIssueOption).css({
+            'opacity':'1'
+          });
+          $(issueDesc).css({
+            "margin" : "5px",
+            'padding':'10px',
+            'padding-left': '5px'
+          });
+          
+          $.ajax({
+            method: 'POST',
+            data:{
+              issueId: issueId,
+              //orgUserId: ,
+              issueTopic : $(issueTopic).find('input#issueDescriptionTopic').val(),
+              issueDesc : $(issueDesc).find('textarea#issueDescriptionText').val()
+            },
+            url: '/updateIssue/',
+            success: function(data){
+              if(data=="1"){
+                $(editIssueOption).closest('div.issuePart1D').find('p#date').html(("Edited on "+new Date()).substring(0,31));
+                $(issueTopic).html($(issueTopic).find('input#issueDescriptionTopic').val());
+                $(issueDesc).html($(issueDesc).find('textarea#issueDescriptionText').val());
+                $(feed_details).find('ul#feed_numbers').show();
+                $(feed_details).find('.issueCommentPart').html(feed_details_issueCommentPart);   
+              }
+              else{
+                console.log("Some Error Occured!");
+                $(issueTopic).html(issueTopicText);
+                $(issueDesc).html(issueDescriptionText);
+                $(feed_details).find('ul#feed_numbers').show();
+                $(feed_details).find('.issueCommentPart').html(feed_details_issueCommentPart);
+              }
+            }
+          })
+        });
+      });
 
 
+      $('button#closeIssueOption').click(function(){
+        console.log("Close Issue Option Select");
+        var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
+        var thisPost = $(this);
 
-			.gridbox.gridmain
-				ul(id="issues")
-					if issues
-						for each in issues	
-							li.issuePart
-								div.issuePart1D
-									if (each.anonymity==="on")
-										span(style='font-weight:900') Anonymous
-									else if(each.anonymity==="off")
-										a(href="/profile/"+each.username style='font-weight:900') #{each.name}
-									span(style='color:gray')  
-										i.glyphicon.glyphicon-play(style="font-size:10pt")  
-										|  #{each.department}
-									if (each.anonymity==="on")
-										button.spamBtn(type='button') Report Spam
-									p(id="date") #{each.datePosted}
-									
-								.main.issueBlock
-										#prevBtn
-											#likeBtns
-												i.glyphicon.glyphicon-fire(style="color:red" aria-hidden='true')
-											#likeBtns
-												i.glyphicon.glyphicon-thumbs-up(aria-hidden='true')
-												p #{each.likes}
-										#nextBtn
-											#issueTopic #{each.issueTopic}
-											#issueDesc #{each.issueDesc}
+        $.ajax({
+          method : 'POST',
+          url : 'closeIssue/'+id,
+          success: function(data){
+            if(data=="1")
+              {
+                
+                thisPost.parents('li.issuePart').find('i.issueStatus').removeClass("octicon-issue-opened");
+                thisPost.parents('li.issuePart').find('i.issueStatus').addClass("octicon-issue-closed");
+                thisPost.parents('li.issuePart').find('i.issueStatus span').text(" Closed");
+                thisPost.siblings('#openIssueOption').show();
+                thisPost.hide(); 
+              }
+          }
+        });
+      });
 
-		
-		//- $('#postIssueForm').submit(function postIssue (){
-		//-     $.ajax({
-		//-         url:'/post',
-		//-         type:'post',
-		//-         data:$('#postIssueForm').serialize(),
-		//-         success:function(){
-		//-         	console.log(data);
-		//-             alert("worked");
-		//-         }
-		//-     });
-		//- });
+      
+      $('button#likeBtn').click(function(e){
 
-		
-		//- var x = document.getElementsByTagName('div');
-		//- console.log(x);
-		//- for(i=0;i<x.length;i++){
-		//- 	if(x[i].id==="issueDesc")
-		//- 	{
-		//- 		var myDiv = x[i];
-		//- 		var full = x[i].innerHTML;
-		//- 		console.log("Full : "+full);
-		//- 		var less = full.substring(0,200);
-		//- 		console.log("Less : "+less);
-		//- 		var rest = full.substring(200);
-		//- 		console.log("Rest : "+rest);
-				
-		//- 		var aFull = document.createElement('a');
-		//- 		aFull.setAttribute("id", "fullDesc");
-		//- 		aFull.innerHTML = "... Read More";
-				
-		//- 		x[i].innerHTML = less;
-				
-				
-		//- 		var restDiv = document.createElement('span');
-		//- 		restDiv.setAttribute("id", "extra");
-		//- 		restDiv.innerHTML = rest;
-		//- 		x[i].appendChild(restDiv);
-		//- 		restDiv.style.display = "none";
-				
-		//- 		x[i].appendChild(aFull);
-				
-		//- 		//- $('#extra').hide();
-		//- 	//- 	//- myDiv.append(aFull);
-		//- 	//- 	var i=0;
-		//- 	//- 	//- 
-		//- }};
+        if( $(this).find('i#likeBtnLogo').hasClass("fa-thumbs-up") )
+          { 
+           console.log("Executed 1");
+            $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])-1);
+          }
+        
+        else if( $(this).find('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
+          {
+           console.log("Executed 2");
+            $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])+1);
+          }
 
-		
-		
+          e.preventDefault();
+          $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
+          var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
+          console.log(id);
+          
+          var _url = "/likepost/"+id;
+          console.log(_url);
+          $.post({
+          url: _url,
+        });
+      });

@@ -119,8 +119,8 @@ html(lang='en')
             a(href='/settings/' style="color:gray")
               i(class="ionicons ion-android-settings" style="font-size:20pt!important;")
           
-          li(class=(title == 'help' ? 'active' : '') style="width:16.66%;padding:10px")
-              a(href='/settings/' style="color:gray")
+          li(class=(title == 'Profile' ? 'active' : '') style="width:16.66%;padding:10px")
+              a(href='/profile/'+user.username style="color:gray")
                 i(class="ionicons ion-ios-contact" style="font-size:20pt!important;")
       
           li(class=(title == 'Logout' ? 'active' : '') style="width:16.66%;padding:10px")

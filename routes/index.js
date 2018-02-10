@@ -285,10 +285,13 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
       Issue.getIssueByUsername(username, function(err, resultsIssue){
         if(err) throw err;
         else{
+          console.log(resultsUser);
+          console.log(resultsIssue);
           res.render('profile', {
             title: 'Profile',
-            profile: resultsUser,
-            issues: resultsIssue
+            userDetails: resultsUser,
+            issues: resultsIssue,
+            username: req.user.username
           });
         }
       });
