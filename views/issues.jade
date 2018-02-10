@@ -230,7 +230,7 @@ block issues
       })
 
       $('button#delIssueOption').click(function(){
-        var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href').substring(9);
+        var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
         var delPost = $(this);
 
         $.ajax({
@@ -246,7 +246,7 @@ block issues
       });
 
       $('button#openIssueOption').click(function(){
-        var id = $(this).parents('li.issuePart').find('#issueTopic a').attr('href').substring(9);
+        var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
         var thisPost = $(this);
 
         $.ajax({
@@ -266,6 +266,11 @@ block issues
       });
 
       $('button#editIssueOption').click(function(){
+        var editIssueOption = $(this);
+        $(this).prop('disabled',true);
+        $(this).css({
+          'opacity':'0.5'
+        });
         var issueTopic = $(this).closest('li.issuePart').find('#issueTopic');
         var issueDesc = $(issueTopic).siblings('#issueDesc');
         
@@ -296,6 +301,11 @@ block issues
         </i> Update</button>');
 
         $('#cancelEditBtn').click(function(){
+          $(editIssueOption).prop('disabled',false);
+          $(editIssueOption).css({
+            'opacity':'1'
+          });
+          
           $(issueDesc).css({
             "margin" : "5px",
             'padding':'10px',
@@ -309,6 +319,10 @@ block issues
         });
 
         $('#updateEditBtn').click(function(){
+          $(editIssueOption).prop('disabled',false);
+          $(editIssueOption).css({
+            'opacity':'1'
+          });
           $(issueDesc).css({
             "margin" : "5px",
             'padding':'10px',
@@ -346,7 +360,7 @@ block issues
 
       $('button#closeIssueOption').click(function(){
         console.log("Close Issue Option Select");
-        var id = $(this).parents('li.issuePart').find('#issueTopic a').attr('href').substring(9);
+        var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
         var thisPost = $(this);
 
         $.ajax({
