@@ -397,10 +397,7 @@ block issues
 
           e.preventDefault();
           $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
-          var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
-          console.log(id);
-          
-          id = id.substring(9);
+          var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
           console.log(id);
           
           var _url = "/likepost/"+id;
