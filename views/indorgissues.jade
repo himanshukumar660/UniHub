@@ -23,36 +23,41 @@ block issues
             for each in openIssues  
               li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-                  div(style="float:left;")
-                    if (each.anonymity==="on")
-                      span(style='font-weight:900') Anonymous
-                    else if(each.anonymity==="off")
-                      a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
-                    
-                    span(style='color:gray')  
-                      i.glyphicon.glyphicon-play(style="font-size:10pt")  
-                      a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
-                    p(id="date") #{each.datePosted}
-
-                  div(style="float:right")
-                    if trending
-                      i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
+                  div(style="float:left;display:inline-flex")
+                    div
+                      if (each.anonymity==="on")
+                        span(style='font-weight:900') Anonymous
+                      else if(each.anonymity==="off")
+                        a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
                       
+                      span(style='color:gray')  
+                        i.glyphicon.glyphicon-play(style="font-size:10pt")  
+                        a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
+
+                      if each.edited
+                       p(id="date") Edited on #{each.datePosted}
+                      else
+                       p(id="date") Posted on #{each.datePosted}
+                         
+                  
+                  div(style="float:right")
                     if (each.status==="open")
-                      i(class="mega-octicon octicon-issue-opened" )
+                      i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
                         span  Open
                     else
-                      i(class="mega-octicon octicon-issue-closed")
+                      i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
                         span  Closed
                     
                 .main.issueBlock
                   #nextBtn
-                    div(style="margin-left:10px")
-                      a#issueTopic(href="/indpost/"+each._id) #{each.issueTopic}
-                    #issueDesc #{each.issueDesc}
+                    div#issueTopic(style="margin-left:10px;width:auto!important")
+                      if each.supporters.length>=(0.75*orgDtl.members.length)
+                        i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
+                      a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
+                    div#issueDesc #{each.issueDesc}
               
-                div
-                  ul(style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
+                div(id="feed_details")
+                  ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
                     li
                       a(href="#" ) 
                         span(id="num_of_likes") #{each.supporters.length}
@@ -65,14 +70,15 @@ block issues
                         |  Comments
                  
                   .issueCommentPart
-                    button(id="likeBtn")
+                    button(id="likeBtn" )
                       if (each.supporters.indexOf(username)==-1)
                         i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                        |  I Support
                       else
                         i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                      |  I Support
+                        |  I Support
 
-                    button(id="commentBtn")
+                    button(id="commentBtn" )
                       i(class="mega-octicon octicon-comment" style="font-size:18px")
                       |  Comment
           else
@@ -87,36 +93,41 @@ block issues
             for each in closedIssues  
               li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-                  div(style="float:left;")
-                    if (each.anonymity==="on")
-                      span(style='font-weight:900') Anonymous
-                    else if(each.anonymity==="off")
-                      a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
-                    
-                    span(style='color:gray')  
-                      i.glyphicon.glyphicon-play(style="font-size:10pt")  
-                      a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
-                    p(id="date") #{each.datePosted}
-
-                  div(style="float:right")
-                    if trending
-                      i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
+                  div(style="float:left;display:inline-flex")
+                    div
+                      if (each.anonymity==="on")
+                        span(style='font-weight:900') Anonymous
+                      else if(each.anonymity==="off")
+                        a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
                       
+                      span(style='color:gray')  
+                        i.glyphicon.glyphicon-play(style="font-size:10pt")  
+                        a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
+
+                      if each.edited
+                       p(id="date") Edited on #{each.datePosted}
+                      else
+                       p(id="date") Posted on #{each.datePosted}
+                         
+                  
+                  div(style="float:right")
                     if (each.status==="open")
-                      i(class="mega-octicon octicon-issue-opened" )
+                      i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
                         span  Open
                     else
-                      i(class="mega-octicon octicon-issue-closed")
+                      i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
                         span  Closed
-                  
+                    
                 .main.issueBlock
                   #nextBtn
-                    div(style="margin-left:10px")
-                      a#issueTopic(href="/indpost/"+each._id) #{each.issueTopic}
-                    #issueDesc #{each.issueDesc}
+                    div#issueTopic(style="margin-left:10px;width:auto!important")
+                      if each.supporters.length>=(0.75*orgDtl.members.length)
+                        i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
+                      a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
+                    div#issueDesc #{each.issueDesc}
               
-                div
-                  ul(style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
+                div(id="feed_details")
+                  ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
                     li
                       a(href="#" ) 
                         span(id="num_of_likes") #{each.supporters.length}
@@ -129,14 +140,15 @@ block issues
                         |  Comments
                  
                   .issueCommentPart
-                    button(id="likeBtn")
+                    button(id="likeBtn" )
                       if (each.supporters.indexOf(username)==-1)
                         i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                        |  I Support
                       else
                         i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                      |  I Support
+                        |  I Support
 
-                    button(id="commentBtn")
+                    button(id="commentBtn" )
                       i(class="mega-octicon octicon-comment" style="font-size:18px")
                       |  Comment
           else
@@ -154,6 +166,33 @@ block issues
             h(style="font-weight:500; font-size:25pt; color:grey") You'r not a member yet
 
   script.
+      $('.main.issueBlock #issueDesc').each(function(){
+        var descLength = $(this).text().length;
+        var descTrimmed1 = (descLength>250)?("<span id='descTrimmed1'>"+$(this).text().substring(0,250)+"</span><span id='3dots'>...</span>"):($(this).text());
+        var descTrimmed2 = (descLength>250)?("<span id='descTrimmed2' style='display:none'>"+$(this).text().substring(250)+"</span>"+"<span id='readMore' style='color:#337ab7;cursor:pointer'>Read More</span>"):"";
+        
+        $(this).html(descTrimmed1+descTrimmed2);
+        //- (descTrimmed.length>200)?($(this).append('<span id="readMore" style="color:#337ab7;cursor:pointer">Read More</span>')):1;
+        //- $('#readMore')
+      });
+
+      $('#issueDesc #readMore').click(function(){
+        if($(this).text()=="Read More")
+          {
+            $(this).text('Read Less');
+          }
+        else
+          $(this).text('Read More');
+          $(this).siblings('#descTrimmed2').toggle();
+          $(this).siblings('#3dots').toggle();
+      });
+
+      $('#expandPost').click(function(){
+        $('#nextBtn').slideToggle();
+        $(this).toggleClass('glyphicon-plus glyphicon-minus');
+      })
+
+
       $('#openBtn').click(function(){
         $('#openIssues').show();
         $('#closedIssues').hide();
@@ -184,22 +223,21 @@ block issues
 
       $('button#likeBtn').click(function(e){
 
-        if( $('i#likeBtnLogo').hasClass("fa-thumbs-up") )
+        if( $(this).find('i#likeBtnLogo').hasClass("fa-thumbs-up") )
           { 
-            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])-1);
+           console.log("Executed 1");
+            $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])-1);
           }
         
-        else if( $('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
+        else if( $(this).find('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
           {
-            $('#num_of_likes').html(parseInt($('#num_of_likes').text()[0])+1);
+           console.log("Executed 2");
+            $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])+1);
           }
 
           e.preventDefault();
           $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
-          var id = $(this).parents('li.issuePart').find('a#issueTopic').attr('href');
-          console.log(id);
-          
-          id = id.substring(9);
+          var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
           console.log(id);
           
           var _url = "/likepost/"+id;
