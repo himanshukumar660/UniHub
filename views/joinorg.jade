@@ -39,15 +39,6 @@ block joinorg
 											input#join(value="Join" type="submit" style="background-color:#42b72a;color:white!important;font-weight:500;border:1px solid #42b72a;border-radius:3px;min-width:70px")
 							
 							.main.issueBlock
-								if(search(username, each.admin))
-										.alert.alert-success#err(style="padding:10px;margin-bottom:0px;")
-											p(style="text-transform: capitalize;") You'r the admin of this org
-									else if(search(username, each.pendingRequest))
-										.alert.alert-warning#err(style="padding:10px;margin-bottom:0px;")
-											p(style="text-transform: capitalize;") Your request is pending
-									else if(search(username, each.members))
-										.alert.alert-success#err(style="padding:10px;margin-bottom:0px;")
-											p(style="text-transform: capitalize;") You'r member of this org
 								#prevBtn
 									#likeBtns
 										i(class="mega-octicon octicon-organization" style="color:gray")  
@@ -59,7 +50,16 @@ block joinorg
 												b Please Note 
 												| : #{each.alert}
 									#issueDesc(style="border-top:none") #{each.aboutUs}
-									
+									if(search(username, each.admin))
+										.alert.alert-success#err(style="padding:10px;margin-bottom:0px;")
+											p(style="text-transform: capitalize;") You'r the admin of this org
+									else if(search(username, each.pendingRequest))
+										.alert.alert-warning#err(style="padding:10px;margin-bottom:0px;")
+											p(style="text-transform: capitalize;") Your request is pending
+									else if(search(username, each.members))
+										.alert.alert-success#err(style="padding:10px;margin-bottom:0px;")
+											p(style="text-transform: capitalize;") You'r member of this org
+								
 				else if(initial=="true")
 					div(style="text-align:center!important;padding-top:100px")
 						img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
