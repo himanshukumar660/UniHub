@@ -286,9 +286,20 @@ li.issuePart{
     color: white!important;
     font-weight:500; 
   }
+  nav{
+    display: block;
+  }
+  .mobileNav{
+    display: none;
+  }
 
 @media only screen and (max-width: 500px) {
-
+  nav{
+    display: none!important;
+  }
+  .mobileNav{
+    display: block;
+  }
   #nav_search_form{
     display: none;
   }
@@ -777,7 +788,10 @@ a#linkProfile:hover {
  font-weight: 500; 
 }
 .active{
-  border-bottom: 2px solid #369a21;
+  border-bottom: 2px solid #42b72a;
+}
+.active i{
+  color: white;
 }
 /* Customs styles for hiding the scrollbars */
 html {

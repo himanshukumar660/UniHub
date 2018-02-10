@@ -98,7 +98,46 @@ html(lang='en')
               
                   li(class=(title == 'Logout' ? 'active' : '') style="cursor:pointer")
                     a(id="logout")
-                      i(class="ionicons ion-log-out" style="font-size:20pt!important;")        
+                      i(class="ionicons ion-log-out" style="font-size:20pt!important;")
+    
+    .mobileNav(data-spy="affix" style="width:100%;background-color:black;z-index:10000;top:0px!important;" data-offset-top="-100")
+      if user
+        ul(style="display:inline-flex;width:100%;padding-left:0px;text-align:center;margin-bottom:0px;margin-top:10px")  
+          li(class=(title == 'Home' ? 'active' : '') style="width:16.66%;padding:10px")
+            a(href='/' style="color:lightgray")
+              i( class="ionicons ion-android-home" style="font-size:20pt!important;")
+            
+          li(class=(title == 'Explore Orgs' ? 'active' : '') id="exploreorg" style="width:16.66%;padding:10px")
+            a(href='/searchorg/q' style="color:gray")
+              i(class="ionicons ion-search" style="font-size:20pt!important;")
+          
+          li(class=(title == 'My Organisations' ? 'active' : '') style="width:16.66%;padding:10px")
+            a(href='/myorg' style="color:gray")
+              i(class="ionicons ion-ios-people" style="font-size:20pt!important;")
+          
+          li(class=(title == 'Settings' ? 'active' : '') style="width:16.66%;padding:10px")
+            a(href='/settings/' style="color:gray")
+              i(class="ionicons ion-android-settings" style="font-size:20pt!important;")
+          
+          li(class=(title == 'help' ? 'active' : '') style="width:16.66%;padding:10px")
+              a(href='/settings/' style="color:gray")
+                i(class="ionicons ion-ios-contact" style="font-size:20pt!important;")
+      
+          li(class=(title == 'Logout' ? 'active' : '') style="width:16.66%;padding:10px")
+            a(id="logout" style="color:gray")
+              i(class="ionicons ion-log-out" style="font-size:20pt!important;cursor:pointer")
+      else
+        ul(style="display:inline-flex;width:100%;padding-left:0px;text-align:center;margin-bottom:0px")  
+          li(class=(title == 'Login' ? 'active' : '') style="width:50%;padding:10px")
+            a(href='/users/login' style="color:gray")
+              i(class="ionicons ion-log-in" style="font-size:20pt!important;")
+          
+          li(class=(title == 'Register' ? 'active' : '') style="width:50%;padding:10px")
+              a(href='/users/register' style="color:gray")
+                i(class="ionicons ion-ios-contact" style="font-size:20pt!important;")
+        
+
+      
     block content
 
     .jumbotron.text-center.addLogoutAlertbackground(style="top:40px")

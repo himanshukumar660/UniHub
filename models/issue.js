@@ -61,6 +61,10 @@ var issueSchema = new Schema({
 	datePosted: {
 		type: Date
 	},
+
+	edited : {
+		type: Boolean
+	},
 });
 
 
@@ -120,7 +124,7 @@ module.exports.closeIssueById = function(id, username, callback){
 };
 
 module.exports.updateIssueById = function(username, updatedIssue,  callback){
-	Issue.findOneAndUpdate({$and: [{_id:updatedIssue.issueId}, {username:username}]},{issueTopic: updatedIssue.issueTopic, issueDesc: updatedIssue.issueDesc}, callback);
+	Issue.findOneAndUpdate({$and: [{_id:updatedIssue.issueId}, {username:username}]},{issueTopic: updatedIssue.issueTopic, issueDesc: updatedIssue.issueDesc, datePosted: new Date, edited : true}, callback);
 };
 
 module.exports.chkWholeIssuesForLiked = function(username, callback){

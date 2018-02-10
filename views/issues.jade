@@ -50,7 +50,12 @@ block issues
                       span(style='color:gray')  
                         i.glyphicon.glyphicon-play(style="font-size:10pt")  
                         a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
-                      p(id="date") #{each.datePosted}
+
+                      if each.edited
+                       p(id="date") Edited on #{each.datePosted}
+                      else
+                       p(id="date") Posted on #{each.datePosted}
+                         
                   
                   div(style="float:right")
                     if (each.status==="open")
@@ -60,27 +65,28 @@ block issues
                       i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
                         span  Closed
 
-                    if(each.username===username)
+                    if(each.username===username||each.anonymity=="on")
                       .dropdown(style="width:auto!important;float:right")
                         button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
                           i(class="ionicons ion-android-more-vertical" style="font-weight:500;font-size:20pt;margin-left:5px")
                         
                         ul.dropdown-menu(role='menu', aria-labelledby='menu1' style="font-size:12pt;font-weight:500;")
-                          li(role='presentation')
-                            if each.status==="open"
-                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
-                              button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
-                            else
-                              button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
-                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
-                          li(role='presentation')
-                            button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit Issue
-                          li(role="presentation" class="divider")
-                          li(role='presentation')
-                            button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOption") Delete Issue
-                          li(role='presentation')
-                            if each.anonymity=="on"
-                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="reportIssueOption") Report Spam
+                          if(each.username===username)
+                            li(role='presentation' style="padding:5px;margin-bottom:2px")
+                              if each.status==="open"
+                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
+                                button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
+                              else
+                                button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
+                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
+                            li(role='presentation' style="padding:5px;margin-bottom:2px")
+                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit Issue
+                            li(role="presentation" class="divider")
+                            li(role='presentation' style="padding:5px;margin-bottom:2px")
+                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOption") Delete Issue
+                          else if each.anonymity=="on"
+                            li(role='presentation' style="padding:5px;margin-bottom:2px")
+                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="reportIssueOption") Report Spam
 
                   
                 .main.issueBlock
@@ -131,6 +137,17 @@ block issues
             br
             h(style="font-weight:500; font-size:25pt; color:grey") Add/Enter any organisation to get started
 
+  .jumbotron.text-center.addLogoutAlertbackground(style="top:40px")
+      .addLogoutAlert(style="margin:200px auto;padding:20px;max-width:400px")
+        div
+         p Confirm to Delete Issue ?
+        div(style="display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px")
+          div(style="width:50%;float:left;border-right:1px solid lightgray"  id="logoutYes")
+            a(href="/users/logout")
+              p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:red") Yes
+          div(style="width:50%;float:right" id="logoutNo")
+              p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:#337ab7;cursor:pointer") No
+  
   script.
     //- ////////////////////////// Coded from W3schools for options /////////////////////////////////////////////////
     var x, i, j, selElmnt, a, b, c;
@@ -318,6 +335,7 @@ block issues
         });
 
         $('#updateEditBtn').click(function(){
+                
           $(editIssueOption).prop('disabled',false);
           $(editIssueOption).css({
             'opacity':'1'
@@ -339,6 +357,7 @@ block issues
             url: '/updateIssue/',
             success: function(data){
               if(data=="1"){
+                $(editIssueOption).closest('div.issuePart1D').find('p#date').html(("Edited on "+new Date()).substring(0,31));
                 $(issueTopic).html($(issueTopic).find('input#issueDescriptionTopic').val());
                 $(issueDesc).html($(issueDesc).find('textarea#issueDescriptionText').val());
                 $(feed_details).find('ul#feed_numbers').show();
