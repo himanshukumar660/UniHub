@@ -119,6 +119,10 @@ module.exports.closeIssueById = function(id, username, callback){
 	Issue.findOneAndUpdate({$and: [{_id:id}, {username:username}]},{status: "closed"}, callback);
 };
 
+module.exports.updateIssueById = function(username, updatedIssue,  callback){
+	Issue.findOneAndUpdate({$and: [{_id:updatedIssue.issueId}, {username:username}]},{issueTopic: updatedIssue.issueTopic, issueDesc: updatedIssue.issueDesc}, callback);
+};
+
 module.exports.chkWholeIssuesForLiked = function(username, callback){
 	Issue.find({ supporters : username}, callback);
 }

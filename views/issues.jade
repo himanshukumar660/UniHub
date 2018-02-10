@@ -51,16 +51,16 @@ block issues
                         i.glyphicon.glyphicon-play(style="font-size:10pt")  
                         a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
                       p(id="date") #{each.datePosted}
-
+                  
                   div(style="float:right")
                     if trending
                       i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
                     
                     if (each.status==="open")
-                      i(class="mega-octicon octicon-issue-opened issueStatus" )
+                      i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
                         span  Open
                     else
-                      i(class="mega-octicon octicon-issue-closed issueStatus")
+                      i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
                         span  Closed
 
                     if(each.username===username)
@@ -275,12 +275,15 @@ block issues
         var feed_details = $(this).closest('li.issuePart').find('#feed_details');
         var feed_details_issueCommentPart = $(feed_details).find('.issueCommentPart').html();
         
+        var issueId = $(this).closest('.dropdown.open').siblings('i.issueStatus').attr('id');
+        console.log(issueId);
+        
         issueTopic.html('<input type="text" id="issueDescriptionTopic" name="issueDescriptionTopic" value="'+issueTopic.text()+'" placeholder="Issue Topic" required maxlength="60"/>');
         $(issueDesc).css({
           "margin" : "0px",
           'padding':'0px',
           'padding-left': '10px'
-        })
+        });
         issueDesc.html('<textarea style="width:100%;min-height:150px" id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required>'+issueDesc.text()+'</textarea>');
         $(feed_details).find('ul#feed_numbers').hide();
         
@@ -293,6 +296,11 @@ block issues
         </i> Update</button>');
 
         $('#cancelEditBtn').click(function(){
+          $(issueDesc).css({
+            "margin" : "5px",
+            'padding':'10px',
+            'padding-left': '5px'
+          });
           console.log(feed_details_issueCommentPart);
           $(issueTopic).html(issueTopicText);
           $(issueDesc).html(issueDescriptionText);
@@ -301,17 +309,35 @@ block issues
         });
 
         $('#updateEditBtn').click(function(){
+          $(issueDesc).css({
+            "margin" : "5px",
+            'padding':'10px',
+            'padding-left': '5px'
+          });
+          
           $.ajax({
             method: 'POST',
-            //- data:{
-            //-   id: ,
-            //-   orgUserId: ,
-            //-   issueTopic : $(issueTopic).find('input#issueDescriptionTopic').val(),
-            //-   issueDesc : $(issueDesc).find('textarea#issueDescriptionText').val(),
-            //- },
-            url: '/update_post/',
-            success: function(){
-
+            data:{
+              issueId: issueId,
+              //orgUserId: ,
+              issueTopic : $(issueTopic).find('input#issueDescriptionTopic').val(),
+              issueDesc : $(issueDesc).find('textarea#issueDescriptionText').val()
+            },
+            url: '/updateIssue/',
+            success: function(data){
+              if(data=="1"){
+                $(issueTopic).html($(issueTopic).find('input#issueDescriptionTopic').val());
+                $(issueDesc).html($(issueDesc).find('textarea#issueDescriptionText').val());
+                $(feed_details).find('ul#feed_numbers').show();
+                $(feed_details).find('.issueCommentPart').html(feed_details_issueCommentPart);   
+              }
+              else{
+                console.log("Some Error Occured!");
+                $(issueTopic).html(issueTopicText);
+                $(issueDesc).html(issueDescriptionText);
+                $(feed_details).find('ul#feed_numbers').show();
+                $(feed_details).find('.issueCommentPart').html(feed_details_issueCommentPart);
+              }
             }
           })
         });

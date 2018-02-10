@@ -5,6 +5,8 @@ var User = require('../models/user');
 var Issue = require('../models/issue');
 var Org = require('../models/org');
 var shortId = require('short-mongo-id');
+var xssFilters = require('xss-filters');
+var validator = require('validator');
 
 //Following are related with the issues 
 
@@ -169,6 +171,21 @@ router.post('/closeIssue/:id', ensureAuthentication, function(req,res, next){
   console.log(username);
   
   Issue.closeIssueById(postId, username, function(err, result){
+    if(err) throw err
+    else
+    {
+      console.log(result);
+      res.send("1");
+    }
+  })
+});
+
+router.post('/updateIssue/', ensureAuthentication, function(req,res, next){
+  console.log("Fteching the post details");
+  console.log(req.body);
+  var username = req.user.username;
+  var updatedIssue = req.body;
+  Issue.updateIssueById(username, updatedIssue, function(err, result){
     if(err) throw err
     else
     {

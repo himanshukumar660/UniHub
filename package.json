@@ -29,7 +29,9 @@
     "randomstring": "*",
     "short-mongo-id": "*",
     "request": "*",
-    "socket.io": "*"
+    "socket.io": "*",
+    "xss-filters": "*",
+    "validator": "*"
   },
   "author": "Himanshu Kumar"
 }
