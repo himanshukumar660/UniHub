@@ -27,17 +27,17 @@ block issues
             br
             h(style="font-weight:500; font-size:25pt; color:grey") Accept Pending requests
   script.
-    $('#choiceAcceptBtn').click(function(e){
+    $('.issuePart1D #choiceJoinBtn #choiceAcceptBtn').click(function(e){
         e.preventDefault();
         console.log();
-
-        var reqUserUsername = $(this).parents('.issuePart1D').find('div#reqUserDetails').find('a#linkProfile').attr('href').substring(9);
+        
+        var acceptBtn = $(this);
+        var reqUser = $(this).closest('.issuePart1D').find('#reqUserDetails p a#linkProfile');
+        var reqUserUsername = $(reqUser).attr('href').substring(9);
         console.log(reqUserUsername);
-        var reqUserName = $(this).parents('.issuePart1D').find('div#reqUserDetails').find('a#linkProfile').text();
+        var reqUserName = $(reqUser).text();
         console.log(reqUserName);
 
-      
-        
         var data = {};
         data.orgDtl = "#{orgDtl.userId}";
         data.reqUserUsername = reqUserUsername;
@@ -51,36 +51,40 @@ block issues
         contentType: 'application/json',            
         success: function(data) {
           console.log(data);
-                $('#choiceAcceptBtn').parents('#choiceJoinBtn').html($('<div style="background-color:#42b72ab8;color:white;border-radius:3px;padding:5px"><i class="ionicons ion-android-done-all"></i><span> Accepted</span></div>'));
-                $('#badge_pendingReq').html($('#badge_pendingReq').html()-1);
-                $('#badge_members').html(parseInt($('#badge_members').html())+1);
+                $(acceptBtn).closest('#choiceJoinBtn').html($('<div style="background-color:#42b72ab8;color:white;border-radius:3px;padding:5px"><i class="ionicons ion-android-done-all"></i><span> Accepted</span></div>'));
+                $('#badge_pendingReq').html(parseInt($(this).html())-1);
+                $('#badge_members').html(parseInt($(this).html())+1);
         }
       })
     });
 
-    $('#choiceDeclineBtn').click(function(e){
-      e.preventDefault();
-     
-      var reqUserUsername = $(this).parents('.issuePart1D').find('div#reqUserDetails').find('a#linkProfile').attr('href').substring(9);
+    $('.issuePart1D #choiceJoinBtn #choiceDeclineBtn').click(function(e){
+            e.preventDefault();
+            console.log();
+            
+            var declineBtn = $(this);
+            var reqUser = $(this).closest('.issuePart1D').find('#reqUserDetails p a#linkProfile');
+            var reqUserUsername = $(reqUser).attr('href').substring(9);
+            console.log(reqUserUsername);
+            var reqUserName = $(reqUser).text();
+            console.log(reqUserName);
 
-      var reqUserName = $(this).parents('.issuePart1D').find('div#reqUserDetails').find('a#linkProfile').text();
-        
-      var data = {};
-      data.orgDtl = "#{orgDtl.userId}";
-      data.reqUserUsername = reqUserUsername;
-      data.reqUserName = reqUserName;
-      console.log(data);
-      $.ajax({
-        type: 'POST',
-        data: JSON.stringify(data),
-        url: '/declineReq/',
-        contentType: 'application/json',            
-        success: function() {
-        console.log(data);
-        console.log("Got");
-          $('#choiceDeclineBtn').parents('#choiceJoinBtn').html($('<div style="background-color:red;opacity:0.7;color:white;border-radius:3px;padding:5px"><i class="ionicons ion-ios-trash-outline"></i><span> Declined</span></div>'));
-          console.log();
-          $('#badge_pendingReq').html(parseInt($('#badge_pendingReq').html())-1);
-        }
-      })
-    });
+            var data = {};
+            data.orgDtl = "#{orgDtl.userId}";
+            data.reqUserUsername = reqUserUsername;
+            data.reqUserName = reqUserName;
+            console.log(data);
+
+          $.ajax({
+            type: 'POST',
+            data: JSON.stringify(data),
+            url: '/declineReq/',
+            contentType: 'application/json',            
+            success: function(data) {
+              console.log(data);
+                    $(declineBtn).closest('#choiceJoinBtn').html($('<div style="background-color:red;opacity:0.7;color:white;border-radius:3px;padding:5px"><i class="ionicons ion-ios-trash-outline"></i><span> Declined</span></div>'));
+                    $('#badge_pendingReq').html(parseInt($(this).html())-1);
+                    $('#badge_members').html(parseInt($(this).html())+1);
+            }
+          })
+        });
