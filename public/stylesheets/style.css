@@ -371,7 +371,7 @@ a{
   text-decoration: none !important;
 }
 
-.addIssueFormbackground, .addLogoutAlertbackground, .addOrgExitAlertbackground, .addCancelPendingReqBackground {
+.addIssueFormbackground, .addLogoutAlertbackground, .addOrgExitAlertbackground, .addCancelPendingReqBackground, .addDeleteAlertbackground {
   display: none;
   position:fixed;
   width:100%;
@@ -381,7 +381,7 @@ a{
   background-color: #00000061 !important;
 }
 
-.addIssueForm, .addLogoutAlert, .addOrgExitAlert, .addCancelPendingReq {
+.addIssueForm, .addLogoutAlert, .addOrgExitAlert, .addCancelPendingReq, .addDeleteAlert {
   border-radius: 2rem;
   background-color: white;
   opacity: 1!important;

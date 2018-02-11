@@ -83,7 +83,7 @@ block issues
                               button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit Issue
                             li(role="presentation" class="divider")
                             li(role='presentation' style="padding:5px;margin-bottom:2px")
-                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOption") Delete Issue
+                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOptionBtn") Delete Issue
                           else if each.anonymity=="on"
                             li(role='presentation' style="padding:5px;margin-bottom:2px")
                                 button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="reportIssueOption") Report Spam
@@ -137,20 +137,19 @@ block issues
             br
             h(style="font-weight:500; font-size:25pt; color:grey") Add/Enter any organisation to get started
 
-  .jumbotron.text-center.addLogoutAlertbackground(style="top:40px")
+  .jumbotron.text-center.addDeleteAlertbackground(style="top:40px")
       .addLogoutAlert(style="margin:200px auto;padding:20px;max-width:400px")
         div
          p Confirm to Delete Issue ?
         div(style="display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px")
-          div(style="width:50%;float:left;border-right:1px solid lightgray"  id="logoutYes")
-            a(href="/users/logout")
-              p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:red") Yes
-          div(style="width:50%;float:right" id="logoutNo")
+          div(style="width:50%;float:left;border-right:1px solid lightgray"  id="delYes")
+            p(id="delIssueOption" style="margin-bottom:0px;cursor:pointer;margin-bottom:0px;border:none;background-color:unset;color:red") Yes
+          div(style="width:50%;float:right" id="delNo")
               p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:#337ab7;cursor:pointer") No
   
   script.
     //- ////////////////////////// Coded from W3schools for options /////////////////////////////////////////////////
-    var x, i, j, selElmnt, a, b, c;
+      var x, i, j, selElmnt, a, b, c;
       /*look for any elements with the class "custom-select":*/
       x = document.getElementsByClassName("custom-select");
       for (i = 0; i < x.length; i++) {
@@ -245,29 +244,14 @@ block issues
         $(this).toggleClass('glyphicon-plus glyphicon-minus');
       })
 
-      $('button#delIssueOption').click(function(){
-        var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
-        var delPost = $(this);
-
-        $.ajax({
-          method : 'POST',
-          url : 'delpost/'+id,
-          success: function(data){
-            if(data=="1")
-              {
-                delPost.closest('li.issuePart').remove();
-              }
-          }
-        });
-      });
-
+      
       $('button#openIssueOption').click(function(){
         var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
         var thisPost = $(this);
 
         $.ajax({
           method : 'POST',
-          url : 'openIssue/'+id,
+          url : '/openIssue/'+id,
           success: function(data){
             if(data=="1")
               {
@@ -383,7 +367,7 @@ block issues
 
         $.ajax({
           method : 'POST',
-          url : 'closeIssue/'+id,
+          url : '/closeIssue/'+id,
           success: function(data){
             if(data=="1")
               {
@@ -424,3 +408,41 @@ block issues
           url: _url,
         });
       });
+
+      $('button#delIssueOptionBtn').click(function(){
+        var delIssueOptionBtn = $(this);
+        $('.addDeleteAlertbackground').show();
+        $('.addDeleteAlertbackground').find('p#delIssueOption').click(function(){
+          var id = $(delIssueOptionBtn).closest('li.issuePart').find('i.issueStatus').attr('id');
+          var delPost = $(delIssueOptionBtn);
+
+          $.ajax({
+            method : 'POST',
+            url : '/delpost/'+id,
+            success: function(data){
+              if(data=="1")
+                {
+                  delPost.closest('li.issuePart').remove();
+                }
+            }
+          });
+          $('.addDeleteAlertbackground').hide();
+        });
+        $('#delNo').click(function(){
+          $('.addDeleteAlertbackground').hide()
+        });
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
