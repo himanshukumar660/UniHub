@@ -16,6 +16,11 @@ var issueSchema = new Schema({
 		required: true
 	},
 
+	userAvatarPath:{
+		type:String,
+		default: "user.png"
+	},
+
 	//Which Department does the issue belongs
 	orgUserId: {
 		type: String,

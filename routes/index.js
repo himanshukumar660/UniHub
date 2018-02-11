@@ -242,6 +242,7 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
       var issue = new Issue({
         username: req.user.username,
         orgUserId: orgId,
+        userAvatarPath: "user.png",
         name: name,
         status: "open",
         issueTopic: topic,
@@ -249,20 +250,26 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
         anonymity: anonymity,
       });
 
-      Org.findOrgByUID(orgId, function(err1, res1){
+      User.getUserByUsername(req.user.username, function(err1, res1){
         if(err1) throw err1;
         else{
-          issue.orgname = res1.name;
-          Issue.createIssue(issue, function(err2, res2){
+          Org.findOrgByUID(orgId, function(err2, res2){
             if(err2) throw err2;
-                  //console.log("Error Occured while uploading the post to the database");
-                  else{
-                    console.log('Issue Posted..');
-                  }
-                });    
+            else{
+              if(anonymity=="off")
+                issue.userAvatarPath = res1.avatarPath;
+              issue.orgname = res2.name;
+              Issue.createIssue(issue, function(err3, res3){
+                if(err3) throw err3;
+                      //console.log("Error Occured while uploading the post to the database");
+                      else{
+                        console.log('Issue Posted..');
+                      }
+                    });    
+            }
+          });
         }
       });
-
     }
     res.redirect('/');
   }

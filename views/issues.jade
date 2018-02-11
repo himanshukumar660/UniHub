@@ -40,7 +40,7 @@ block issues
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
                   div(style="float:left;display:inline-flex")
                     div(style="float:left")
-                      img(src='/uploads/'+'#{userDetails.avatarPath}', alt='' style="border-radius:10%;width:40px;margin-right:10px")
+                      img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
                     div(style="float:right")
                       if (each.anonymity==="on")
                         span(style='font-weight:900') Anonymous
