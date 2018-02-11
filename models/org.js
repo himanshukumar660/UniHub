@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+//require('mongoose-type-url');
 // var uniqueValidator = require('mongoose-unique-validator');
 var randomstring = require('randomstring');
 var SALT_WORK_FACTOR = 10;
@@ -33,6 +34,14 @@ var orgSchema = new Schema({
 		required:true
 	},
 
+	orgLink: {
+		type: String//mongoose.SchemaTypes.Url
+	},
+
+	orgAvatarPath : {
+		type: String,
+		default: "univ.png"
+	},
 	//date the organisation registered
 	dateMade: {
 		type: Date

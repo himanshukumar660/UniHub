@@ -412,7 +412,7 @@ a{
   border-radius: 3px;
 }
 
-#issueDept, #orgName{
+#issueDept, #orgName, #orgLink{
   border-radius: 3px;
 }
 textarea{
@@ -431,7 +431,7 @@ textarea{
   text-align:left;
 }
 
-#issueDept, #orgName, #issueDescriptionTopic, #orgAlert, #orgUserId{
+#issueDept, #orgName, #issueDescriptionTopic, #orgAlert, #orgUserId, #orgLink{
   margin-left:0px !important;
   margin-right:0px !important;
 }
@@ -665,7 +665,7 @@ a#linkProfile:hover {
   border-radius:3px;
   width: 97.5% !important;
 }
-#issueDept, #orgName, #orgUserId{
+#issueDept, #orgName, #orgUserId, #orgLink{
   border:1px solid #e8f3ff;
 }
 #issueDescriptionTopic, #orgAlert, #issueDescriptionText, #orgAbout{
