@@ -31,7 +31,8 @@
     "request": "*",
     "socket.io": "*",
     "xss-filters": "*",
-    "validator": "*"
+    "validator": "*",
+    "mongoose-type-url": "*"
   },
   "author": "Himanshu Kumar"
 }

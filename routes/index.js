@@ -1,4 +1,6 @@
 var express = require('express');
+var crypto = require('crypto');
+var mime = require('mime');
 var router = express.Router();
 var path = require('path');
 var User = require('../models/user');
@@ -7,6 +9,23 @@ var Org = require('../models/org');
 var shortId = require('short-mongo-id');
 var xssFilters = require('xss-filters');
 var validator = require('validator');
+
+//Relating to the upload of org pics
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/')
+  },
+  filename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      cb(null, raw.toString('hex') + Date.now() + '.' + mime.getExtension(file.mimetype));
+    });
+  }
+});
+
+var upload = multer({ storage: storage });
+
 
 //Following are related with the issues 
 
@@ -366,12 +385,15 @@ router.post('/joinOrg/:orgUId', ensureAuthentication, function(req, res, next) {
   })   
 });
 
-router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
+router.post('/addmyorg', ensureAuthentication, upload.single('orgAvatar'), function(req, res, next) {
   console.log("Initiating to add the organisation");
   var name = req.body.orgName;
   var aboutUs = req.body.orgAbout;
   var alert = req.body.orgAlert;
-
+  var orgLink = req.body.orgLink;
+  var orgAvatarPath ;
+  if(req.file)
+    orgAvatarPath = req.file.filename;
 
   var userObj = {
     name: req.user.name,
@@ -380,6 +402,8 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
 
   var orgDtl = new Org({
     name:name,
+    orgLink: orgLink,
+    orgAvatarPath: orgAvatarPath,
     alert:alert,
     aboutUs: aboutUs,
     admin: [userObj],
@@ -391,11 +415,9 @@ router.post('/addmyorg', ensureAuthentication, function(req, res, next) {
   Org.makeOrg(orgDtl, function(err1, res1){
     if(err1) throw err1;
     else{
-      console.log("Hi wkskskksksks\n 3");
       console.log(res1);
     }
   });
-  console.log("Hi wkskskksksks\n 4");
   res.redirect('/myorg');
 });
 
@@ -789,6 +811,14 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
     });
 });
 
+
+//Go to the org Link 
+
+router.get('/ol/:orgLink', ensureAuthentication, function(req, res, next){
+  console.log("Redirecting to the org Link");
+  console.log(req.params.orgLink);
+  res.redirect("google.com");
+});
 // The following method deletes the organisation
 // router.post('/delorg/:orgUId', ensureAuthentication, function(req, res, next) {
 //     console.log("Initiating Deletion of Organisation");

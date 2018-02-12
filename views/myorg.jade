@@ -3,10 +3,10 @@ block issues
 	.gridbox.gridmain
 		ul(id="issues")
 			li.postIssuePart
-				form(method='POST', id="addMyOrg", action="/addmyorg")		
+				form(method='POST', id="addMyOrg", action="/addmyorg" enctype="multipart/form-data")		
 					.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
 						div(style="float:left")
-							h(style="font-weight:500;font-size:14pt") Make Organisation
+							h(style="font-weight:500;font-size:14pt") Add your organisation
 						div(style="float:right")
 							i(class="glyphicon glyphicon-plus" id="expandMakeOrg")			
 
@@ -15,12 +15,22 @@ block issues
 							div(style="margin-left:5px")
 									input(type='text' id="orgName" name="orgName" placeholder="Name of organisation" required)
 										
+									.form-group.has-success.has-feedback#orgLinkFeild(style="margin-bottom:0px")
+										span.glyphicon.glyphicon-ok.form-control-feedback(style="padding:15px;margin-right:5px;color:#42b72a;display:none")
+										span.glyphicon.glyphicon-remove.form-control-feedback(style="padding:15px;margin-right:5px;color:red;display:none")
+										input(type='text' id="orgLink" name="orgLink" placeholder="Link to home page")
+
 									input(type='text' id="orgAlert" name="orgAlert" placeholder="Any Special Note or Alert ?")
 									
 									textarea(id="orgAbout" name="orgAbout" placeholder="About Organisation" required )
-									
-									div(style="width:100%;text-align:center;")
-										input( value="Add" type="submit" name="orgSubmit" id="orgSubmit" style="max-width:71.77px;")
+
+									div(style="display:inline-block;width:100%")
+										div(style="display:inline-flex;float:left")
+											label(for="files" style="min-width:115px;padding:10px;margin:5.33px") Upload logo
+											input(id='orgAvatar', type='file', name='orgAvatar', placeholder='Upload Profile Pic')
+											
+										div(style="text-align:center;max-width:80px;margin:0px auto")
+											input( value="Add" type="submit" name="issuePost" id="issuePost")        
 			
 			li.postIssuePart(style="border-radius:3px")
 				.issuePart1D(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px;padding:0px")
@@ -149,6 +159,25 @@ block issues
 						p(style='margin-bottom:0px;color:#337ab7') No
 
 	script.
+		function isUrl(s) {
+			var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+			return regexp.test(s);
+		}
+		$('#orgLinkFeild #orgLink').on('input', function(){
+			console.log($(this).val());
+			if($(this).val()==null||$(this).val()==""){
+				$(this).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').hide();
+				$(this).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').hide();
+			}
+			else if(isUrl($(this).val())){
+				$(this).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').show();
+				$(this).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').hide();
+			}
+			else{
+				$(this).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').hide();
+				$(this).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').show();
+			}
+		});
 		$('#member').click(function(){
 			$('#memberctrlorgs').show();
 			$('#member').css({

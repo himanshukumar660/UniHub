@@ -7,13 +7,13 @@ block issues
           
           div(style="width:50.0%;padding:10px;border-right:1px solid lightgray;border-bottom:2px solid #42b72a;cursor:pointer" id="openBtn")
             button(style="background-color:unset;font-size:14pt;border:none")
-              i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;")
+              i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;color:green")
               | #{openIssues.length}
               | Open           
           
           div(style="width:50.0%;padding:10px;cursor:pointer" id="closedBtn")
             button(style="background-color:unset;font-size:14pt;border:none")
-              i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:black;font-size:14pt;")
+              i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:black;font-size:14pt;color:red")
               | #{closedIssues.length}
               | Closed                 
 
@@ -25,7 +25,7 @@ block issues
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
                   div(style="float:left;display:inline-flex")
                     div(style="float:left")
-                      img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:10%;width:40px;margin-right:10px")
+                      img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
                     div(style="float:right")
                       if (each.anonymity==="on")
                         span(style='font-weight:900') Anonymous
@@ -97,7 +97,7 @@ block issues
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
                   div(style="float:left;display:inline-flex")
                     div(style="float:left")
-                      img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;margin-right:10px")
+                      img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
                     div(style="float:right")
                       if (each.anonymity==="on")
                         span(style='font-weight:900') Anonymous
