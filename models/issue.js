@@ -58,6 +58,16 @@ var issueSchema = new Schema({
 		default:0
 	},
 
+	docsUpload: [{
+		filename : {
+			type: String
+		},
+		originalName: {
+			type: String
+		},
+		_id : false
+	}],
+
 	supporters: [String],
 
 	comments: [String],
@@ -110,6 +120,14 @@ module.exports.getIssueById = function(id, callback){
 		_id : id
 	}
 	Issue.findOne(query, callback);
+};
+
+//Del anonymous issues by admin
+module.exports.delIssueByAId = function(id, callback){
+	var query = {
+		_id : id,
+	}
+	Issue.remove(query, callback);
 };
 
 module.exports.delIssueById = function(id, username, callback){
@@ -168,6 +186,10 @@ module.exports.getOpenIssueByOrgUserId = function(orguid, callback){
 
 module.exports.getClosedIssueByOrgUserId = function(orguid, callback){
 	Issue.find({$and : [{orgUserId : orguid}, {status : "closed"}]}, callback);
+};
+
+module.exports.getAnonymousIssueByOrgUserId = function(orguid, callback){
+	Issue.find({$and : [{orgUserId : orguid}, {anonymity : "on"}]}, callback);
 };
 
 module.exports.deleteIssueByOrgUserId = function(orguid, callback){

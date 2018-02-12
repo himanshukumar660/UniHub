@@ -17,7 +17,6 @@ html(lang='en')
   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
   script(src='https://cdn.rawgit.com/yahoo/xss-filters/master/dist/xss-filters.js')
   scritp(src='https://cdnjs.cloudflare.com/ajax/libs/validator/9.4.0/validator.min.js')
-  script(src='/javascripts/main.js')
   
   body
     -function search(nameKey, myArray){
@@ -155,7 +154,7 @@ html(lang='en')
               p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:red") Yes
           div(style="width:50%;float:right" id="logoutNo")
               p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:#337ab7;cursor:pointer") No
-          
+    
     script.
       $('a#logout').click(function(){
         $('.addLogoutAlertbackground').toggle();

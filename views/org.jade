@@ -3,11 +3,11 @@ block content
 	.gridcontainer
 		.gridwrapper
 			.gridbox.gridmenu(data-spy="affix" style="height:100%")		
-				#wrapper(class="pro_info")
+				#wrapper(class="pro_info" style="margin-bottom:100px;")
 					section#main(style='background-color: unset !important;top:auto !important;max-width: 40em !important;')
 						div
 							span.avatar 
-								img(src='/uploads/'+'#{orgDtl.orgAvatarPath}', alt='', width='125px' height="125px" style="border-radius:50%;padding:10px;margin-bottom:10px!important")
+								img(src='/uploads/'+'#{orgDtl.orgAvatarPath}', alt='', width='125px' height="125px" style="border-radius:20%;padding:10px;margin-bottom:10px!important")
 							div
 								if(isUrl(orgDtl.orgLink))
 									a(href=orgDtl.orgLink style="font-size:1.2em;") #{orgDtl.name}

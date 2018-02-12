@@ -151,6 +151,25 @@ router.get('/indpost/:id', ensureAuthentication, function(req,res, next){
   })
 });
 
+//The following function deals with the deletion of anonymous issues by admin
+router.post('/delpostA/:id', ensureAuthentication, function(req,res, next){
+  console.log("Fteching the post details");
+  var postId = req.params.id;
+  console.log(postId);
+  var username = req.user.username;
+  console.log(username);
+  
+  Issue.delIssueByAId(postId, function(err, result){
+    if(err) throw err
+    else
+    {
+      console.log(result);
+      res.send("1");
+    }
+  })
+});
+
+
 router.post('/delpost/:id', ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
   var postId = req.params.id;
@@ -242,7 +261,15 @@ router.get('/trending', ensureAuthentication, function(req, res, next) {
 
 //Post the issue
 //Status : Checked
-router.post('/post', ensureAuthentication, function(req, res, next) {
+router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(req, res, next) {
+  var docs ="";
+  var files_array = [];
+  if(req.files){
+    docs = req.files;
+    for (var each in docs)
+      files_array.push({filename : docs[each].filename, originalName : docs[each].originalname});
+    console.log(files_array);
+  }
   if(req.body){
     if(req.body.orguserId!="not_selected")
     {
@@ -250,7 +277,6 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
       var topic = req.body.issueDescriptionTopic;
       var desc = req.body.issueDescriptionText;
       var name = req.user.name;
-
       var anonymity;
 
       if(req.body.anonymity)
@@ -261,6 +287,7 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
       var issue = new Issue({
         username: req.user.username,
         orgUserId: orgId,
+        docsUpload: files_array,
         userAvatarPath: "user.png",
         name: name,
         status: "open",
@@ -283,6 +310,7 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
                       //console.log("Error Occured while uploading the post to the database");
                       else{
                         console.log('Issue Posted..');
+                        res.redirect('/');
                       }
                     });    
             }
@@ -290,10 +318,6 @@ router.post('/post', ensureAuthentication, function(req, res, next) {
         }
       });
     }
-    res.redirect('/');
-  }
-  else{
-    res.redirect("/");
   }
 });
 
@@ -344,14 +368,19 @@ router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
           Issue.getClosedIssueByOrgUserId(orgUId, function(err3, res3){
             if(err3) throw err3;
             else{
-              console.log(res3);
-              res.render('indorgissues', {
-                title: res1.name+" : ",
-                username: username,
-                orgDtl : res1,
-                openIssues: res2,
-                closedIssues: res3  
-              });
+              Issue.getAnonymousIssueByOrgUserId(orgUId, function(err4, res4){
+                if(err4) throw err4;
+                else{
+                    res.render('indorgissues', {
+                      title: res1.name+" : ",
+                      username: username,
+                      orgDtl : res1,
+                      openIssues: res2,
+                      closedIssues: res3,
+                      aIssues: res4  
+                    });
+                }
+              })
             }
           });
         }
@@ -415,10 +444,9 @@ router.post('/addmyorg', ensureAuthentication, upload.single('orgAvatar'), funct
   Org.makeOrg(orgDtl, function(err1, res1){
     if(err1) throw err1;
     else{
-      console.log(res1);
+      res.redirect('/myorg');
     }
   });
-  res.redirect('/myorg');
 });
 
 router.get('/pendingreq/:orguid', ensureAuthentication, function(req, res, next) {
@@ -812,13 +840,7 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
 });
 
 
-//Go to the org Link 
 
-router.get('/ol/:orgLink', ensureAuthentication, function(req, res, next){
-  console.log("Redirecting to the org Link");
-  console.log(req.params.orgLink);
-  res.redirect("google.com");
-});
 // The following method deletes the organisation
 // router.post('/delorg/:orgUId', ensureAuthentication, function(req, res, next) {
 //     console.log("Initiating Deletion of Organisation");

@@ -811,3 +811,10 @@ html {
     left: -620% !important;
     top:120%!important;
 }
+
+
+.select-items {
+    max-height: 200px;
+    overflow-x: auto;
+        box-shadow: 0 2px 4px 0 lightgray,0 20px 40px 0 lightgray!important;
+}
