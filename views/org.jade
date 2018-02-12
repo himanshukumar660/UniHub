@@ -9,7 +9,10 @@ block content
 							span.avatar 
 								img(src='/uploads/'+'#{orgDtl.orgAvatarPath}', alt='', width='125px' height="125px" style="border-radius:50%;padding:10px;margin-bottom:10px!important")
 							div
-								a(href=orgDtl.orgLink style="font-size:1.2em;") #{orgDtl.name}
+								if(isUrl(orgDtl.orgLink))
+									a(href=orgDtl.orgLink style="font-size:1.2em;") #{orgDtl.name}
+								else
+									a(style="font-size:1.2em") #{orgDtl.name}
 								p 
 									b UID : 
 									| #{orgDtl.userId} 
@@ -87,6 +90,7 @@ block content
 
 
 	script.
+
 		$('button#cancelPendingReqBtn').click(function(){
 			$('.addCancelPendingReqBackground').toggle();
 		});

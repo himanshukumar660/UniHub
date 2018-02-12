@@ -811,6 +811,14 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
     });
 });
 
+
+//Go to the org Link 
+
+router.get('/ol/:orgLink', ensureAuthentication, function(req, res, next){
+  console.log("Redirecting to the org Link");
+  console.log(req.params.orgLink);
+  res.redirect("google.com");
+});
 // The following method deletes the organisation
 // router.post('/delorg/:orgUId', ensureAuthentication, function(req, res, next) {
 //     console.log("Initiating Deletion of Organisation");

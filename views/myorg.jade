@@ -15,8 +15,11 @@ block issues
 							div(style="margin-left:5px")
 									input(type='text' id="orgName" name="orgName" placeholder="Name of organisation" required)
 										
-									input(type='text' id="orgLink" name="orgLink" placeholder="Link to home page")
-								
+									.form-group.has-success.has-feedback#orgLinkFeild(style="margin-bottom:0px")
+										span.glyphicon.glyphicon-ok.form-control-feedback(style="padding:15px;margin-right:5px;color:#42b72a;display:none")
+										span.glyphicon.glyphicon-remove.form-control-feedback(style="padding:15px;margin-right:5px;color:red;display:none")
+										input(type='text' id="orgLink" name="orgLink" placeholder="Link to home page")
+
 									input(type='text' id="orgAlert" name="orgAlert" placeholder="Any Special Note or Alert ?")
 									
 									textarea(id="orgAbout" name="orgAbout" placeholder="About Organisation" required )
@@ -156,6 +159,25 @@ block issues
 						p(style='margin-bottom:0px;color:#337ab7') No
 
 	script.
+		function isUrl(s) {
+			var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+			return regexp.test(s);
+		}
+		$('#orgLinkFeild #orgLink').on('input', function(){
+			console.log($(this).val());
+			if($(this).val()==null||$(this).val()==""){
+				$(this).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').hide();
+				$(this).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').hide();
+			}
+			else if(isUrl($(this).val())){
+				$(this).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').show();
+				$(this).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').hide();
+			}
+			else{
+				$(this).siblings('span.glyphicon.glyphicon-ok.form-control-feedback').hide();
+				$(this).siblings('span.glyphicon.glyphicon-remove.form-control-feedback').show();
+			}
+		});
 		$('#member').click(function(){
 			$('#memberctrlorgs').show();
 			$('#member').css({
