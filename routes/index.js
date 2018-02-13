@@ -24,9 +24,23 @@ var storage = multer.diskStorage({
   }
 });
 
+var algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
+var key = 'password';
+
 var upload = multer({ storage: storage });
 
+// For encryption and decryption
+function encrypt(text){
+  var cipher = crypto.createCipher(algorithm, key);  
+  var encrypted = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
+  return encrypted;
+}
 
+function decrypt(text){
+  var decipher = crypto.createDecipher(algorithm, key);
+  var decrypted = decipher.update(text, 'hex', 'utf8') + decipher.final('utf8');
+  return decrypted;
+}
 //Following are related with the issues 
 
 /* Get the home page*/
@@ -279,11 +293,7 @@ router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(r
       var name = req.user.name;
       var anonymity;
 
-      if(req.body.anonymity)
-        anonymity =  "on";
-      else
-        anonymity = "off";
-
+      
       var issue = new Issue({
         username: req.user.username,
         orgUserId: orgId,
@@ -296,6 +306,18 @@ router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(r
         anonymity: anonymity,
       });
 
+      if(req.body.anonymity=="on"){
+        anonymity = "on";
+        issue.anonymity =  "on";
+        issue.username = encrypt(issue.username);
+        issue.name = encrypt(issue.name);
+      }
+      else{
+        anonymity = "off";
+        issue.anonymity = "off";
+      }
+
+
       User.getUserByUsername(req.user.username, function(err1, res1){
         if(err1) throw err1;
         else{
@@ -304,6 +326,8 @@ router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(r
             else{
               if(anonymity=="off")
                 issue.userAvatarPath = res1.avatarPath;
+              if(anonymity=="on")
+                issue.userAvatarPath = encrypt(res1.avatarPath);
               issue.orgname = res2.name;
               Issue.createIssue(issue, function(err3, res3){
                 if(err3) throw err3;
@@ -370,7 +394,14 @@ router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
             else{
               Issue.getAnonymousIssueByOrgUserId(orgUId, function(err4, res4){
                 if(err4) throw err4;
-                else{
+                else{      
+                    for (var each in res4)
+                      if(res4[each].anonymity=="on"){
+                        res4[each].username = decrypt(res4[each].username);
+                        res4[each].name = decrypt(res4[each].name);
+                        res4[each].userAvatarPath = decrypt(res4[each].userAvatarPath);
+                      }
+
                     res.render('indorgissues', {
                       title: res1.name+" : ",
                       username: username,

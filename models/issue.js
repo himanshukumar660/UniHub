@@ -87,10 +87,6 @@ var Issue = module.exports = mongoose.model('Issue', issueSchema);
 
 module.exports.createIssue = function(newIssue, callback) {
 	  console.log(newIssue.anonymity);
-	  if(newIssue.anonymity=="on")
-		{
-			newIssue.username = randomstring.generate(10);	
-		}
 	  newIssue.datePosted = new Date();
 
       newIssue.save(callback);

@@ -119,12 +119,17 @@ block issues
                     div(style="float:left")
                       img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
                     div(style="float:right")
-                      span(style='font-weight:900') Anonymous
+                      a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
+                      
                       span(style='color:gray')  
                         i.glyphicon.glyphicon-play(style="font-size:10pt")  
                         a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
-                      p(id="date") Posted on #{each.datePosted}
-                         
+
+                      if each.edited
+                       p(id="date") Edited on #{each.datePosted}
+                      else
+                       p(id="date") Posted on #{each.datePosted}
+                    
                   
                   div(style="float:right")
                     if (each.status==="open")
