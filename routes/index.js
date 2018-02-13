@@ -887,7 +887,33 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
     });
 });
 
-
+router.post('/makeAnnouncement', ensureAuthentication, upload.array('announcementDocs'), function(req, res, next){
+  if(req.body){
+    var orgUId = req.body.orgUId;
+    var topic = req.body.announcementTopic;
+    var text = req.body.announcementText;
+    var files = [];
+    if(req.files){
+      for (var each in req.files){
+        files.push({originalName:req.files[each].originalname, filename:req.files[each].filename});
+      }
+    }
+    var announcementObj = {
+      topic : topic,
+      desc : text,
+      docsUpload : files
+    }
+    console.log(announcementObj);
+    console.log(orgUId);
+    Org.addAnnouncement(orgUId, announcementObj, function(err1, res1){
+      if(err1)  throw err1;
+      else{
+        console.log('Added');
+        res.redirect('/orgs/'+orgUId);
+      }
+    })
+  }
+});
 
 // The following method deletes the organisation
 // router.post('/delorg/:orgUId', ensureAuthentication, function(req, res, next) {

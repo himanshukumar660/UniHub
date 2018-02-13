@@ -19,6 +19,30 @@ var memberSchema = new Schema({
 		}
 	},{_id : false});
 
+var announcementSchema = new Schema({
+		dateAnnounced: {
+			type: Date,
+			default: Date.now()
+		},
+		topic : {
+			type: String
+		},
+		desc:{
+			type:String
+		},
+		
+		docsUpload: [{
+			filename : {
+				type: String
+			},
+			originalName: {
+				type: String
+			},
+			_id : false
+	}],
+
+	},{_id : false});
+
 var orgSchema = new Schema({
 	//userID is the organisation user id
 	userId:{
@@ -53,6 +77,8 @@ var orgSchema = new Schema({
 	aboutUs: {
 		type: String,
 	},
+
+	announcements: [announcementSchema],
 	//Listing of all the members
 	members: [memberSchema],
 	//Listing of Admins
@@ -159,6 +185,14 @@ module.exports.findInOrg = function(orgname, callback){
 
 module.exports.findOrgByUID = function(orguid, callback){
 	Org.findOne({userId : orguid}, callback);
+}
+
+module.exports.addAnnouncement = function(orguid, announcementObj, callback){
+	Org.findOneAndUpdate({userId : orguid}, {$addToSet : {announcements : announcementObj}}, callback);
+}
+
+module.exports.delAnnouncement = function(orguid, announcementObj, callback){
+	Org.findOneAndUpdate({userId : orgUId}, {$pull : {announcements : announcementObj}}, callback);
 }
 
 module.exports.findOrgByID = function(orguid, callback){

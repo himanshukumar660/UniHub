@@ -13,11 +13,13 @@ block content
 								p @ #{userDetails.username} 
 						
 							blockquote(style="color:#369a21;padding:10px;font-size:12pt;margin-top:15px!important") #{userDetails.moto}
-
+						
 						div(id="myissues" style="padding:10px")
-							i(class="fa fa-pencil")
-							a(href="/")  Issues
-
+							a(href="/profile/"+userDetails.username) My Issues
+						
+						div(id="myissues" style="padding:10px")
+							a(href="/") Write Issues
+						
 						div(id="manageOrg" style="margin-bottom:15px!important;padding:10px")
 							a(href="/myorg") Manage Organisations
 						
@@ -31,8 +33,6 @@ block content
 								
 			.gridbox.gridright(data-spy="affix" )
 				.right(style="background-color:unset!important")
-	
-
 
 	script.
 		var issuedate = $('p#date').each(function(){

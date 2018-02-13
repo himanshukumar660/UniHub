@@ -18,7 +18,7 @@ block issues
                       select(name="orguserId" required)
                         option(value="not_selected") Select organisation
                          for ech in memberctrlorgs
-                          option(value=ech.userId) #{ech.name}
+                          option(value=ech.userId) #{ech.name} - #{ech.userId}
 
                     
                     input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic" required maxlength="60")

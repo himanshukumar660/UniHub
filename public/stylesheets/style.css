@@ -228,36 +228,39 @@ li.issuePart{
     margin: 1%;
     float: left;
 }
-
+.gridbox.gridmenu{
+  margin-left:0%!important;
+  padding-left: 0px; 
+}
 .gridmenu {
     width: 20.481781376518218623481781376518%;
     overflow: scroll;
     background-color: transparent;
-    height: 85%;
+    height: 100%;
     text-align: center;
     padding: 10px;
     margin-top: 20px;
 }
 
 .gridmain {
-    width: 60.57854251012145748987854251012%;
+    width: 50.57854251012145748987854251012%;
     overflow: scroll;
     float: left;
     position: absolute;
-    left: 19% !important;
+    left: 17% !important;
 }
 
 
 .gridright {
-  width: 18.481781376518218623481781376518%;
+  width: 36.651781376518218623481781376518%;
   overflow: scroll;
-  background-color: transparent;
-  height: 85%;
+  background-color: unset;
+  height: 100%;
   text-align: center;
   float: right;
-  left: 79.6%;
-  margin-top: 20px;
+  left: 64.08%;
 }
+
 .right {
     background-color: #e9ebee;
     border-radius: 3px;

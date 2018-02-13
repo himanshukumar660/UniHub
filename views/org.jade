@@ -17,8 +17,7 @@ block content
 									b UID : 
 									| #{orgDtl.userId} 
 						
-							blockquote(style="color:#369a21;padding:10px;font-size:12pt;margin-top:15px!important") #{orgDtl.aboutUs}
-
+							
 							ul(style="font-size:11pt;list-style:none;padding:0px;")
 								li(style="display: inline-block;padding: 0 10px;border-right: 1px solid #d4dbe0;")
 									| Issues Open
@@ -29,7 +28,10 @@ block content
 
 					if(search(username, orgDtl.admin))
 						i(class="fa fa-shield" style="font-size:50pt;color:black")
-
+						
+						div(id="manageOrg" style="padding:10px;")
+							a(href="/orgs/"+orgDtl.userId) Home
+						
 						div(id="manageOrg" style="padding:10px;")
 							a(href="/pendingreq/"+orgDtl.userId) Pending Request
 								span(class="badge info" id="badge_pendingReq" style="margin-left:5px;background-color:red") #{orgDtl.pendingRequest.length}
