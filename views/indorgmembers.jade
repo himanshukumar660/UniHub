@@ -8,10 +8,48 @@ block issues
             .issuePart1D(style="display:inline-block;width:100%;padding-left:13px;background-color:white;box-shadow: 0 2px 4px 0 lightgray,0 2px 10px 0 #d4e8ff!important;")
               div(style="float:left;" id="reqUserDetails")
                 | #{i+1}. 
-                a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;')  #{each.name}
+                a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
+              if (search(each.username, orgDtl.admin))
+                div(style="float:right;display:inline-flex")  
+                    div(style="cursor:disabled;margin-right:5px;background-color:red;padding:5px;border-radius:3px;opacity:0.7")
+                      span(style="color:white")  Admin
+              else
+                div(style="float:right;display:inline-flex" id="choiceJoinBtn")  
+                    div(style="cursor:pointer;margin-right:5px;background-color:red;padding:5px;border-radius:3px" id="choiceDeclineBtn")
+                      i(class="ionicons ion-android-delete" style="color:white")
+                      span(style="color:white")  Remove
+                
       else
         div(style="text-align:center!important;padding-top:100px")
             img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
             br
             br
             h(style="font-weight:500; font-size:25pt; color:grey") Here appears the mebers Lists.
+
+  script.
+    $('.issuePart1D #choiceJoinBtn #choiceDeclineBtn').click(function(e){
+            e.preventDefault();
+            var declineBtn = $(this);
+            var reqUser = $(this).closest('.issuePart1D').find('#reqUserDetails a#linkProfile');
+            var reqUserUsername = $(reqUser).attr('href').substring(9);
+            
+            var reqUserName = $(reqUser).text();
+            
+            var data = {};
+            data.name = reqUserName;
+            data.orgUId = "#{orgDtl.userId}";
+            data.username = reqUserUsername;
+            console.log(data);
+
+          $.ajax({
+            type: 'POST',
+            data: JSON.stringify(data),
+            url: '/removeMem/',
+            contentType: 'application/json',            
+            success: function(data) {
+              console.log(data);
+              $(declineBtn).closest('#choiceJoinBtn').html($('<div style="background-color:red;opacity:0.7;color:white;border-radius:3px;padding:5px"><i class="ionicons ion-ios-trash-outline"></i><span> Removed </span></div>'));
+              $('#badge_members').html(parseInt($('#badge_members').html())-1);
+            }
+          })
+        });

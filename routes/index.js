@@ -808,6 +808,23 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
       });          
 });
 
+router.post('/removeMem', ensureAuthentication, function(req, res, next){
+  console.log(req.body);
+  var userObj = {
+    name: req.body.name,
+    username : req.body.username
+  };
+  var orgUId = req.body.orgUId;
+  console.log(userObj);
+  Org.exitOrgMember(orgUId, userObj, function(err1, res1){
+    if(err1) throw err1;
+    else{
+      console.log("Hi");
+      res.send("done");
+    }
+  })
+})
+
 router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
   var orgUId = req.params.orgUId;
   var username = req.user.username;
