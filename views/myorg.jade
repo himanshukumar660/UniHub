@@ -2,7 +2,7 @@ extends home
 block issues
 	.gridbox.gridmain
 		ul(id="issues")
-			li.postIssuePart
+			li.postIssuePart(id="addOrg" style="transition:0.2s all ease-in-out")
 				form(method='POST', id="addMyOrg", action="/addmyorg" enctype="multipart/form-data")		
 					.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
 						div(style="float:left")
@@ -232,5 +232,17 @@ block issues
 				$('#nextBtn').slideToggle();
 				$(this).toggleClass('glyphicon-plus glyphicon-minus');
 			});
-		
+		$('li.postIssuePart#addOrg').mouseover(function(){
+			$(this).css({
+				'box-shadow': '0 20px 60px 0 rgba(27,42,53,.25)',
+				'transform': 'translateY(-1%)'
+			})
+		})
+
+		$('li.postIssuePart#addOrg').mouseout(function(){
+			$(this).css({
+				'transform': 'translateY(1%)',
+				'box-shadow' : '0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff'
+			})
+		})
 
