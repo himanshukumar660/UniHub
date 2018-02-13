@@ -7,7 +7,7 @@ block issues
           form(method='POST', id="postIssueForm", action="/post" enctype="multipart/form-data")   
             .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
               div(style="float:left")
-                h(style="font-weight:500;font-size:14pt") Add issue
+                h(style="font-weight:500;font-size:14pt") Add post
               div(style="float:right")
                 i(class="glyphicon glyphicon-minus" id="expandPost")           
             
@@ -16,12 +16,12 @@ block issues
                 div(style="margin-left:5px")
                     .custom-select(style='width:100%;max-height:100px')
                       select(name="orguserId" required)
-                        option(value="not_selected") Select organisation
+                        option(value="not_selected") Select group
                          for ech in memberctrlorgs
                           option(value=ech.userId) #{ech.name} - #{ech.userId}
 
                     
-                    input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Issue Topic" required maxlength="60")
+                    input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Topic" required maxlength="60")
                     
                     textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
                     
@@ -45,7 +45,7 @@ block issues
                 | Recent
             div(style="width:50.0%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="announcementBtn")
               button(style="background-color:unset;font-size:14pt;border:none")
-                i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:black;font-size:14pt;color:black;padding-right:5px")
+                i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:red!important;font-size:14pt;color:black;padding-right:5px")
                 | #{announcements.length}
                 |  Notices
           
@@ -198,7 +198,7 @@ block issues
   .jumbotron.text-center.addDeleteAlertbackground(style="top:40px")
       .addLogoutAlert(style="margin:200px auto;padding:20px;max-width:400px")
         div
-         p Confirm to Delete Issue ?
+         p Confirm to Delete Post?
         div(style="display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px")
           div(style="width:50%;float:left;border-right:1px solid lightgray"  id="delYes")
             p(id="delIssueOption" style="margin-bottom:0px;cursor:pointer;margin-bottom:0px;border:none;background-color:unset;color:red") Yes

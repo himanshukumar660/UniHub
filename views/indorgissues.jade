@@ -48,7 +48,7 @@ block issues
 
             div(style="width:25.0%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="announcementBtn")
               button(style="background-color:unset;font-size:14pt;border:none")
-                i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:black;font-size:14pt;color:black;padding-right:5px")
+                i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:red!important;font-size:14pt;color:black;padding-right:5px")
                 | #{announcements.length}
                 |  Notices
           else
@@ -66,9 +66,9 @@ block issues
             
             div(style="width:33.33%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="aBtn")
               button(style="background-color:unset;font-size:14pt;border:none")
-                i(class="fa fa-user-secret" style="background-color:unset!important;color:black;font-size:14pt;color:black;padding-right:5px")
+                i(class="fa fa-user-secret" style="background-color:unset!important;color:red!important;font-size:14pt;color:black;padding-right:5px")
                 span#aLen #{orgDtl.announcements.length}
-                |  Announcements
+                |  Notices
     
       if(search(username, orgDtl.members))      
         div#openIssues(style="display:block;")
