@@ -63,9 +63,33 @@ block content
 			block pendingreq
 
 		
-			.gridbox.gridright(data-spy="affix" )
-				.right(style="background-color:unset!important")
-		
+			//- .gridbox.gridright(data-spy="affix" style="text-align:left")
+			//- 	.right(style="background-color:unset!important")
+			//- 		ul(id="issues")
+			//- 			if orgDtl.announcements.length!=0
+			//- 				for each in orgDtl.announcements
+			//- 					li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
+			//- 						.issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+			//- 							div(style="float:left;display:inline-flex")
+			//- 								div(style="float:left")
+			//- 									img(src='/uploads/'+'#{orgDtl.orgAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
+			//- 								div(style="float:right")
+			//- 									a(href="/orgs/"+orgDtl.userId id="linkProfile" style='font-weight:900;') #{orgDtl.name}
+			//- 									p(id="date") Posted on #{each.dateAnnounced}
+                        
+
+			//- 						.main.issueBlock
+			//- 							#nextBtn
+			//- 								div#issueTopic(style="margin-left:10px;width:auto!important") #{each.topic}
+			//- 								div#issueDesc #{each.desc}
+
+			//- 			else
+			//- 				div(style="text-align:center!important;padding-top:100px")
+			//- 					i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:lightgray;font-size:100px;")
+			//- 					br
+			//- 					br
+			//- 					h(style="font-weight:500; font-size:25pt; color:grey") No open issues
+							
 		.jumbotron.text-center.addCancelPendingReqBackground
 			.addCancelPendingReq(style='margin:200px auto;padding:20px;max-width:400px')
 				div

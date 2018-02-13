@@ -3,7 +3,7 @@ block issues
   .gridbox.gridmain
     ul(id="issues")
       if(userOrgs.length!=0)
-        li.postIssuePart(style="transition:0.2s all ease-in-out")
+        li.postIssuePart#adIs(style="transition:0.2s all ease-in-out")
           form(method='POST', id="postIssueForm", action="/post" enctype="multipart/form-data")   
             .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
               div(style="float:left")
@@ -37,108 +37,155 @@ block issues
                       div(style="text-align:center;float:right")
                         input( value="Post" type="submit" name="issuePost" id="issuePost")        
         
+        li.postIssuePart(style="border-radius:3px")
+          .issuePart1D(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px;padding:0px")
+            div(style="width:50.0%;padding:10px;border-right:1px solid lightgray;border-bottom:2px solid #42b72a;cursor:pointer" id="openBtn")
+              button(style="background-color:unset;font-size:14pt;border:none")
+                i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;color:green")
+                | Recent
+            div(style="width:50.0%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="announcementBtn")
+              button(style="background-color:unset;font-size:14pt;border:none")
+                i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:black;font-size:14pt;color:black;padding-right:5px")
+                | #{announcements.length}
+                |  Notices
           
-        if (issues.length!=0)
-          for each in issues  
-            if(userOrgs.indexOf(each.orgUserId)>-1)  
-              li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
-                .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-                  div(style="float:left;display:inline-flex")
-                    div(style="float:left")
-                      img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
-                    div(style="float:right")
-                      if (each.anonymity==="on")
-                        span(style='font-weight:900') Anonymous
-                      else if(each.anonymity==="off")
-                        a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
-                      
-                      span(style='color:gray')  
-                        i.glyphicon.glyphicon-play(style="font-size:10pt")  
-                        a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
-
-                      if each.edited
-                       p(id="date") Edited on #{each.datePosted}
-                      else
-                       p(id="date") Posted on #{each.datePosted}
-                         
-                  
-                  div(style="float:right")
-                    if (each.status==="open")
-                      i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
-                        span  Open
-                    else
-                      i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
-                        span  Closed
-                    if(each.username===username||each.anonymity=="on")
-                      .dropdown(style="width:auto!important;float:right")
-                        button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
-                          i(class="ionicons ion-android-more-vertical" style="font-weight:500;font-size:20pt;margin-left:5px")
+        div#announcements(style="display:none;")
+          if announcements.length!=0  
+            for each in announcements
+              if userOrgs.indexOf(each.username)>-1
+                li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
+                  .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+                    div(style="float:left;display:inline-flex")
+                      div(style="float:left")
+                        img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
+                      div(style="float:right")
+                        a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;') #{each.name}
+                        p(id="date") Posted on #{each.datePosted}
                         
-                        ul.dropdown-menu(role='menu', aria-labelledby='menu1' style="font-size:12pt;font-weight:500;")
-                          if(each.username===username)
-                            li(role='presentation' style="padding:5px;margin-bottom:2px")
-                              if each.status==="open"
-                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
-                                button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
-                              else
-                                button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
-                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
-                            li(role='presentation' style="padding:5px;margin-bottom:2px")
-                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit Issue
-                            li(role="presentation" class="divider")
-                            li(role='presentation' style="padding:5px;margin-bottom:2px")
-                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOptionBtn") Delete Issue
-                          else if each.anonymity=="on"
-                            li(role='presentation' style="padding:5px;margin-bottom:2px")
-                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="reportIssueOption") Report Spam
 
-                  
-                .main.issueBlock
-                  #nextBtn
-                    div#issueTopic(style="margin-left:10px;width:auto!important")
-                      if each.supporters.length>=(0.75*memberctrlorgs[0].members.length)
-                        i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
-                      a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
-                    div#issueDesc #{each.issueDesc}
-                    div#issueAttach(style="padding:10px;")
-                      if each.docsUpload.length!=0
-                        p(style="font-weight:500") #{each.docsUpload.length} Attachments :
-                        for all in each.docsUpload 
-                          i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                          a(href="/uploads/"+all.filename ) #{all.originalName}
-                          br
-              
-                div(id="feed_details")
-                  ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
-                    li
-                      a(href="#" ) 
-                        span(id="num_of_likes") #{each.supporters.length}
-                        |  Supports
-                    li
-                      h(style="margin-right:5px;margin-left:5px") -
-                    li
-                      a(href="#")
-                        span(id="num_of_comments") #{each.comments.length}
-                        |  Comments
-                 
-                  .issueCommentPart
-                    button(id="likeBtn" )
-                      if (each.supporters.indexOf(username)==-1)
-                        i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                        |  I Support
+                  .main.issueBlock
+                    #nextBtn
+                      div#issueTopic(style="margin-left:10px;width:auto!important") #{each.issueTopic}
+                      div#issueDesc #{each.issueDesc}
+                      div#issueAttach(style="padding:10px;")
+                        if each.docsUpload.length!=0
+                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                          for all in each.docsUpload 
+                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                            a(href="/uploads/"+all.filename ) #{all.originalName}
+                            br
+
+          else
+            div(style="text-align:center!important;padding-top:100px")
+              i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:lightgray;font-size:100px;")
+              br
+              br
+              h(style="font-weight:500; font-size:25pt; color:grey") No notices yet
+
+        div#openIssue      
+          if (issues.length!=0)
+            for each in issues  
+              if(userOrgs.indexOf(each.orgUserId)>-1&&each.status!="Notice")  
+                li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
+                  .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+                    div(style="float:left;display:inline-flex")
+                      div(style="float:left")
+                        if each.anonymity=="off"
+                          img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
+                        else
+                          img(src='/uploads/'+'user.png', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
+                      div(style="float:right")
+                        if (each.anonymity==="on")
+                          span(style='font-weight:900') Anonymous
+                        else if(each.anonymity==="off")
+                          a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
+                        
+                        span(style='color:gray')  
+                          i.glyphicon.glyphicon-play(style="font-size:10pt")  
+                          a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
+
+                        if each.edited
+                         p(id="date") Edited on #{each.datePosted}
+                        else
+                         p(id="date") Posted on #{each.datePosted}
+                           
+                    
+                    div(style="float:right")
+                      if (each.status==="open")
+                        i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
+                          span  Open
                       else
-                        i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                        |  I Support
+                        i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
+                          span  Closed
+                      if(each.username===username||each.anonymity=="on")
+                        .dropdown(style="width:auto!important;float:right")
+                          button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
+                            i(class="ionicons ion-android-more-vertical" style="font-weight:500;font-size:20pt;margin-left:5px")
+                          
+                          ul.dropdown-menu(role='menu', aria-labelledby='menu1' style="font-size:12pt;font-weight:500;")
+                            if(each.username===username)
+                              li(role='presentation' style="padding:5px;margin-bottom:2px")
+                                if each.status==="open"
+                                  button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
+                                  button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
+                                else
+                                  button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
+                                  button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
+                              li(role='presentation' style="padding:5px;margin-bottom:2px")
+                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit Issue
+                              li(role="presentation" class="divider")
+                              li(role='presentation' style="padding:5px;margin-bottom:2px")
+                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOptionBtn") Delete Issue
+                            else if each.anonymity=="on"
+                              li(role='presentation' style="padding:5px;margin-bottom:2px")
+                                  button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="reportIssueOption") Report Spam
 
-                    button(id="commentBtn" )
-                      i(class="mega-octicon octicon-comment" style="font-size:18px")
-                      |  Comment
-        else
-          div(style="text-align:center!important;")
-            img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
-            br
-            br
-            h(style="font-weight:500; font-size:25pt; color:grey") Add your issues
+                    
+                  .main.issueBlock
+                    #nextBtn
+                      div#issueTopic(style="margin-left:10px;width:auto!important")
+                        if each.supporters.length>=(0.75*memberctrlorgs[0].members.length)
+                          i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
+                        a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
+                      div#issueDesc #{each.issueDesc}
+                      div#issueAttach(style="padding:10px;")
+                        if each.docsUpload.length!=0
+                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                          for all in each.docsUpload 
+                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                            a(href="/uploads/"+all.filename ) #{all.originalName}
+                            br
+                
+                  div(id="feed_details")
+                    ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
+                      li
+                        a(href="#" ) 
+                          span(id="num_of_likes") #{each.supporters.length}
+                          |  Upvotes
+                      //- li
+                      //-   h(style="margin-right:5px;margin-left:5px") -
+                      //- li
+                      //-   a(href="#")
+                      //-     span(id="num_of_comments") #{each.comments.length}
+                      //-     |  Comments
+                   
+                    .issueCommentPart
+                      button(id="likeBtn" )
+                        if (each.supporters.indexOf(username)==-1)
+                          i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                          |  Upvote
+                        else
+                          i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
+                          |  Upvote
+
+                      //- button(id="commentBtn" )
+                      //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
+          else
+            div(style="text-align:center!important;")
+              img(src="/images/SuccessLogo.png" style="width:30%;opacity:0.7")
+              br
+              br
+              h(style="font-weight:500; font-size:25pt; color:grey") Add your issues
   
 
       else if(userOrgs.length==0)
@@ -254,6 +301,28 @@ block issues
         $('#nextBtn').slideToggle();
         $(this).toggleClass('glyphicon-plus glyphicon-minus');
       })
+
+      $('#openBtn').click(function(){
+        $('#openIssue').show();
+        $('#announcements').hide();
+        $(this).css({
+          'border-bottom' : '2px solid #42b72a'
+        })
+        $('#announcementBtn').css({
+          'border-bottom' : '2px solid white'
+        })
+      });
+
+      $('#announcementBtn').click(function(){
+        $('#openIssue').hide();
+        $('#announcements').show();
+        $(this).css({
+          'border-bottom' : '2px solid #42b72a'
+        })
+        $('#openBtn').css({
+          'border-bottom' : '2px solid white'
+        })
+      });
 
       
       $('button#openIssueOption').click(function(){
@@ -444,14 +513,14 @@ block issues
         });
       });
 
-      $('li.postIssuePart').mouseover(function(){
+      $('li.postIssuePart#adIs').mouseover(function(){
         $(this).css({
               'box-shadow': '0 20px 60px 0 rgba(27,42,53,.25)',
               'transform': 'translateY(-1%)'
         })
       })
 
-      $('li.postIssuePart').mouseout(function(){
+      $('li.postIssuePart#adIs').mouseout(function(){
               $(this).css({
                  'transform': 'translateY(1%)',
                  'box-shadow' : '0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff'

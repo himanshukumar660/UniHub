@@ -11,7 +11,7 @@ block issues
               i(class="glyphicon glyphicon-plus" id="expandMakeOrg")      
 
           .main.issueBlock
-            #nextBtn(style="display:block")
+            #nextBtn(style="display:none")
               div(style="margin-left:5px")
                   input(type='text' id="issueDescriptionTopic" name="announcementTopic" placeholder="Topic" required maxlength="60")
                   
@@ -28,37 +28,48 @@ block issues
       li.postIssuePart(style="border-radius:3px")
         .issuePart1D(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px;padding:0px")
           if(search(username, orgDtl.admin))
-            div(style="width:33.3%;padding:10px;border-right:1px solid lightgray;border-bottom:2px solid #42b72a;cursor:pointer" id="openBtn")
+            div(style="width:25.0%;padding:10px;border-right:1px solid lightgray;border-bottom:2px solid #42b72a;cursor:pointer" id="openBtn")
               button(style="background-color:unset;font-size:14pt;border:none")
                 i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;color:green")
                 | #{openIssues.length - aIssues.length}
                 | Open           
             
-            div(style="width:33.33%;padding:10px;cursor:pointer" id="closedBtn")
+            div(style="width:25.0%;padding:10px;cursor:pointer" id="closedBtn")
               button(style="background-color:unset;font-size:14pt;border:none")
                 i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:black;font-size:14pt;color:red")
                 | #{closedIssues.length}
                 | Closed                 
 
+            div(style="width:25.0%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="aBtn")
+              button(style="background-color:unset;font-size:14pt;border:none")
+                i(class="fa fa-user-secret" style="background-color:unset!important;color:black;font-size:14t;color:black;padding-right:5px")
+                | #{aIssues.length}
+                | Secret
+
+            div(style="width:25.0%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="announcementBtn")
+              button(style="background-color:unset;font-size:14pt;border:none")
+                i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:black;font-size:14pt;color:black;padding-right:5px")
+                | #{announcements.length}
+                |  Notices
+          else
+            div(style="width:33.33%;padding:10px;border-right:1px solid lightgray;border-bottom:2px solid #42b72a;cursor:pointer" id="openBtn")
+              button(style="background-color:unset;font-size:14pt;border:none")
+                i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;color:green")
+                | #{openIssues.length - aIssues.length}
+                | Open           
+          
+            div(style="width:33.33%;padding:10px;cursor:pointer" id="closedBtn")
+              button(style="background-color:unset;font-size:14pt;border:none")
+                i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:black;font-size:14pt;color:red")
+                | #{closedIssues.length}
+                | Closed                 
+            
             div(style="width:33.33%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="aBtn")
               button(style="background-color:unset;font-size:14pt;border:none")
                 i(class="fa fa-user-secret" style="background-color:unset!important;color:black;font-size:14pt;color:black;padding-right:5px")
-                span#aLen #{aIssues.length}
-                |  Anonymous
-          else
-              div(style="width:50.0%;padding:10px;border-right:1px solid lightgray;border-bottom:2px solid #42b72a;cursor:pointer" id="openBtn")
-                button(style="background-color:unset;font-size:14pt;border:none")
-                  i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:black;font-size:14pt;color:green")
-                  | #{openIssues.length - aIssues.length}
-                  | Open           
-            
-              div(style="width:50.0%;padding:10px;cursor:pointer" id="closedBtn")
-                button(style="background-color:unset;font-size:14pt;border:none")
-                  i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:black;font-size:14pt;color:red")
-                  | #{closedIssues.length}
-                  | Closed                 
-
-
+                span#aLen #{orgDtl.announcements.length}
+                |  Announcements
+    
       if(search(username, orgDtl.members))      
         div#openIssues(style="display:block;")
           if (openIssues.length-aIssues.length)!=0
@@ -100,32 +111,39 @@ block issues
                           i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
                         a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
-                
+                      div#issueAttach(style="padding:10px;")
+                        if each.docsUpload.length!=0
+                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                          for all in each.docsUpload 
+                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                            a(href="/uploads/"+all.filename ) #{all.originalName}
+                            br
+
                   div(id="feed_details")
                     ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
                       li
                         a(href="#" ) 
                           span(id="num_of_likes") #{each.supporters.length}
-                          |  Supports
-                      li
-                        h(style="margin-right:5px;margin-left:5px") -
-                      li
-                        a(href="#")
-                          span(id="num_of_comments") #{each.comments.length}
-                          |  Comments
+                          |  Upvotes
+                      //- li
+                      //-   h(style="margin-right:5px;margin-left:5px") -
+                      //- li
+                      //-   a(href="#")
+                      //-     span(id="num_of_comments") #{each.comments.length}
+                      //-     |  Comments
                    
                     .issueCommentPart
                       button(id="likeBtn" )
                         if (each.supporters.indexOf(username)==-1)
                           i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                          |  I Support
+                          |  Upvote
                         else
                           i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                          |  I Support
+                          |  Upvote
 
-                      button(id="commentBtn" )
-                        i(class="mega-octicon octicon-comment" style="font-size:18px")
-                        |  Comment
+                      //- button(id="commentBtn" )
+                      //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
+                      //-   |  Comment
           else
             div(style="text-align:center!important;padding-top:100px")
               i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:lightgray;font-size:100px;")
@@ -177,32 +195,39 @@ block issues
                         i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
                       a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
                     div#issueDesc #{each.issueDesc}
-              
+                    div#issueAttach(style="padding:10px;")
+                      if each.docsUpload.length!=0
+                        p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                        for all in each.docsUpload 
+                          i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                          a(href="/uploads/"+all.filename ) #{all.originalName}
+                          br
+
                 div(id="feed_details")
                   ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
                     li
                       a(href="#" ) 
                         span(id="num_of_likes") #{each.supporters.length}
-                        |  Supports
-                    li
-                      h(style="margin-right:5px;margin-left:5px") -
-                    li
-                      a(href="#")
-                        span(id="num_of_comments") #{each.comments.length}
-                        |  Comments
+                        |  Upvotes
+                    //- li
+                    //-   h(style="margin-right:5px;margin-left:5px") -
+                    //- li
+                    //-   a(href="#")
+                    //-     span(id="num_of_comments") #{each.comments.length}
+                    //-     |  Comments
                  
                   .issueCommentPart
                     button(id="likeBtn" )
                       if (each.supporters.indexOf(username)==-1)
                         i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                        |  I Support
+                        |  Upvote
                       else
                         i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                        |  I Support
+                        |  Upvote
 
-                    button(id="commentBtn" )
-                      i(class="mega-octicon octicon-comment" style="font-size:18px")
-                      |  Comment
+                    //- button(id="commentBtn" )
+                    //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
+                    //-   |  Comment
           else
             div(style="text-align:center!important;padding-top:100px")
               i(class="fa fa-user-secret" style="background-color:unset!important;color:lightgray;font-size:100px;")
@@ -250,38 +275,84 @@ block issues
                           i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
                         a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
-                
+                      div#issueAttach(style="padding:10px;")
+                        if each.docsUpload.length!=0
+                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                          for all in each.docsUpload 
+                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                            a(href="/uploads/"+all.filename ) #{all.originalName}
+                            br
+
                   div(id="feed_details")
                     ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
                       li
                         a(href="#" ) 
                           span(id="num_of_likes") #{each.supporters.length}
-                          |  Supports
-                      li
-                        h(style="margin-right:5px;margin-left:5px") -
-                      li
-                        a(href="#")
-                          span(id="num_of_comments") #{each.comments.length}
-                          |  Comments
+                          |  Upvotes
+                      //- li
+                      //-   h(style="margin-right:5px;margin-left:5px") -
+                      //- li
+                      //-   a(href="#")
+                      //-     span(id="num_of_comments") #{each.comments.length}
+                      //-     |  Comments
                    
                     .issueCommentPart
                       button(id="likeBtn" )
                         if (each.supporters.indexOf(username)==-1)
                           i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                          |  I Support
+                          |  Upvote
                         else
                           i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                          |  I Support
+                          |  Upvote
 
-                      button(id="commentBtn" )
-                        i(class="mega-octicon octicon-comment" style="font-size:18px")
-                        |  Comment
+                      //- button(id="commentBtn" )
+                      //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
+                      //-   |  Comment
           else
             div(style="text-align:center!important;padding-top:100px")
               i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:lightgray;font-size:100px;")
               br
               br
-              h(style="font-weight:500; font-size:25pt; color:grey") No closed issues    
+              h(style="font-weight:500; font-size:25pt; color:grey") No closed issues  
+        
+        div#announcements(style="display:none;")
+          if announcements.length!=0  
+            for each in announcements
+              li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
+                .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+                  div(style="float:left;display:inline-flex")
+                    div(style="float:left")
+                      img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
+                    div(style="float:right")
+                      a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;') #{each.name}
+                      p(id="date") Posted on #{each.datePosted}
+                      
+
+                .main.issueBlock
+                  #nextBtn
+                    div#issueTopic(style="margin-left:10px;width:auto!important") #{each.issueTopic}
+                    div#issueDesc #{each.issueDesc}
+                    div#issueAttach(style="padding:10px;")
+                        if each.docsUpload.length!=0
+                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                          for all in each.docsUpload 
+                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                            a(href="/uploads/"+all.filename ) #{all.originalName}
+                            br
+
+            else
+              div(style="text-align:center!important;padding-top:100px")
+                i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:lightgray;font-size:100px;")
+                br
+                br
+                h(style="font-weight:500; font-size:25pt; color:grey") No notices yet
+
+          else
+            div(style="text-align:center!important;padding-top:100px")
+              i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:lightgray;font-size:100px;")
+              br
+              br
+              h(style="font-weight:500; font-size:25pt; color:grey") No notices yet
 
       else
         div(style="text-align:center!important;padding-top:100px")
@@ -341,6 +412,7 @@ block issues
         $('#openIssues').show();
         $('#closedIssues').hide();
         $('#aIssues').hide();
+        $('#announcements').hide();
         $(this).css({
           'border-bottom' : '2px solid #42b72a'
         })
@@ -350,12 +422,16 @@ block issues
         $('#aBtn').css({
           'border-bottom' : '2px solid white'
         })
+        $('#announcementBtn').css({
+          'border-bottom' : '2px solid white'
+        })
       });
 
       $('#closedBtn').click(function(){
         $('#openIssues').hide();
         $('#closedIssues').show();
         $('#aIssues').hide();
+        $('#announcements').hide();
         $(this).css({
           'border-bottom' : '2px solid #42b72a'
         })
@@ -365,12 +441,15 @@ block issues
         $('#aBtn').css({
           'border-bottom' : '2px solid white'
         })
-        
+        $('#announcementBtn').css({
+          'border-bottom' : '2px solid white'
+        })
       });
 
       $('#aBtn').click(function(){
         $('#openIssues').hide();
         $('#closedIssues').hide();
+        $('#announcements').hide();
         $('#aIssues').show();
         $(this).css({
           'border-bottom' : '2px solid #42b72a'
@@ -381,8 +460,30 @@ block issues
         $('#closedBtn').css({
           'border-bottom' : '2px solid white'
         })
+        $('#announcementBtn').css({
+          'border-bottom' : '2px solid white'
+        })
       });
 
+      $('#announcementBtn').click(function(){
+        $('#openIssues').hide();
+        $('#closedIssues').hide();
+        $('#aIssues').hide();
+        $('#announcements').show();
+        $(this).css({
+          'border-bottom' : '2px solid #42b72a'
+        })
+        $('#openBtn').css({
+          'border-bottom' : '2px solid white'
+        })
+        $('#closedBtn').css({
+          'border-bottom' : '2px solid white'
+        })
+        $('#aBtn').css({
+          'border-bottom' : '2px solid white'
+        })
+      });
+      
       $('#expandPost').click(function(){
         $('#nextBtn').toggle();
         $(this).toggleClass('glyphicon-plus glyphicon-minus');

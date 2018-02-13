@@ -61,25 +61,25 @@ block issues
                   li
                     a(href="#" ) 
                       span(id="num_of_likes") #{each.supporters.length}
-                      |  Supports
-                  li
-                    h(style="margin-right:5px;margin-left:5px") -
-                  li
-                    a(href="#")
-                      span(id="num_of_comments") #{each.comments.length}
-                      |  Comments
+                      |  Upvotes
+                  //- li
+                  //-   h(style="margin-right:5px;margin-left:5px") -
+                  //- li
+                  //-   a(href="#")
+                  //-     span(id="num_of_comments") #{each.comments.length}
+                  //-     |  Comments
                
                 .issueCommentPart
                   button(id="likeBtn" )
                     if (each.supporters.indexOf(username)==-1)
                       i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                      |  I Support
+                      |  Upvote
                     else
                       i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                      |  I Support
+                      |  Upvote
 
-                  button(id="commentBtn" )
-                    i(class="mega-octicon octicon-comment" style="font-size:18px")
+                  //- button(id="commentBtn" )
+                  //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
                     |  Comment
         else
           div(style="text-align:center!important;")

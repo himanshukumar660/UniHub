@@ -65,21 +65,27 @@ router.get('/', ensureAuthentication, function(req, res, next) {
           Org.memberOrgs(userObj, function(err4, res4){
            if(err4) throw err4;
            else{
-            var userOrgs = [];
+            Issue.getAnnouncementIssues(function(err5, res5){
+              if(err5) throw res5;
+              else
+              {
+                var userOrgs = [];
+                for(each in res4){
+                  userOrgs.push(res4[each].userId);
+                }
+                console.log(userOrgs);
 
-            for(each in res4){
-              userOrgs.push(res4[each].userId);
-            }
-            console.log(userOrgs);
-
-            res.render('issues',{
-              title: 'Home',
-              username: req.user.username,
-              name: req.user.name,
-              memberctrlorgs: res4,
-              userDetails: res2,
-              issues: res1,
-              userOrgs: userOrgs,
+                res.render('issues',{
+                  title: 'Home',
+                  username: req.user.username,
+                  name: req.user.name,
+                  memberctrlorgs: res4,
+                  userDetails: res2,
+                  issues: res1,
+                  userOrgs: userOrgs,
+                  announcements: res5
+                })
+              }
             })
           }
         }) 
@@ -394,22 +400,29 @@ router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
             else{
               Issue.getAnonymousIssueByOrgUserId(orgUId, function(err4, res4){
                 if(err4) throw err4;
-                else{      
-                    for (var each in res4)
-                      if(res4[each].anonymity=="on"){
-                        res4[each].username = decrypt(res4[each].username);
-                        res4[each].name = decrypt(res4[each].name);
-                        res4[each].userAvatarPath = decrypt(res4[each].userAvatarPath);
-                      }
+                else{
+                  Issue.getAnnouncementIssues(function(err5, res5){
+                    if(err5) throw err5;
+                    else
+                    {     
+                      for (var each in res4)
+                        if(res4[each].anonymity=="on"){
+                          res4[each].username = decrypt(res4[each].username);
+                          res4[each].name = decrypt(res4[each].name);
+                          res4[each].userAvatarPath = decrypt(res4[each].userAvatarPath);
+                        }
 
-                    res.render('indorgissues', {
-                      title: res1.name+" : ",
-                      username: username,
-                      orgDtl : res1,
-                      openIssues: res2,
-                      closedIssues: res3,
-                      aIssues: res4  
-                    });
+                      res.render('indorgissues', {
+                        title: res1.name+" : ",
+                        username: username,
+                        orgDtl : res1,
+                        openIssues: res2,
+                        closedIssues: res3,
+                        aIssues: res4,
+                        announcements: res5  
+                      });
+                    }
+                  })   
                 }
               })
             }
@@ -898,18 +911,26 @@ router.post('/makeAnnouncement', ensureAuthentication, upload.array('announcemen
         files.push({originalName:req.files[each].originalname, filename:req.files[each].filename});
       }
     }
-    var announcementObj = {
-      topic : topic,
-      desc : text,
-      docsUpload : files
-    }
-    console.log(announcementObj);
-    console.log(orgUId);
-    Org.addAnnouncement(orgUId, announcementObj, function(err1, res1){
-      if(err1)  throw err1;
+    Org.findOrgByUID(orgUId, function (err2, res2) {
+      if(err2) throw err2;
       else{
-        console.log('Added');
-        res.redirect('/orgs/'+orgUId);
+          var issue = new Issue({
+            username: res2.userId,
+            orgUserId: orgUId,
+            docsUpload: files,
+            userAvatarPath: res2.orgAvatarPath,
+            name: res2.name,
+            status: "Notice",
+            issueTopic: topic,
+            issueDesc: text,
+        });
+        Issue.createIssue(issue, function(err1, res1){
+          if(err1)  throw err1;
+          else{
+            console.log('Added');
+            res.redirect('/orgs/'+orgUId);
+          }
+        })
       }
     })
   }

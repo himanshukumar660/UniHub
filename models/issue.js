@@ -180,6 +180,11 @@ module.exports.getOpenIssueByOrgUserId = function(orguid, callback){
 	Issue.find({$and : [{orgUserId : orguid}, {status : "open"}]}, callback);
 };
 
+module.exports.getAnnouncementIssues = function(callback){
+	Issue.find({status : "Notice"}, callback);
+};
+
+
 module.exports.getClosedIssueByOrgUserId = function(orguid, callback){
 	Issue.find({$and : [{orgUserId : orguid}, {status : "closed"}]}, callback);
 };
@@ -194,3 +199,5 @@ module.exports.deleteIssueByOrgUserId = function(orguid, callback){
 	}
 	Issue.remove(query, callback);
 };
+
+

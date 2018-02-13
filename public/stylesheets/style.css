@@ -230,7 +230,7 @@ li.issuePart{
 }
 .gridbox.gridmenu{
   margin-left:0%!important;
-  padding-left: 0px; 
+  padding-left: 20px; 
 }
 .gridmenu {
     width: 20.481781376518218623481781376518%;
@@ -243,22 +243,22 @@ li.issuePart{
 }
 
 .gridmain {
-    width: 50.57854251012145748987854251012%;
+    width: 60.57854251012145748987854251012%;
     overflow: scroll;
     float: left;
     position: absolute;
-    left: 17% !important;
+    left: 18% !important;
 }
 
 
 .gridright {
-  width: 36.651781376518218623481781376518%;
+  width: 18.651781376518218623481781376518%;
   overflow: scroll;
   background-color: unset;
   height: 100%;
   text-align: center;
   float: right;
-  left: 64.08%;
+  left: 79.08%;
 }
 
 .right {
@@ -601,7 +601,7 @@ li#iRD{
   color:#000000;
   font-weight:500;
   font-size:12pt;
-  width:50%;
+  width:100%;
   text-align:center;
   border:none;
   padding: 7px;
