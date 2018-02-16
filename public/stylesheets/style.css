@@ -217,7 +217,7 @@ li.issuePart{
     display:inline;
     height:100%;
     position:absolute;
-    top:40px;
+    top:60px;
 }
 
 .gridwrapper {
@@ -300,6 +300,26 @@ li.issuePart{
   nav{
     display: none!important;
   }
+  #issues{
+    margin:0px;
+    padding: 0px;
+  }
+  .issuePart{
+    margin-left: 0px!important;
+    margin-right: 0px !important;
+  }
+  .tabBtns{
+    border-radius: 2rem!important;
+  }
+  .tabCnts{
+   border-radius: 2rem!important; 
+  }
+  #openBtn, #member{
+    border-bottom-left-radius: 2rem !important;
+  }
+  #announcementBtn, #pending{
+    border-bottom-right-radius: 2rem !important; 
+  }
   .mobileNav{
     display: block;
   }
@@ -351,6 +371,7 @@ li.issuePart{
         width: 100%;
         float: center;
         left: 0% !important;
+        padding: 0px;
     }
 
     .main {
