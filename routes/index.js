@@ -113,43 +113,125 @@ router.get('/getIssues/:date', ensureAuthentication, function(req,res, next){
 
 
 //When the user Likes any post
-router.post('/likepost/:id', ensureAuthentication, function(req,res, next){
+router.post('/favour/', ensureAuthentication, function(req,res, next){
   console.log("Initiating to like the post");
-  var _id = req.params.id;
-  console.log(_id);
+  var userCh = req.body.userFv;
+  var postId = req.body.id;
   var username = req.user.username;
-  Issue.chkUserLikedPost(username, _id, function(err1, results1){
-    if(err1) throw err1
-      else
-      {
-         if(results1==null) //Not have liked before
-         {
-          Issue.addUsertoSupporters(username, _id, function(err2){
-            if(err2) throw err2;
-            else
-            {
-              Issue.incLikesByIssues(username, _id, function(err3){
-                if(err3)
-                  throw err3;
-              });
-            }
-          });
+  console.log(username);
+  if(userCh=="like"){
+    console.log('like');
+    Issue.chkUserDislikedPost(username, postId, function(err3, res3){
+      if(err3) throw err3;
+      else{
+        if(res3==null){
+              Issue.chkUserLikedPost(username, postId, function(err1, res1){
+                if(err1) throw res1;
+                else if(res1==null){
+                  Issue.addUsertoSupporters(username, postId, function(err2, res2){
+                    if(err2) throw err2;
+                    else{
+                      console.log(res2);
+                    }
+                  });
+                }
+                else{
+                  Issue.removeUsertoSupporters(username, postId, function(err2, res2){
+                    if(err2) throw err2;
+                    else{
+                      console.log(res2);
+                    }
+                  });
+                }
+              })
         }
-        else {
-          Issue.removeUsertoSupporters(username, _id, function(err2){
-            if(err2) throw err2;
-            else
-            {
-              Issue.dcrLikesByIssues(req.user.username, _id, function(err3){
-                if(err3)
-                  throw err3;
-              });
+        else{
+          Issue.removeUsertoHaters(username, postId, function(err1, res1){
+            if(err1) throw err1;
+            else{
+                  Issue.chkUserLikedPost(username, postId, function(err1, res1){
+                    if(err1) throw res1;
+                    else if(res1==null){
+                      Issue.addUsertoSupporters(username, postId, function(err2, res2){
+                        if(err2) throw err2;
+                        else{
+                          console.log(res2);
+                        }
+                      });
+                    }
+                    else{
+                      Issue.removeUsertoSupporters(username, postId, function(err2, res2){
+                        if(err2) throw err2;
+                        else{
+                          console.log(res2);
+                        }
+                      });
+                    }
+                  })
             }
-          });
-        } 
+          })
+        }
       }
-    });
+    })
+  }
+  else if(userCh=="dislike"){
+    console.log('dislike');
+    Issue.chkUserLikedPost(username, postId, function(err3, res3){
+      if(err3) throw err3;
+      else{
+        if(res3==null){
+              Issue.chkUserDislikedPost(username, postId, function(err1, res1){
+                if(err1) throw res1;
+                else if(res1==null){
+                  Issue.addUsertoHaters(username, postId, function(err2, res2){
+                    if(err2) throw err2;
+                    else{
+                      console.log(res2);
+                    }
+                  });
+                }
+                else{
+                  Issue.removeUsertoHaters(username, postId, function(err2, res2){
+                    if(err2) throw err2;
+                    else{
+                      console.log(res2);
+                    }
+                  });
+                }
+              })
+        }
+        else{
+          Issue.removeUsertoSupporters(username, postId, function(err1, res1){
+            if(err1) throw err1;
+            else{
+                  Issue.chkUserDislikedPost(username, postId, function(err1, res1){
+                    if(err1) throw res1;
+                    else if(res1==null){
+                      Issue.addUsertoHaters(username, postId, function(err2, res2){
+                        if(err2) throw err2;
+                        else{
+                          console.log(res2);
+                        }
+                      });
+                    }
+                    else{
+                      Issue.removeUsertoHaters(username, postId, function(err2, res2){
+                        if(err2) throw err2;
+                        else{
+                          console.log(res2);
+                        }
+                      });
+                    }
+                  })
+            }
+          })
+        }
+      }
+    })
+
+  }
 });
+
 
 //When the user demands for a single post details
 router.get('/indpost/:id', ensureAuthentication, function(req,res, next){

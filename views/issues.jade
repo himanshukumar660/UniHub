@@ -155,31 +155,46 @@ block issues
                             i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
                             a(href="/uploads/"+all.filename ) #{all.originalName}
                             br
-                
-                  div(id="feed_details")
-                    ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
-                      li
-                        a(href="#" ) 
-                          span(id="num_of_likes") #{each.supporters.length}
-                          |  Upvotes
-                      //- li
-                      //-   h(style="margin-right:5px;margin-left:5px") -
-                      //- li
-                      //-   a(href="#")
-                      //-     span(id="num_of_comments") #{each.comments.length}
-                      //-     |  Comments
-                   
-                    .issueCommentPart
-                      button(id="likeBtn" )
-                        if (each.supporters.indexOf(username)==-1)
-                          i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                          |  Upvote
-                        else
-                          i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                          |  Upvote
 
-                      //- button(id="commentBtn" )
-                      //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
+                  div(id="feed_details")
+                    if((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1))  
+                      div(style="display:inline-block;width:100%!important")
+                        ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
+                          li
+                            a(href="#" ) 
+                              span(id="num_of_likes") #{each.supporters.length}
+                              |  Upvotes
+                          li
+                            h(style="margin-right:5px;margin-left:5px") -
+                          li
+                            a(href="#")
+                              span(id="num_of_dislikes") #{each.haters.length}
+                              |  Downvotes
+                        
+                        if(each.supporters.indexOf(username)!=-1)
+                          div(id="status" style="float:right")
+                            i(class="fa fa-thumbs-up" title="You have Upvoted" style="font-size:28px;padding-right:17px")
+                        else
+                          div(id="status" style="float:right")
+                            i(class="fa fa-thumbs-down" title="You have Downvoted" style="font-size:28px;padding-right:17px")
+
+                    else 
+                      .issueCommentPart
+                        button(id="likeBtn" )
+                          if (each.supporters.indexOf(username)==-1)
+                            i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                            |  Upvote
+                          else
+                            i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
+                            |  Upvote
+
+                        button(id="dislikeBtn" )                        
+                          if (each.haters.indexOf(username)==-1)
+                            i(class="fa fa-thumbs-o-down" style="font-size:18px;" id="dislikeBtnLogo")
+                            |  Downvote
+                          else
+                            i(class="fa fa-thumbs-down" style="font-size:18px" id="dislikeBtnLogo")
+                            |  Downvote
           else
             div(style="text-align:center!important;")
               i(class="mega-octicon octicon-issue-opened" style="font-size:100px;background-color:unset;color:lightgray")
@@ -462,33 +477,6 @@ block issues
         });
       });
 
-      
-      $('button#likeBtn').click(function(e){
-
-        if( $(this).find('i#likeBtnLogo').hasClass("fa-thumbs-up") )
-          { 
-           console.log("Executed 1");
-            $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])-1);
-          }
-        
-        else if( $(this).find('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
-          {
-           console.log("Executed 2");
-            $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])+1);
-          }
-
-          e.preventDefault();
-          $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
-          var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
-          console.log(id);
-          
-          var _url = "/likepost/"+id;
-          console.log(_url);
-          $.post({
-          url: _url,
-        });
-      });
-
       $('button#delIssueOptionBtn').click(function(){
         var delIssueOptionBtn = $(this);
         $('.addDeleteAlertbackground').show();
@@ -526,6 +514,79 @@ block issues
                  'box-shadow' : '0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff'
               })
       })
+    
+    $('button#likeBtn').click(function(e){
+
+            //- if( $(this).find('i#likeBtnLogo').hasClass("fa-thumbs-up") )
+            //-   { 
+            //-    console.log("Executed 1");
+            //-     $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])-1);
+            //-   }
+            
+            //- else if( $(this).find('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
+            //-   {
+            //-    console.log("Executed 2");
+            //-     $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])+1);
+            //-   }
+
+              e.preventDefault();
+              $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
+              if($('.issueCommentPart').find('#dislikeBtn i.fa').hasClass('fa-thumbs-down')){
+                  $('.issueCommentPart').find('#dislikeBtn i.fa').removeClass('fa-thumbs-down')
+                  $('.issueCommentPart').find('#dislikeBtn i.fa').addClass('fa-thumbs-o-down');
+              }
+              //$(this).parents('.issueCommentPart').find('button#dislikeBtn i.fa.fa-thumbs-o-down').removeClass('fa-thumbs-down');
+              //- $(this).siblings('i.fa.fa-thumbs-down').removeClass('fa-thumbs-down');
+              //- $(this).siblings('i.fa').addClass('i.fa.fa-thumbs-o-down');
+          
+              var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
+              console.log(id);
+              $.ajax({
+                url : '/favour/',
+                data: {
+                  userFv : "like",
+                  id: id
+                },
+                method: 'POST'
+              });
+          });
+    $('button#dislikeBtn').click(function(e){
+
+        //- if( $(this).find('i#dislikeBtnLogo').hasClass("fa-thumbs-down") )
+        //-   { 
+        //-    console.log("Executed dislike");
+        //-     $(this).parents('#feed_details').find('#num_of_dislikes').html(parseInt($(this).parents('#feed_details').find('#num_of_dislikes').text()[0])-1);
+        //-   }
+        
+        //- else if( $(this).find('i#dislikeBtnLogo').hasClass('fa-thumbs-o-down') )
+        //-   {
+        //-    console.log("Executed dislike 2");
+        //-     $(this).parents('#feed_details').find('#num_of_dislikes').html(parseInt($(this).parents('#feed_details').find('#num_of_dislikes').text()[0])+1);
+        //-   }
+
+        //-   e.preventDefault();
+          $(this).find('i.fa').toggleClass('fa-thumbs-o-down fa-thumbs-down');
+            if($('.issueCommentPart').find('#likeBtn i.fa').addClass('fa-thumbs-o-up')){
+                $('.issueCommentPart').find('#likeBtn i.fa').removeClass('fa-thumbs-up')
+                $('.issueCommentPart').find('#likeBtn i.fa').addClass('fa-thumbs-o-up');
+          }
+          //$(this).parents('.issueCommentPart').find('button#likeBtn i.fa').addClass('fa-thumbs-o-up');
+          //$(this).parents('.issueCommentPart').find('button#likeBtn i.fa').removeClass('fa-thumbs-up');
+          
+          //- $(this).siblings('i.fa.fa-thumbs-up').removeClass('fa-thumbs-up');
+          //- $(this).siblings('i.fa').addClass('i.fa.fa-thumbs-o-up');
+
+          var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
+          console.log(id);
+          $.ajax({
+            url : '/favour/',
+            data: {
+              userFv : "dislike",
+              id: id
+            },
+            method: 'POST'
+          });
+      });
 
 
 

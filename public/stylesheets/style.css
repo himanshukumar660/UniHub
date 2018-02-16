@@ -332,6 +332,10 @@ li.issuePart{
       background-color: white;
     }
 
+    button#dislikeBtn{
+      background-color: white;
+    }
+
     #issueDesc{
       font-size: 11pt;
     }
@@ -575,6 +579,10 @@ color:gray;
   color: #42b72a !important;
 }
 
+.fa-thumbs-down{
+  color: red !important;
+}
+
 a#issueTopic{
   text-decoration: none;
   color: black;
@@ -597,7 +605,7 @@ li#iRD{
   border-right: 1px solid #d4dbe0;
 }
 
-#commentBtn, #likeBtn, #updateEditBtn, #cancelEditBtn{
+#commentBtn, #likeBtn, #updateEditBtn, #cancelEditBtn, #dislikeBtn{
   color:#000000;
   font-weight:500;
   font-size:12pt;
@@ -608,7 +616,7 @@ li#iRD{
   transition: background-color 0.2s ease-in-out;
 }
 
-#commentBtn:hover, #likeBtn:hover, #updateEditBtn:hover, #cancelEditBtn:hover{
+#commentBtn:hover, #likeBtn:hover, #updateEditBtn:hover, #cancelEditBtn:hover, #dislikeBtn:hover{
   background-color: #e8f3ff;
 }
 .issueCommentPart{

@@ -99,6 +99,7 @@ router.post('/check_creadentials/', ensureNotAuthenticated, function(req, res, n
 });
 
 router.post('/register', upload.single('avatar'), function(req, res, next) {
+//	console.log(req.body);
 	console.log(req.body);
 	var name = req.body.name;
 	var moto = req.body.moto;

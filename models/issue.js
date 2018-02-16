@@ -70,6 +70,8 @@ var issueSchema = new Schema({
 
 	supporters: [String],
 
+	haters: [String],
+
 	comments: [String],
 
 	//date potsed 
@@ -149,24 +151,29 @@ module.exports.updateIssueById = function(username, updatedIssue,  callback){
 module.exports.chkWholeIssuesForLiked = function(username, callback){
 	Issue.find({ supporters : username}, callback);
 }
+
 module.exports.chkUserLikedPost = function(username, id, callback) {
 	Issue.findOne({ $and: [{_id :id}, { supporters : username }]}, callback);
 }
 
 module.exports.addUsertoSupporters = function(username, id, callback){
-	Issue.findOneAndUpdate({ _id : id }, { $addToSet : { supporters : username}}, callback);	
+		Issue.findOneAndUpdate({ _id : id }, { $addToSet : { supporters : username}}, callback);		
 }
 
 module.exports.removeUsertoSupporters = function(username, id, callback){
 	Issue.findOneAndUpdate({ _id : id }, { $pull : { supporters : username}}, callback);	
 }
 
-module.exports.incLikesByIssues = function(username, id, callback) {
-	Issue.update({_id :id}, {$inc : {likes : 1}}, callback);
+module.exports.chkUserDislikedPost = function(username, id, callback) {
+	Issue.findOne({ $and: [{_id :id}, { haters : username }]}, callback);
 }
 
-module.exports.dcrLikesByIssues = function(username, id, callback) {
-	Issue.update({_id :id}, {$inc : {likes : -1}}, callback);
+module.exports.addUsertoHaters = function(username, id, callback){
+		Issue.findOneAndUpdate({ _id : id }, { $addToSet : { haters : username}}, callback);
+}
+
+module.exports.removeUsertoHaters = function(username, id, callback){
+	Issue.findOneAndUpdate({ _id : id }, { $pull : { haters : username}}, callback);	
 }
 
 module.exports.getIssueByOrgUserId = function(orguid, callback){

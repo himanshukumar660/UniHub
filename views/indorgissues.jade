@@ -64,10 +64,10 @@ block issues
                 | #{closedIssues.length}
                 | Closed                 
             
-            div(style="width:33.33%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="aBtn")
+            div(style="width:33.33%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="announcementBtn")
               button(style="background-color:unset;font-size:14pt;border:none")
                 i(class="fa fa-user-secret" style="background-color:unset!important;color:red!important;font-size:14pt;color:black;padding-right:5px")
-                span#aLen #{orgDtl.announcements.length}
+                span#aLen #{announcements.length}
                 |  Notices
     
       if(search(username, orgDtl.members))      
@@ -151,89 +151,90 @@ block issues
               br
               h(style="font-weight:500; font-size:25pt; color:grey") No open issues    
             
-        div#aIssues(style="display:none;")
-          if aIssues.length!=0
-            for each in aIssues  
-              li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
-                .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-                  div(style="float:left;display:inline-flex")
-                    div(style="float:left")
-                      img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
-                    div(style="float:right")
-                      a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
-                      
-                      span(style='color:gray')  
-                        i.glyphicon.glyphicon-play(style="font-size:10pt")  
-                        a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
-
-                      if each.edited
-                       p(id="date") Edited on #{each.datePosted}
-                      else
-                       p(id="date") Posted on #{each.datePosted}
-                    
-                  
-                  div(style="float:right")
-                    if (each.status==="open")
-                      i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
-                        span  Open
-                    else
-                      i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
-                        span  Closed
-                    
-                    .dropdown(style="width:auto!important;float:right")
-                        button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
-                          i(class="ionicons ion-android-more-vertical" style="font-weight:500;font-size:20pt;margin-left:5px")
+        if(search(username, orgDtl.admin))
+          div#aIssues(style="display:none;")
+            if aIssues.length!=0
+              for each in aIssues  
+                li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
+                  .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+                    div(style="float:left;display:inline-flex")
+                      div(style="float:left")
+                        img(src='/uploads/'+'#{each.userAvatarPath}', alt='' style="border-radius:50%;width:40px;height:40px;margin-right:10px")
+                      div(style="float:right")
+                        a(href="/profile/"+each.username id="linkProfile" style='font-weight:900;') #{each.name}
                         
-                        ul.dropdown-menu(role='menu', aria-labelledby='menu1' style="font-size:12pt;font-weight:500;")
-                          li(role='presentation' style="padding:5px;margin-bottom:2px")
-                            button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOptionBtn") Delete Issue
-                            
-                .main.issueBlock
-                  #nextBtn
-                    div#issueTopic(style="margin-left:10px;width:auto!important")
-                      if each.supporters.length>=(0.75*orgDtl.members.length)
-                        i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
-                      a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
-                    div#issueDesc #{each.issueDesc}
-                    div#issueAttach(style="padding:10px;")
-                      if each.docsUpload.length!=0
-                        p(style="font-weight:500") #{each.docsUpload.length} Attachments :
-                        for all in each.docsUpload 
-                          i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                          a(href="/uploads/"+all.filename ) #{all.originalName}
-                          br
+                        span(style='color:gray')  
+                          i.glyphicon.glyphicon-play(style="font-size:10pt")  
+                          a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;')  #{each.orgname}
 
-                div(id="feed_details")
-                  ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
-                    li
-                      a(href="#" ) 
-                        span(id="num_of_likes") #{each.supporters.length}
-                        |  Upvotes
-                    //- li
-                    //-   h(style="margin-right:5px;margin-left:5px") -
-                    //- li
-                    //-   a(href="#")
-                    //-     span(id="num_of_comments") #{each.comments.length}
-                    //-     |  Comments
-                 
-                  .issueCommentPart
-                    button(id="likeBtn" )
-                      if (each.supporters.indexOf(username)==-1)
-                        i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                        |  Upvote
+                        if each.edited
+                         p(id="date") Edited on #{each.datePosted}
+                        else
+                         p(id="date") Posted on #{each.datePosted}
+                      
+                    
+                    div(style="float:right")
+                      if (each.status==="open")
+                        i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
+                          span  Open
                       else
-                        i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                        |  Upvote
+                        i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
+                          span  Closed
+                      
+                      .dropdown(style="width:auto!important;float:right")
+                          button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
+                            i(class="ionicons ion-android-more-vertical" style="font-weight:500;font-size:20pt;margin-left:5px")
+                          
+                          ul.dropdown-menu(role='menu', aria-labelledby='menu1' style="font-size:12pt;font-weight:500;")
+                            li(role='presentation' style="padding:5px;margin-bottom:2px")
+                              button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOptionBtn") Delete Issue
+                              
+                  .main.issueBlock
+                    #nextBtn
+                      div#issueTopic(style="margin-left:10px;width:auto!important")
+                        if each.supporters.length>=(0.75*orgDtl.members.length)
+                          i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
+                        a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
+                      div#issueDesc #{each.issueDesc}
+                      div#issueAttach(style="padding:10px;")
+                        if each.docsUpload.length!=0
+                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                          for all in each.docsUpload 
+                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                            a(href="/uploads/"+all.filename ) #{all.originalName}
+                            br
 
-                    //- button(id="commentBtn" )
-                    //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
-                    //-   |  Comment
-          else
-            div(style="text-align:center!important;padding-top:100px")
-              i(class="fa fa-user-secret" style="background-color:unset!important;color:lightgray;font-size:100px;")
-              br
-              br
-              h(style="font-weight:500; font-size:25pt; color:grey") No Anonymous issues
+                  div(id="feed_details")
+                    ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
+                      li
+                        a(href="#" ) 
+                          span(id="num_of_likes") #{each.supporters.length}
+                          |  Upvotes
+                      //- li
+                      //-   h(style="margin-right:5px;margin-left:5px") -
+                      //- li
+                      //-   a(href="#")
+                      //-     span(id="num_of_comments") #{each.comments.length}
+                      //-     |  Comments
+                   
+                    .issueCommentPart
+                      button(id="likeBtn" )
+                        if (each.supporters.indexOf(username)==-1)
+                          i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                          |  Upvote
+                        else
+                          i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
+                          |  Upvote
+
+                      //- button(id="commentBtn" )
+                      //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
+                      //-   |  Comment
+            else
+              div(style="text-align:center!important;padding-top:100px")
+                i(class="fa fa-user-secret" style="background-color:unset!important;color:lightgray;font-size:100px;")
+                br
+                br
+                h(style="font-weight:500; font-size:25pt; color:grey") No Anonymous issues
 
         div#closedIssues(style="display:none")
           if closedIssues.length!=0
@@ -315,8 +316,8 @@ block issues
               br
               h(style="font-weight:500; font-size:25pt; color:grey") No closed issues  
         
-        div#announcements(style="display:none;")
-          if announcements.length!=0  
+        div#announcements(style="display:none;")  
+          if(announcements.length!=0)
             for each in announcements
               li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")

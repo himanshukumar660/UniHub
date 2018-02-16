@@ -15,7 +15,7 @@ block content
 					.glyphicon.glyphicon-remove(style="float:right" id="close_error")
 		
 					
-		form(method='POST', action="/users/register" enctype="multipart/form-data")
+		form(id="myForm" method='POST', action="/users/register" enctype="multipart/form-data")
 			input(id='name', type='text', placeholder="Your Name", name="name", value= '#{name}' style="text-transform:capitalize")
 			textarea#moto(rows='2', placeholder='What is your principle ?', name="moto" style="width:100%!important") #{moto}
 			.form-group.has-success.has-feedback#usernameFeild(style="margin-bottom:0px")
@@ -32,6 +32,14 @@ block content
 			div(style="text-align:center;padding:15px!important")
 				input(style="background-color:#42b72a;border:none;color:white!important;width:10rem!important;font-size:20px" value="Register" type="submit" name="submit" id="submit")
 		script.
+			function capitalize(string, lower) {
+				return (lower ? string.toLowerCase() : string).replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+			};
+
+			$('#myForm').on('submit', function(){
+				$(this).find('input#name').setAttr('value', "Himanshu");
+				console.log($(this).find('#name').val());
+			})
 
 			$('#username').on('input', function(){
 				var usernameFeild = $(this);
