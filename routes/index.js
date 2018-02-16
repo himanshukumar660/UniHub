@@ -31,7 +31,7 @@ var upload = multer({ storage: storage });
 
 // For encryption and decryption
 function encrypt(text){
-  var cipher = crypto.createCipher(algorithm, key);  
+  var cipher = crypto.createCipher(algorithm, key);
   var encrypted = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
   return encrypted;
 }
@@ -41,7 +41,7 @@ function decrypt(text){
   var decrypted = decipher.update(text, 'hex', 'utf8') + decipher.final('utf8');
   return decrypted;
 }
-//Following are related with the issues 
+//Following are related with the issues
 
 /* Get the home page*/
 router.get('/', ensureAuthentication, function(req, res, next) {
@@ -65,35 +65,35 @@ router.get('/', ensureAuthentication, function(req, res, next) {
           Org.memberOrgs(userObj, function(err4, res4){
            if(err4) throw err4;
            else{
-            Issue.getAnnouncementIssues(function(err5, res5){
-              if(err5) throw res5;
-              else
-              {
                 var userOrgs = [];
+                var userAnnouncement = [];
                 for(each in res4){
                   userOrgs.push(res4[each].userId);
                 }
-                console.log(userOrgs);
 
-                res.render('issues',{
-                  title: 'Home',
-                  username: req.user.username,
-                  name: req.user.name,
-                  memberctrlorgs: res4,
-                  userDetails: res2,
-                  issues: res1,
-                  userOrgs: userOrgs,
-                  announcements: res5
+                Issue.getAnnouncementIssues(function(err5, res5){
+                  if(err5) throw err5;
+                  else{
+                    console.log(res5);
+                    res.render('issues',{
+                      title: 'Home',
+                      username: req.user.username,
+                      name: req.user.name,
+                      memberctrlorgs: res4,
+                      userDetails: res2,
+                      issues: res1,
+                      userOrgs: userOrgs,
+                      announcements: res5
+                    })
+                  }
                 })
               }
             })
           }
-        }) 
+        })
         }
-      }); 
-    }
-  });
-});        
+      });
+});
 
 //Asynchronously get the Issues and populate the issue division
 router.get('/getIssues/:date', ensureAuthentication, function(req,res, next){
@@ -238,7 +238,7 @@ router.get('/indpost/:id', ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
   var id = req.params.id;
   console.log(id);
-  
+
   Issue.getIssueById(id, function(err, result){
     if(err)
       console.log("Could'nt fetch post details");
@@ -260,7 +260,7 @@ router.post('/delpostA/:id', ensureAuthentication, function(req,res, next){
   console.log(postId);
   var username = req.user.username;
   console.log(username);
-  
+
   Issue.delIssueByAId(postId, function(err, result){
     if(err) throw err
     else
@@ -278,7 +278,7 @@ router.post('/delpost/:id', ensureAuthentication, function(req,res, next){
   console.log(postId);
   var username = req.user.username;
   console.log(username);
-  
+
   Issue.delIssueById(postId, username, function(err, result){
     if(err) throw err
     else
@@ -292,7 +292,7 @@ router.post('/delpost/:id', ensureAuthentication, function(req,res, next){
 router.post('/openIssue/:id', ensureAuthentication, function(req,res, next){
   var postId = req.params.id;
   var username = req.user.username;
-  
+
   Issue.openIssueById(postId, username, function(err, result){
     if(err) throw err
     else
@@ -309,7 +309,7 @@ router.post('/closeIssue/:id', ensureAuthentication, function(req,res, next){
   console.log(postId);
   var username = req.user.username;
   console.log(username);
-  
+
   Issue.closeIssueById(postId, username, function(err, result){
     if(err) throw err
     else
@@ -381,7 +381,7 @@ router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(r
       var name = req.user.name;
       var anonymity;
 
-      
+
       var issue = new Issue({
         username: req.user.username,
         orgUserId: orgId,
@@ -424,7 +424,7 @@ router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(r
                         console.log('Issue Posted..');
                         res.redirect('/');
                       }
-                    });    
+                    });
             }
           });
         }
@@ -458,7 +458,7 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
         }
       });
     }
-  });    
+  });
 });
 
 
@@ -483,10 +483,10 @@ router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
               Issue.getAnonymousIssueByOrgUserId(orgUId, function(err4, res4){
                 if(err4) throw err4;
                 else{
-                  Issue.getAnnouncementIssues(function(err5, res5){
+                  Issue.getAnnouncementIssuesByOrgUserId(orgUId, function(err5, res5){
                     if(err5) throw err5;
                     else
-                    {     
+                    {
                       for (var each in res4)
                         if(res4[each].anonymity=="on"){
                           res4[each].username = decrypt(res4[each].username);
@@ -501,10 +501,10 @@ router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
                         openIssues: res2,
                         closedIssues: res3,
                         aIssues: res4,
-                        announcements: res5  
+                        announcements: res5
                       });
                     }
-                  })   
+                  })
                 }
               })
             }
@@ -512,7 +512,7 @@ router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
         }
       });
     }
-  });    
+  });
 });
 
 
@@ -527,7 +527,7 @@ router.post('/joinOrg/:orgUId', ensureAuthentication, function(req, res, next) {
   console.log(orgUId);
   var userObj = {
     name: req.user.name,
-    username : req.user.username  
+    username : req.user.username
   };
   Org.enterOrg(orgUId, userObj, function(err2, res2){
     if(err2) throw err2;
@@ -537,7 +537,7 @@ router.post('/joinOrg/:orgUId', ensureAuthentication, function(req, res, next) {
       console.log('Waiting for the adminstrator for accepting the request');
       res.redirect('back');
     }
-  })   
+  })
 });
 
 router.post('/addmyorg', ensureAuthentication, upload.single('orgAvatar'), function(req, res, next) {
@@ -552,7 +552,7 @@ router.post('/addmyorg', ensureAuthentication, upload.single('orgAvatar'), funct
 
   var userObj = {
     name: req.user.name,
-    username : req.user.username  
+    username : req.user.username
   };
 
   var orgDtl = new Org({
@@ -598,7 +598,7 @@ router.get('/pendingreq/:orguid', ensureAuthentication, function(req, res, next)
                 username: username,
                 orgDtl : res1,
                 openIssues: res2,
-                closedIssues: res3,  
+                closedIssues: res3,
               });
             }
           });
@@ -631,7 +631,7 @@ router.get('/members/:orguid', ensureAuthentication, function(req, res, next) {
                 username: username,
                 orgDtl : res1,
                 openIssues: res2,
-                closedIssues: res3,  
+                closedIssues: res3,
               });
             }
           });
@@ -653,7 +653,7 @@ router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
   var reqUsername = toString(req.body.reqUserName);
   var orgUserId = req.body.orgDtl;
 
-  
+
   var username = req.user.username;
   var name = req.user.name;
 
@@ -699,7 +699,7 @@ router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
           else{
             console.log(res2);
             res.send('Member added to member Group');
-            console.log("Member added to member Group");    
+            console.log("Member added to member Group");
           }
         });
       }
@@ -717,7 +717,7 @@ router.post('/cancelPendingReq/:orgUserId', ensureAuthentication, function(req, 
     username: username,
     name: name
   };
-  
+
   Org.declinePendingReq(orgUserId, userObj, function(err1, res1){
     if(err1) throw err1;
     else{
@@ -740,7 +740,7 @@ router.post('/declineReq/', ensureAuthentication, function(req, res, next){
   var reqUsername = toString(req.body.reqUserName);
   var orgUserId = req.body.orgDtl;
 
-  
+
   var username = req.user.username;
   var name = req.user.name;
 
@@ -757,7 +757,7 @@ router.post('/declineReq/', ensureAuthentication, function(req, res, next){
 
   console.log(adminObj);
 
-  
+
   var reqUserObj = {
     name: JSON.stringify(req.body.reqUserName).replace(/"/g,''),
     username: JSON.stringify(req.body.reqUserUsername).replace(/"/g,''),
@@ -788,7 +788,7 @@ router.post('/declineReq/', ensureAuthentication, function(req, res, next){
           else{
             console.log(res2);
             console.log("Member request is declined");
-            res.send('Successfull');    
+            res.send('Successfull');
           }
         });
       }
@@ -833,7 +833,7 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
         }
       })
     }
-  })    
+  })
 });
 
 router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next) {
@@ -859,7 +859,7 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
               initial: "true"
             })
           }
-          
+
           else{
 
             if(req.query.suborgquery)
@@ -889,7 +889,7 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
                               pendingctrlorgs: res5,
                               orgsByName: res6,
                               initial: "false"
-                            })    
+                            })
                           }
                         })
                       }
@@ -900,7 +900,7 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
             })
           }
         }
-      });          
+      });
 });
 
 router.post('/removeMem', ensureAuthentication, function(req, res, next){
@@ -930,7 +930,7 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
   Org.exitOrgAdmin(orgUId, userObj, function(err1, res1){
     if(err1) throw err1;
     else{
-        //We have equated the following to 1 becuase of async nature of javascript. 
+        //We have equated the following to 1 becuase of async nature of javascript.
         // The Fact is that even after calling the exitOrgAdmin , the fucntion sees the previus state result.
         //So we need to make sure that we are not including the results of previous state of the database.
         console.log("After Exiting the org Admin");
@@ -943,7 +943,7 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
             console.log("No one is Admin Now. Do somehting..");
             console.log(res1);
             if(res1.members.length==1)
-            {   
+            {
                 //If no one is present in the organisation, just delete the organisation
                 console.log("No one is member.. Finally delete the organisation");
                 Issue.deleteIssueByOrgUserId(orgUId, function(err3, res3){
@@ -1031,7 +1031,7 @@ router.post('/makeAnnouncement', ensureAuthentication, upload.array('announcemen
 //           if(err2) throw err2;
 //               else{
 //                   res.redirect('/myorg');
-//                 }   
+//                 }
 //           });
 //       }
 //     });

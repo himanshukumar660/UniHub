@@ -2,7 +2,7 @@
         var descLength = $(this).text().length;
         var descTrimmed1 = (descLength>250)?("<span id='descTrimmed1'>"+$(this).text().substring(0,250)+"</span><span id='3dots'>...</span>"):($(this).text());
         var descTrimmed2 = (descLength>250)?("<span id='descTrimmed2' style='display:none'>"+$(this).text().substring(250)+"</span>"+"<span id='readMore' style='color:#337ab7;cursor:pointer'>Read More</span>"):"";
-        
+
         $(this).html(descTrimmed1+descTrimmed2);
         //- (descTrimmed.length>200)?($(this).append('<span id="readMore" style="color:#337ab7;cursor:pointer">Read More</span>')):1;
         //- $('#readMore')
@@ -46,7 +46,7 @@
         })
       });
 
-      
+
       $('button#openIssueOption').click(function(){
         var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
         var thisPost = $(this);
@@ -75,16 +75,16 @@
       //-   });
       //-   var issueTopic = $(this).closest('li.issuePart').find('#issueTopic');
       //-   var issueDesc = $(issueTopic).siblings('#issueDesc');
-        
+
       //-   var issueTopicText = $(issueTopic).html();
       //-   var issueDescriptionText = $(issueDesc).html();
 
       //-   var feed_details = $(this).closest('li.issuePart').find('#feed_details');
       //-   var feed_details_issueCommentPart = $(feed_details).html();
-        
+
       //-   var issueId = $(this).closest('.dropdown.open').siblings('i.issueStatus').attr('id');
       //-   console.log(issueId);
-        
+
       //-   issueTopic.html('<input type="text" id="issueDescriptionTopic" name="issueDescriptionTopic" value="'+issueTopic.text()+'" placeholder="Issue Topic" required maxlength="60"/>');
       //-   $(issueDesc).css({
       //-     "margin" : "0px",
@@ -93,7 +93,7 @@
       //-   });
       //-   issueDesc.html('<textarea style="width:100%;min-height:100px" id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required>'+issueDesc.text()+'</textarea>');
       //-   $(feed_details).find('ul#feed_numbers').hide();
-        
+
       //-   $(feed_details).html('\
       //-   <div style="display:inline-flex;width:100%;text-align:center!important">\
       //-   <button id="cancelEditBtn" style="width:100%;float:left">\
@@ -109,7 +109,7 @@
       //-     $(editIssueOption).css({
       //-       'opacity':'1'
       //-     });
-          
+
       //-     $(issueDesc).css({
       //-       "margin" : "5px",
       //-       'padding':'10px',
@@ -123,7 +123,7 @@
       //-   });
 
       //-   $('#updateEditBtn').click(function(){
-                
+
       //-     $(editIssueOption).prop('disabled',false);
       //-     $(editIssueOption).css({
       //-       'opacity':'1'
@@ -133,7 +133,7 @@
       //-       'padding':'10px',
       //-       'padding-left': '5px'
       //-     });
-          
+
       //-     $.ajax({
       //-       method: 'POST',
       //-       data:{
@@ -149,7 +149,7 @@
       //-           $(issueTopic).html($(issueTopic).find('input#issueDescriptionTopic').val());
       //-           $(issueDesc).html($(issueDesc).find('textarea#issueDescriptionText').val());
       //-           $(feed_details).find('ul#feed_numbers').show();
-      //-           $(feed_details).html(feed_details_issueCommentPart);   
+      //-           $(feed_details).html(feed_details_issueCommentPart);
       //-         }
       //-         else{
       //-           console.log("Some Error Occured!");
@@ -175,12 +175,12 @@
           success: function(data){
             if(data=="1")
               {
-                
+
                 thisPost.parents('li.issuePart').find('i.issueStatus').removeClass("octicon-issue-opened");
                 thisPost.parents('li.issuePart').find('i.issueStatus').addClass("octicon-issue-closed");
                 thisPost.parents('li.issuePart').find('i.issueStatus span').text(" Closed");
                 thisPost.siblings('#openIssueOption').show();
-                thisPost.hide(); 
+                thisPost.hide();
               }
           }
         });
@@ -223,15 +223,15 @@
                  'box-shadow' : '0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff'
               })
       })
-    
+
     $('button#likeBtn').click(function(e){
 
             //- if( $(this).find('i#likeBtnLogo').hasClass("fa-thumbs-up") )
-            //-   { 
+            //-   {
             //-    console.log("Executed 1");
             //-     $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])-1);
             //-   }
-            
+
             //- else if( $(this).find('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
             //-   {
             //-    console.log("Executed 2");
@@ -247,7 +247,7 @@
               //$(this).parents('.issueCommentPart').find('button#dislikeBtn i.fa.fa-thumbs-o-down').removeClass('fa-thumbs-down');
               //- $(this).siblings('i.fa.fa-thumbs-down').removeClass('fa-thumbs-down');
               //- $(this).siblings('i.fa').addClass('i.fa.fa-thumbs-o-down');
-          
+
               var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
               console.log(id);
               $.ajax({
@@ -262,11 +262,11 @@
     $('button#dislikeBtn').click(function(e){
 
         //- if( $(this).find('i#dislikeBtnLogo').hasClass("fa-thumbs-down") )
-        //-   { 
+        //-   {
         //-    console.log("Executed dislike");
         //-     $(this).parents('#feed_details').find('#num_of_dislikes').html(parseInt($(this).parents('#feed_details').find('#num_of_dislikes').text()[0])-1);
         //-   }
-        
+
         //- else if( $(this).find('i#dislikeBtnLogo').hasClass('fa-thumbs-o-down') )
         //-   {
         //-    console.log("Executed dislike 2");
@@ -281,7 +281,7 @@
           }
           //$(this).parents('.issueCommentPart').find('button#likeBtn i.fa').addClass('fa-thumbs-o-up');
           //$(this).parents('.issueCommentPart').find('button#likeBtn i.fa').removeClass('fa-thumbs-up');
-          
+
           //- $(this).siblings('i.fa.fa-thumbs-up').removeClass('fa-thumbs-up');
           //- $(this).siblings('i.fa').addClass('i.fa.fa-thumbs-o-up');
 

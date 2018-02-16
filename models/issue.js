@@ -26,7 +26,7 @@ var issueSchema = new Schema({
 		type: String,
 		required: true
 	},
-	
+
 	orgname:{
 		type: String,
 	},
@@ -44,7 +44,7 @@ var issueSchema = new Schema({
 		type: String
 	},
 
-	issueDesc: { 
+	issueDesc: {
 		type:String
 	},
 
@@ -74,7 +74,7 @@ var issueSchema = new Schema({
 
 	comments: [String],
 
-	//date potsed 
+	//date potsed
 	datePosted: {
 		type: Date
 	},
@@ -157,11 +157,11 @@ module.exports.chkUserLikedPost = function(username, id, callback) {
 }
 
 module.exports.addUsertoSupporters = function(username, id, callback){
-		Issue.findOneAndUpdate({ _id : id }, { $addToSet : { supporters : username}}, callback);		
+		Issue.findOneAndUpdate({ _id : id }, { $addToSet : { supporters : username}}, callback);
 }
 
 module.exports.removeUsertoSupporters = function(username, id, callback){
-	Issue.findOneAndUpdate({ _id : id }, { $pull : { supporters : username}}, callback);	
+	Issue.findOneAndUpdate({ _id : id }, { $pull : { supporters : username}}, callback);
 }
 
 module.exports.chkUserDislikedPost = function(username, id, callback) {
@@ -173,7 +173,7 @@ module.exports.addUsertoHaters = function(username, id, callback){
 }
 
 module.exports.removeUsertoHaters = function(username, id, callback){
-	Issue.findOneAndUpdate({ _id : id }, { $pull : { haters : username}}, callback);	
+	Issue.findOneAndUpdate({ _id : id }, { $pull : { haters : username}}, callback);
 }
 
 module.exports.getIssueByOrgUserId = function(orguid, callback){
@@ -190,7 +190,9 @@ module.exports.getOpenIssueByOrgUserId = function(orguid, callback){
 module.exports.getAnnouncementIssues = function(callback){
 	Issue.find({status : "Notice"}, callback);
 };
-
+module.exports.getAnnouncementIssuesByOrgUserId = function(orgUserId, callback){
+	Issue.find({$and : [{status : "Notice"},{orgUserId : orgUserId}]}, callback);
+};
 
 module.exports.getClosedIssueByOrgUserId = function(orguid, callback){
 	Issue.find({$and : [{orgUserId : orguid}, {status : "closed"}]}, callback);
@@ -206,5 +208,3 @@ module.exports.deleteIssueByOrgUserId = function(orguid, callback){
 	}
 	Issue.remove(query, callback);
 };
-
-
