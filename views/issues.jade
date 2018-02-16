@@ -195,6 +195,7 @@ block issues
                           else
                             i(class="fa fa-thumbs-down" style="font-size:18px" id="dislikeBtnLogo")
                             |  Downvote
+                  .editBtns
           else
             div(style="text-align:center!important;")
               i(class="mega-octicon octicon-issue-opened" style="font-size:100px;background-color:unset;color:lightgray")
@@ -387,7 +388,7 @@ block issues
         issueDesc.html('<textarea style="width:100%;min-height:100px" id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required>'+issueDesc.text()+'</textarea>');
         $(feed_details).find('ul#feed_numbers').hide();
         
-        $(feed_details).find('.issueCommentPart').html('\
+        $(feed_details).closest('.editBtns').html('\
         <button id="cancelEditBtn">\
         <i style="font-size:18px;" id="likeBtnLogo" class="ionicons ion-android-cancel"></i> Cancel\
         </button>\

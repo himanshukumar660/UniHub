@@ -120,30 +120,44 @@ block issues
                             br
 
                   div(id="feed_details")
-                    ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
-                      li
-                        a(href="#" ) 
-                          span(id="num_of_likes") #{each.supporters.length}
-                          |  Upvotes
-                      //- li
-                      //-   h(style="margin-right:5px;margin-left:5px") -
-                      //- li
-                      //-   a(href="#")
-                      //-     span(id="num_of_comments") #{each.comments.length}
-                      //-     |  Comments
-                   
-                    .issueCommentPart
-                      button(id="likeBtn" )
-                        if (each.supporters.indexOf(username)==-1)
-                          i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                          |  Upvote
+                    if((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1))  
+                      div(style="display:inline-block;width:100%!important")
+                        ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
+                          li
+                            a(href="#" ) 
+                              span(id="num_of_likes") #{each.supporters.length}
+                              |  Upvotes
+                          li
+                            h(style="margin-right:5px;margin-left:5px") -
+                          li
+                            a(href="#")
+                              span(id="num_of_dislikes") #{each.haters.length}
+                              |  Downvotes
+                        
+                        if(each.supporters.indexOf(username)!=-1)
+                          div(id="status" style="float:right")
+                            i(class="fa fa-thumbs-up" title="You have Upvoted" style="font-size:28px;padding-right:17px")
                         else
-                          i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                          |  Upvote
+                          div(id="status" style="float:right")
+                            i(class="fa fa-thumbs-down" title="You have Downvoted" style="font-size:28px;padding-right:17px")
 
-                      //- button(id="commentBtn" )
-                      //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
-                      //-   |  Comment
+                    else 
+                      .issueCommentPart
+                        button(id="likeBtn" )
+                          if (each.supporters.indexOf(username)==-1)
+                            i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                            |  Upvote
+                          else
+                            i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
+                            |  Upvote
+
+                        button(id="dislikeBtn" )                        
+                          if (each.haters.indexOf(username)==-1)
+                            i(class="fa fa-thumbs-o-down" style="font-size:18px;" id="dislikeBtnLogo")
+                            |  Downvote
+                          else
+                            i(class="fa fa-thumbs-down" style="font-size:18px" id="dislikeBtnLogo")
+                            |  Downvote
           else
             div(style="text-align:center!important;padding-top:100px")
               i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:lightgray;font-size:100px;")
@@ -205,30 +219,44 @@ block issues
                             br
 
                   div(id="feed_details")
-                    ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
-                      li
-                        a(href="#" ) 
-                          span(id="num_of_likes") #{each.supporters.length}
-                          |  Upvotes
-                      //- li
-                      //-   h(style="margin-right:5px;margin-left:5px") -
-                      //- li
-                      //-   a(href="#")
-                      //-     span(id="num_of_comments") #{each.comments.length}
-                      //-     |  Comments
-                   
-                    .issueCommentPart
-                      button(id="likeBtn" )
-                        if (each.supporters.indexOf(username)==-1)
-                          i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                          |  Upvote
+                    if((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1))  
+                      div(style="display:inline-block;width:100%!important")
+                        ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
+                          li
+                            a(href="#" ) 
+                              span(id="num_of_likes") #{each.supporters.length}
+                              |  Upvotes
+                          li
+                            h(style="margin-right:5px;margin-left:5px") -
+                          li
+                            a(href="#")
+                              span(id="num_of_dislikes") #{each.haters.length}
+                              |  Downvotes
+                        
+                        if(each.supporters.indexOf(username)!=-1)
+                          div(id="status" style="float:right")
+                            i(class="fa fa-thumbs-up" title="You have Upvoted" style="font-size:28px;padding-right:17px")
                         else
-                          i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                          |  Upvote
+                          div(id="status" style="float:right")
+                            i(class="fa fa-thumbs-down" title="You have Downvoted" style="font-size:28px;padding-right:17px")
 
-                      //- button(id="commentBtn" )
-                      //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
-                      //-   |  Comment
+                    else 
+                      .issueCommentPart
+                        button(id="likeBtn" )
+                          if (each.supporters.indexOf(username)==-1)
+                            i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                            |  Upvote
+                          else
+                            i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
+                            |  Upvote
+
+                        button(id="dislikeBtn" )                        
+                          if (each.haters.indexOf(username)==-1)
+                            i(class="fa fa-thumbs-o-down" style="font-size:18px;" id="dislikeBtnLogo")
+                            |  Downvote
+                          else
+                            i(class="fa fa-thumbs-down" style="font-size:18px" id="dislikeBtnLogo")
+                            |  Downvote
             else
               div(style="text-align:center!important;padding-top:100px")
                 i(class="fa fa-user-secret" style="background-color:unset!important;color:lightgray;font-size:100px;")
@@ -285,30 +313,44 @@ block issues
                             br
 
                   div(id="feed_details")
-                    ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;")
-                      li
-                        a(href="#" ) 
-                          span(id="num_of_likes") #{each.supporters.length}
-                          |  Upvotes
-                      //- li
-                      //-   h(style="margin-right:5px;margin-left:5px") -
-                      //- li
-                      //-   a(href="#")
-                      //-     span(id="num_of_comments") #{each.comments.length}
-                      //-     |  Comments
-                   
-                    .issueCommentPart
-                      button(id="likeBtn" )
-                        if (each.supporters.indexOf(username)==-1)
-                          i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                          |  Upvote
+                    if((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1))  
+                      div(style="display:inline-block;width:100%!important")
+                        ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
+                          li
+                            a(href="#" ) 
+                              span(id="num_of_likes") #{each.supporters.length}
+                              |  Upvotes
+                          li
+                            h(style="margin-right:5px;margin-left:5px") -
+                          li
+                            a(href="#")
+                              span(id="num_of_dislikes") #{each.haters.length}
+                              |  Downvotes
+                        
+                        if(each.supporters.indexOf(username)!=-1)
+                          div(id="status" style="float:right")
+                            i(class="fa fa-thumbs-up" title="You have Upvoted" style="font-size:28px;padding-right:17px")
                         else
-                          i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                          |  Upvote
+                          div(id="status" style="float:right")
+                            i(class="fa fa-thumbs-down" title="You have Downvoted" style="font-size:28px;padding-right:17px")
 
-                      //- button(id="commentBtn" )
-                      //-   i(class="mega-octicon octicon-comment" style="font-size:18px")
-                      //-   |  Comment
+                    else 
+                      .issueCommentPart
+                        button(id="likeBtn" )
+                          if (each.supporters.indexOf(username)==-1)
+                            i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
+                            |  Upvote
+                          else
+                            i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
+                            |  Upvote
+
+                        button(id="dislikeBtn" )                        
+                          if (each.haters.indexOf(username)==-1)
+                            i(class="fa fa-thumbs-o-down" style="font-size:18px;" id="dislikeBtnLogo")
+                            |  Downvote
+                          else
+                            i(class="fa fa-thumbs-down" style="font-size:18px" id="dislikeBtnLogo")
+                            |  Downvote
           else
             div(style="text-align:center!important;padding-top:100px")
               i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:lightgray;font-size:100px;")
