@@ -21,9 +21,9 @@ block issues
                           option(value=ech.userId) #{ech.name} : #{ech.userId}
 
                     
-                    input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Topic" required maxlength="60")
+                    input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Topic" style="margin-bottom:0px!important;border-bottom:0px" required maxlength="60")
                     
-                    textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
+                    textarea(id="issueDescriptionText" name="issueDescriptionText" style="margin-top:0px" placeholder="Write detailed description" required )
                     
                     div(style="display:inline-block;width:100%")
                       
@@ -32,11 +32,12 @@ block issues
                       div(style="display:inline-flex;float:left")
                         input(type="checkbox" id="anonymity" name="anonymity")
                         span(style="color:black;width:150px") Be Anonymous
-                      div(style="display:inline-flex;float:right")
-                        label(for="files" style="min-width:100px;") Attachments :
+                      div(style="display:inline-flex;float:center")
+                        label(for="files" style="min-width:auto")
+                          i(class="glyphicon glyphicon-paperclip" style="padding-right:10px") 
                         input(id='orgAvatar' type='file' name='issueDocs' style="padding:0px!important;margin:0px!important" multiple)
-                    div(style="text-align:center;float:right")
-                      input( value="Post" type="submit" name="issuePost" id="issuePost")        
+                      div(style="text-align:center;float:right")
+                        input( value="Post" type="submit" name="issuePost" id="issuePost")        
         -var i=0;
         -for(each in announcements){
         -if(userOrgs.indexOf(announcements[each].orgUserId)>-1){
