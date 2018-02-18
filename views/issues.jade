@@ -25,17 +25,17 @@ block issues
                     
                     textarea(id="issueDescriptionText" name="issueDescriptionText" style="margin-top:0px" placeholder="Write detailed description" required )
                     
-                    div(style="display:inline-block;width:100%")
-                      
+                    div(style="display:inline-block;width:100%" id="uploadInfo")
+                      p(style="padding-left:10px") 
 
                     div(style="display:inline-block;width:100%")
                       div(style="display:inline-flex;float:left")
                         input(type="checkbox" id="anonymity" name="anonymity")
                         span(style="color:black;width:150px") Be Anonymous
-                      div(style="display:inline-flex;float:center")
+                      div(style="display:inline-block;float:center;position:absolute")
                         label(for="files" style="min-width:auto")
-                          i(class="glyphicon glyphicon-paperclip" style="padding-right:10px") 
-                        input(id='orgAvatar' type='file' name='issueDocs' style="padding:0px!important;margin:0px!important" multiple)
+                          i(class="ionicons ion-ios-cloud-upload" style="padding-right:10px;position:absolute;cursor:pointer!important;font-size:40px;cursor:pointer" title="File Upload")
+                          input(type='file' id='issueDocs' name='issueDocs' style="padding:0px!important;margin:0px!important;opacity:0;width:40px!important" multiple)
                       div(style="text-align:center;float:right")
                         input( value="Post" type="submit" name="issuePost" id="issuePost")        
         -var i=0;
@@ -73,12 +73,13 @@ block issues
                       div#issueTopic(style="margin-left:10px;width:auto!important") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
                       div#issueAttach(style="padding:10px;")
-                        if each.docsUpload.length!=0
-                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
-                          for all in each.docsUpload 
-                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                            a(href="/uploads/"+all.filename ) #{all.originalName}
-                            br
+                        p#attachmentBtn(style="font-weight:500") Show #{each.docsUpload.length} Attachments :
+                          div#attachmentsList(style="display:none")
+                            if each.docsUpload.length!=0
+                              for all in each.docsUpload 
+                                i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                                a(href="/uploads/"+all.filename ) #{all.originalName}
+                                br
 
           else
             div(style="text-align:center!important;")
@@ -154,12 +155,14 @@ block issues
                         a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
                       div#issueAttach(style="padding:10px;")
-                        if each.docsUpload.length!=0
-                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
-                          for all in each.docsUpload 
-                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                            a(href="/uploads/"+all.filename ) #{all.originalName}
-                            br
+                        p#attachmentBtn(style="font-weight:500;cursor:pointer") Show #{each.docsUpload.length} Attachments :
+                          div#attachmentsList(style="display:none")
+                            if each.docsUpload.length!=0
+                              for all in each.docsUpload 
+                                i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                                a(href="/uploads/"+all.filename ) #{all.originalName}
+                                br
+
 
                   div(id="feed_details")
                     if((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1))  
@@ -484,7 +487,26 @@ block issues
           }
         });
       });
-
+      
+      $('p#attachmentBtn').click(function(){
+        $(this).text($(this).text().replace("Show", ""));
+        $(this).siblings('#attachmentsList').show();
+      });
+      
+      $('#issueDocs').bind('change', function(){
+        console.log('Hi');
+        //for (var ech in )
+        //console.log(document.getElementById('issueDocs').files.length);
+        
+        //console.log(typeof($().files[0].name));
+        $(this).closest('#nextBtn').find('#uploadInfo p').append("<b>Attachments </b>");
+        for (var i=0; i<document.getElementById('issueDocs').files.length;i++)
+          {
+              $(this).closest('#nextBtn').find('#uploadInfo p').append("<br>"+(i+1)+". "+document.getElementById('issueDocs').files[i].name);
+          }
+        
+      });
+      
       $('button#delIssueOptionBtn').click(function(){
         var delIssueOptionBtn = $(this);
         $('.addDeleteAlertbackground').show();
