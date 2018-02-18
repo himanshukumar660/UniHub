@@ -368,8 +368,9 @@ router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(r
   var files_array = [];
   if(req.files){
     docs = req.files;
+    console.log(docs);
     for (var each in docs)
-      files_array.push({filename : docs[each].filename, originalName : docs[each].originalname});
+      files_array.push({filename : docs[each].filename, originalName : docs[each].originalname, mimetype: docs[each].mimetype});
     console.log(files_array);
   }
   if(req.body){

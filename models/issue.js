@@ -65,6 +65,9 @@ var issueSchema = new Schema({
 		originalName: {
 			type: String
 		},
+		mimetype:{
+			type: String
+		},
 		_id : false
 	}],
 

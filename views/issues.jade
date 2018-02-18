@@ -78,7 +78,7 @@ block issues
                             if each.docsUpload.length!=0
                               for all in each.docsUpload 
                                 i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                                a(href="/uploads/"+all.filename ) #{all.originalName}
+                                a(href="/uploads/"+all.filename filetype="#{all.mimetype}") #{all.originalName}
                                 br
 
           else
@@ -156,12 +156,14 @@ block issues
                       div#issueDesc #{each.issueDesc}
                       div#issueAttach(style="padding:10px;")
                         p#attachmentBtn(style="font-weight:500;cursor:pointer") Show #{each.docsUpload.length} Attachments :
+                          //i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px") 
                           div#attachmentsList(style="display:none")
-                            if each.docsUpload.length!=0
-                              for all in each.docsUpload 
-                                i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                                a(href="/uploads/"+all.filename ) #{all.originalName}
-                                br
+                            ul(style="list-style:none;padding-left:0px")
+                              if each.docsUpload.length!=0
+                                for all in each.docsUpload 
+                                  li#attachmentsItem
+                                    span#filetype(style="padding-left:5px;padding-right:5px;color:gray") #{all.mimetype}
+                                    a(id="filename" href="/uploads/"+all.filename) #{all.originalName}
 
 
                   div(id="feed_details")
@@ -490,7 +492,38 @@ block issues
       
       $('p#attachmentBtn').click(function(){
         $(this).text($(this).text().replace("Show", ""));
+        $(this).siblings('#attachmentsList').find('ul li#attachmentsItem').each(function(){
+            console.log("hi");
+            var mimetype = $(this).find('#filetype').text();
+            console.log(mimetype);
+            mimetype = mimetype.substring(0, mimetype.indexOf("/"));
+            console.log(mimetype);
+            if(mimetype=="text"){
+              $(this).find('#filetype').html('<i class="fa fa-file-text-o" title="Text File"></i>');
+            }
+            else if(mimetype=="image"){
+              $(this).find('#filetype').html('<i class="fa fa-file-image-o" title="Image File"></i>');
+            }
+            else if(mimetype=="audio"){
+              $(this).find('#filetype').html('<i class="fa fa-file-audio-o" title="Audio File"></i>');
+            }
+            else if(mimetype=="video"){
+              $(this).find('#filetype').html('<i class="fa fa-film" title="Video File"></i>');  
+            }
+            else if(mimetype=="application"){
+              $(this).find('#filetype').html('<i class="fa fa-file-archive-o" title="Application"></i>');
+            }
+            else {
+              $(this).find('#filetype').html('<i class="fa fa-file-o" title="Unknown"></i>');
+            }
+            var filename = $(this).find('#filename').text();
+            var shortName = (filename.length<40)?(filename):(filename.substring(0,40)+"...");
+            
+            $(this).find('#filename').text(shortName);
+            //console.log($(this).find('#filename').text().substring(0,30));
+        });
         $(this).siblings('#attachmentsList').show();
+        $(this).unbind();
       });
       
       $('#issueDocs').bind('change', function(){
@@ -502,7 +535,14 @@ block issues
         $(this).closest('#nextBtn').find('#uploadInfo p').append("<b>Attachments </b>");
         for (var i=0; i<document.getElementById('issueDocs').files.length;i++)
           {
-              $(this).closest('#nextBtn').find('#uploadInfo p').append("<br>"+(i+1)+". "+document.getElementById('issueDocs').files[i].name);
+              var filename = document.getElementById('issueDocs').files[i].name;
+              console.log(filename);
+              var mimetype = document.getElementById('issueDocs').files[i].type;
+              var slashPos = mimetype.indexOf("/")+1;
+              console.log(slashPos);
+              mimetype = mimetype.substring(slashPos);
+              var filename = (filename.length<40)?filename:(filename.substring(0,40)+"...");
+              $(this).closest('#nextBtn').find('#uploadInfo p').append("<br>"+(i+1)+". "+filename);
           }
         
       });
