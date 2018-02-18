@@ -1,14 +1,18 @@
 html {
     position: relative;
     min-height: 100%;
-   
+
 }
 body{
   font-family: 'Quicksand' !important;
-  font-size: 16px !important;
+  *//*font-family: 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  */font-size: 16px !important;
   background-color: #e9ebee3d !important;
 	color: black !important;
   zoom: 0.9;
+}
+#linkProfile{
+  font-weight: 900!important;
 }
 
 .container{
@@ -230,7 +234,7 @@ li.issuePart{
 }
 .gridbox.gridmenu{
   margin-left:0%!important;
-  padding-left: 20px; 
+  padding-left: 20px;
 }
 .gridmenu {
     width: 20.481781376518218623481781376518%;
@@ -243,7 +247,7 @@ li.issuePart{
 }
 
 .gridmain {
-    width: 45.57854251012145748987854251012%;
+    width: 60.57854251012145748987854251012%;
     overflow: scroll;
     float: left;
     position: absolute;
@@ -287,7 +291,7 @@ li.issuePart{
     background-color: #3f4448;
     border-color: #3f4448;
     color: white!important;
-    font-weight:500; 
+    font-weight:500;
   }
   nav{
     display: block;
@@ -312,13 +316,13 @@ li.issuePart{
     border-radius: 2rem!important;
   }
   .tabCnts{
-   border-radius: 2rem!important; 
+   border-radius: 2rem!important;
   }
   #openBtn, #member{
     border-bottom-left-radius: 2rem !important;
   }
   #announcementBtn, #pending{
-    border-bottom-right-radius: 2rem !important; 
+    border-bottom-right-radius: 2rem !important;
   }
   .mobileNav{
     display: block;
@@ -432,7 +436,7 @@ a{
 
 #issueDescriptionText, #orgAbout{
   font-size: 15px;
-  margin-top: 5px; 
+  margin-top: 5px;
   height: 6em;
   width: 100%;
   max-width: 100%;
@@ -473,8 +477,8 @@ textarea{
   color:white!important;
   font-size:20px;
   padding: 5px !important;
-  padding-left:15px !important; 
-  padding-right:15px !important; 
+  padding-left:15px !important;
+  padding-right:15px !important;
   border:1px solid #e8f3ff;
   border-radius: 5px;
   box-shadow: 0 2px 4px 0 #e8f3ff,0 2px 10px 0 #e8f3ff!important;
@@ -558,8 +562,7 @@ color:gray;
 
 #issueDesc{
   padding:10px;
-  padding-left:5px; 
-  font-weight: 400;
+  padding-left:5px;
   margin:5px;
   border-top:1px solid lightgray;
 }
@@ -701,13 +704,13 @@ a#linkProfile:hover {
   border:1px solid #e8f3ff;
 }
 #issueDescriptionTopic, #orgAlert, #issueDescriptionText, #orgAbout{
- border:1px solid #e8f3ff; 
+ border:1px solid #e8f3ff;
 }
 
 #myOrgsList{
   list-style: none;
   text-align:left;
-  padding: 0px; 
+  padding: 0px;
   font-size:12pt;
 }
 
@@ -806,7 +809,7 @@ a#linkProfile:hover {
   border: 1px solid #d1d5da;
   margin:5px;
   background-color: white;
-  box-shadow: 0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff!important; 
+  box-shadow: 0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff!important;
 }
 #manageOrg, #joinOrg, #exitOrg, #myissues, #logoutYes, #logoutNo {
   transition: all 0.4s ease;
@@ -817,7 +820,7 @@ a#linkProfile:hover {
 }
 
 #logoutNo:hover, #logoutYes:hover {
- font-weight: 500; 
+ font-weight: 500;
 }
 .active{
   border-bottom: 2px solid #42b72a;

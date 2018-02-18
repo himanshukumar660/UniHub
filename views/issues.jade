@@ -18,7 +18,7 @@ block issues
                       select(name="orguserId" required)
                         option(value="not_selected") Select group
                          for ech in memberctrlorgs
-                          option(value=ech.userId) #{ech.name} - #{ech.userId}
+                          option(value=ech.userId) #{ech.name} : #{ech.userId}
 
                     
                     input(type='text' id="issueDescriptionTopic" name="issueDescriptionTopic" placeholder="Topic" required maxlength="60")
@@ -26,16 +26,17 @@ block issues
                     textarea(id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required )
                     
                     div(style="display:inline-block;width:100%")
-                      div(style="display:inline-flex;float:left")
-                        label(for="files" style="min-width:120px;padding:10px;margin:5.33px") Upload files
-                        input(id='orgAvatar' type='file' name='issueDocs' multiple)
+                      
 
                     div(style="display:inline-block;width:100%")
                       div(style="display:inline-flex;float:left")
                         input(type="checkbox" id="anonymity" name="anonymity")
                         span(style="color:black;width:150px") Be Anonymous
-                      div(style="text-align:center;float:right")
-                        input( value="Post" type="submit" name="issuePost" id="issuePost")        
+                      div(style="display:inline-flex;float:right")
+                        label(for="files" style="min-width:100px;") Attachments :
+                        input(id='orgAvatar' type='file' name='issueDocs' style="padding:0px!important;margin:0px!important" multiple)
+                    div(style="text-align:center;float:right")
+                      input( value="Post" type="submit" name="issuePost" id="issuePost")        
         -var i=0;
         -for(each in announcements){
         -if(userOrgs.indexOf(announcements[each].orgUserId)>-1){
