@@ -5,7 +5,7 @@ html {
 }
 body{
   font-family: 'Quicksand' !important;
-  font-size: 16px !important;
+  font-size: 16px;
   background-color: #e9ebee3d !important;
 	color: black !important;
   zoom: 0.9;
