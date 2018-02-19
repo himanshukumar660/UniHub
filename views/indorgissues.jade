@@ -2,8 +2,9 @@ extends org
 block issues
   .gridbox.gridmain
     ul(id="issues")
-      li.postIssuePart(id="addOrg" style="transition:0.2s all ease-in-out")
-        form(method='POST', id="addMyOrg", action="/makeAnnouncement" enctype="multipart/form-data")    
+      if(search(username, orgDtl.admin))
+        li.postIssuePart(id="addOrg" style="transition:0.2s all ease-in-out")
+          form(method='POST', id="addMyOrg", action="/makeAnnouncement" enctype="multipart/form-data")    
           .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
             div(style="float:left")
               h(style="font-weight:500;font-size:14pt") Make Announcement
@@ -15,12 +16,13 @@ block issues
               div(style="margin-left:5px")
                   input(type='text' id="issueDescriptionTopic" name="announcementTopic" placeholder="Topic" required maxlength="60")
                   
-                  textarea(id="issueDescriptionText" name="announcementText" placeholder="Description" required )
+                  textarea(id="issueDescriptionText" name="announcementText" placeholder="Description" required)
                   
                   div(style="display:inline-block;width:100%")
-                    div(style="display:inline-flex;float:left")
-                      label(for="files" style="min-width:120px;padding:10px;margin:5.33px") Upload files
-                      input(id='orgAvatar' type='file' name='announcementDocs' multiple style="margin-left:-20px!important")
+                    div(style="display:inline-block;float:center;position:absolute")
+                      label(for="files" style="min-width:auto")
+                        i(class="ionicons ion-ios-cloud-upload" style="padding-right:10px;position:absolute;cursor:pointer!important;font-size:40px;cursor:pointer;display:none" title="File Upload" id="fileUploadLogo")
+                        input(type='file' id='issueDocs' name='issueDocs' style="padding:0px!important;margin:0px!important;opacity:0;width:40px!important" multiple)
                     div(style="text-align:center;float:right")
                       input( value="#{orgDtl.userId}" type="hidden" name="orgUId")
                       input( value="Post" type="submit" name="issuePost" id="issuePost")
@@ -66,8 +68,8 @@ block issues
             
             div(style="width:33.33%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="announcementBtn")
               button(style="background-color:unset;font-size:14pt;border:none")
-                i(class="fa fa-user-secret" style="background-color:unset!important;color:red!important;font-size:14pt;color:black;padding-right:5px")
-                span#aLen #{announcements.length}
+                i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:red!important;font-size:14pt;color:black;padding-right:5px")
+                | #{announcements.length}
                 |  Notices
     
       if(search(username, orgDtl.members))      
@@ -405,10 +407,19 @@ block issues
             h(style="font-weight:500; font-size:25pt; color:grey") You'r not a member yet
 
   script.
-     
+     var i=0;
       $('#expandMakeOrg').click(function(){
         $('#nextBtn').slideToggle();
+        if(i==0)
+          setTimeout(function(){
+            $('#fileUploadLogo').show();
+          }, 250);
+        else
+          setTimeout(function(){
+            $('#fileUploadLogo').toggle();
+          }, 100);
         $(this).toggleClass('glyphicon-plus glyphicon-minus');
+        i=!i;
       });
       $('li.postIssuePart#addOrg').mouseover(function(){
         $(this).css({
@@ -499,8 +510,3 @@ block issues
           'border-bottom' : '2px solid white'
         })
       });
-      
-      $('#expandPost').click(function(){
-        $('#nextBtn').toggle();
-        $(this).toggleClass('glyphicon-plus glyphicon-minus');
-      })
