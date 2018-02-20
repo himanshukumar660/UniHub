@@ -122,7 +122,6 @@ block issues
                             br
 
                   div(id="feed_details")
-                    if((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1))  
                       div(style="display:inline-block;width:100%!important")
                         ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
                           li
@@ -135,31 +134,7 @@ block issues
                             a(href="#")
                               span(id="num_of_dislikes") #{each.haters.length}
                               |  Downvotes
-                        
-                        if(each.supporters.indexOf(username)!=-1)
-                          div(id="status" style="float:right")
-                            i(class="fa fa-thumbs-up" title="You have Upvoted" style="font-size:28px;padding-right:17px")
-                        else
-                          div(id="status" style="float:right")
-                            i(class="fa fa-thumbs-down" title="You have Downvoted" style="font-size:28px;padding-right:17px")
-
-                    else 
-                      .issueCommentPart
-                        button(id="likeBtn" )
-                          if (each.supporters.indexOf(username)==-1)
-                            i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                            |  Upvote
-                          else
-                            i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                            |  Upvote
-
-                        button(id="dislikeBtn" )                        
-                          if (each.haters.indexOf(username)==-1)
-                            i(class="fa fa-thumbs-o-down" style="font-size:18px;" id="dislikeBtnLogo")
-                            |  Downvote
-                          else
-                            i(class="fa fa-thumbs-down" style="font-size:18px" id="dislikeBtnLogo")
-                            |  Downvote
+                            
           else
             div(style="text-align:center!important;padding-top:100px")
               i(class="mega-octicon octicon-issue-opened" style="background-color:unset!important;color:lightgray;font-size:100px;")
@@ -188,7 +163,6 @@ block issues
                         else
                          p(id="date") Posted on #{each.datePosted}
                       
-                    
                     div(style="float:right")
                       if (each.status==="open")
                         i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
@@ -371,8 +345,24 @@ block issues
                     div(style="float:right")
                       a(href="/orgs/"+each.orgUserId id="linkProfile" style='font-weight:900;') #{each.name}
                       p(id="date") Posted on #{each.datePosted}
-                      
-
+                    
+                  div(style="float:right")
+                      if(each.username===orgDtl.userId)
+                        .dropdown(style="width:auto!important;float:right")
+                          button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
+                            i(class="ionicons ion-android-more-vertical" style="font-weight:500;font-size:20pt;margin-left:5px")
+                          
+                          ul.dropdown-menu(role='menu', aria-labelledby='menu1' style="font-size:12pt;font-weight:500;")
+                            if(each.username===orgDtl.userId)
+                              li(role='presentation' style="padding:5px;margin-bottom:2px")
+                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit
+                              li(role="presentation" class="divider")
+                              li(role='presentation' style="padding:5px;margin-bottom:2px")
+                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOptionBtn") Delete
+                            else if each.anonymity=="on"
+                              li(role='presentation' style="padding:5px;margin-bottom:2px")
+                                  button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="reportIssueOption") Report Spam
+  
                 .main.issueBlock
                   #nextBtn
                     div#issueTopic(style="margin-left:10px;width:auto!important") #{each.issueTopic}

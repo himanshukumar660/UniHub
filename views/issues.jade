@@ -132,16 +132,16 @@ block issues
                             if(each.username===username)
                               li(role='presentation' style="padding:5px;margin-bottom:2px")
                                 if each.status==="open"
-                                  button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
-                                  button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
+                                  button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close
+                                  button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen
                                 else
-                                  button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close Issue
-                                  button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen Issue
+                                  button(type="submit" style="display:none;border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="closeIssueOption") Close
+                                  button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="openIssueOption") Reopen
                               //li(role='presentation' style="padding:5px;margin-bottom:2px")
-                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit Issue
+                                //button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="editIssueOption") Edit
                               li(role="presentation" class="divider")
                               li(role='presentation' style="padding:5px;margin-bottom:2px")
-                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOptionBtn") Delete Issue
+                                button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="delIssueOptionBtn") Delete 
                             else if each.anonymity=="on"
                               li(role='presentation' style="padding:5px;margin-bottom:2px")
                                   button(type="submit" style="border:none;background-color:unset;margin-left:10px" role='menuitem', tabindex='-1', id="reportIssueOption") Report Spam
