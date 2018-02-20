@@ -5,27 +5,27 @@ block issues
       if(search(username, orgDtl.admin))
         li.postIssuePart(id="addOrg" style="transition:0.2s all ease-in-out")
           form(method='POST', id="addMyOrg", action="/makeAnnouncement" enctype="multipart/form-data")    
-          .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
-            div(style="float:left")
-              h(style="font-weight:500;font-size:14pt") Make Announcement
-            div(style="float:right")
-              i(class="glyphicon glyphicon-plus" id="expandMakeOrg")      
+            .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+              div(style="float:left")
+                h(style="font-weight:500;font-size:14pt") Make Announcement
+              div(style="float:right")
+                i(class="glyphicon glyphicon-plus" id="expandMakeOrg")      
 
-          .main.issueBlock
-            #nextBtn(style="display:none")
-              div(style="margin-left:5px")
-                  input(type='text' id="issueDescriptionTopic" name="announcementTopic" placeholder="Topic" required maxlength="60")
-                  
-                  textarea(id="issueDescriptionText" name="announcementText" placeholder="Description" required)
-                  
-                  div(style="display:inline-block;width:100%")
-                    div(style="display:inline-block;float:center;position:absolute")
-                      label(for="files" style="min-width:auto")
-                        i(class="ionicons ion-ios-cloud-upload" style="padding-right:10px;position:absolute;cursor:pointer!important;font-size:40px;cursor:pointer;display:none" title="File Upload" id="fileUploadLogo")
-                        input(type='file' id='issueDocs' name='issueDocs' style="padding:0px!important;margin:0px!important;opacity:0;width:40px!important" multiple)
-                    div(style="text-align:center;float:right")
-                      input( value="#{orgDtl.userId}" type="hidden" name="orgUId")
-                      input( value="Post" type="submit" name="issuePost" id="issuePost")
+            .main.issueBlock
+              #nextBtn(style="display:none")
+                div(style="margin-left:5px")
+                    input(type='text' id="issueDescriptionTopic" name="announcementTopic" placeholder="Topic" required maxlength="60")
+                    
+                    textarea(id="issueDescriptionText" name="announcementText" placeholder="Description" required)
+                    
+                    div(style="display:inline-block;width:100%")
+                      div(style="display:inline-block;float:center;position:absolute")
+                        label(for="files" style="min-width:auto")
+                          i(class="ionicons ion-ios-cloud-upload" style="padding-right:10px;position:absolute;font-size:40px;display:none" title="File Upload" id="fileUploadLogo")
+                          input(type='file' id='announcementDocs' name='announcementDocs' style="padding:0px!important;margin:0px!important;opacity:0;width:40px!important" multiple)
+                      div(style="text-align:center;float:right")
+                        input( value="#{orgDtl.userId}" type="hidden" name="orgUId")
+                        input( value="Post" type="submit" name="issuePost" id="issuePost")
         
       li.postIssuePart.tabBtns(style="border-radius:3px")
         .issuePart1D.tabCnts(style="background-color:white;display:inline-flex;text-align:center;width:100%;padding-left:13px;border-radius:3px;padding:0px")
