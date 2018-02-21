@@ -58,7 +58,7 @@ block issues
           if announcements.length!=0
             for each in announcements
               if(userOrgs.indexOf(each.orgUserId)>-1)
-                li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
+                li.issuePart(style="border-color:#d1d5da78")
                   .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
                     div(style="float:left;display:inline-flex")
                       div(style="float:left")
@@ -92,7 +92,7 @@ block issues
           if (issues.length!=0)
             for each in issues  
               if(userOrgs.indexOf(each.orgUserId)>-1&&each.status!="Notice")  
-                li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
+                li.issuePart(style="border-color:#d1d5da78")
                   .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
                     div(style="float:left;display:inline-flex")
                       div(style="float:left")
@@ -117,12 +117,6 @@ block issues
                            
                     
                     div(style="float:right")
-                      if (each.status==="open")
-                        i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id)
-                          span  Open
-                      else
-                        i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id)
-                          span  Closed
                       if(each.username===username||each.anonymity=="on")
                         .dropdown(style="width:auto!important;float:right")
                           button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
@@ -152,18 +146,24 @@ block issues
                       div#issueTopic(style="margin-left:10px;width:auto!important")
                         if each.supporters.length>=(0.75*memberctrlorgs[0].members.length)
                           i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
-                        a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
+                        if (each.status==="open")
+                          i(class="mega-octicon octicon-issue-opened issueStatus" id=each._id title="Issue Open")
+                        else
+                          i(class="mega-octicon octicon-issue-closed issueStatus" id=each._id title="Issue Closed")
+                        
+                        a(href="/indpost/"+each._id style="color:black;" id="issueTopicText") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
-                      div#issueAttach(style="padding:10px;")
-                        p#attachmentBtn(style="font-weight:500;cursor:pointer") Show #{each.docsUpload.length} Attachments :
-                          //i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px") 
-                          div#attachmentsList(style="display:none")
-                            ul(style="list-style:none;padding-left:0px")
-                              if each.docsUpload.length!=0
-                                for all in each.docsUpload 
-                                  li#attachmentsItem
-                                    span#filetype(style="padding-left:5px;padding-right:5px;color:gray") #{all.mimetype}
-                                    a(id="filename" href="/uploads/"+all.filename) #{all.originalName}
+                      if each.docsUpload.length!=0
+                        div#issueAttach(style="padding:10px;")
+                          p#attachmentBtn(style="font-weight:500;cursor:pointer") Show #{each.docsUpload.length} Attachments :
+                            //i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px") 
+                            div#attachmentsList(style="display:none")
+                              ul(style="list-style:none;padding-left:0px")
+                                if each.docsUpload.length!=0
+                                  for all in each.docsUpload 
+                                    li#attachmentsItem
+                                      span#filetype(style="padding-left:5px;padding-right:5px;color:gray") #{all.mimetype}
+                                      a(id="filename" href="/uploads/"+all.filename) #{all.originalName}
 
 
                   div(id="feed_details")

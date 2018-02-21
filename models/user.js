@@ -21,9 +21,6 @@ var userSchema = new Schema({
 	name: {
 		type: String
 	},
-	moto: {
-		type: String,
-	},
 	username: {
 		type: String,
 		required: true,
@@ -41,7 +38,7 @@ var userSchema = new Schema({
 	},
 
 	//orgs: [orgDetailScehma],
-	
+
 	avatarPath: {
 		type: String,
 		default: "user.png"

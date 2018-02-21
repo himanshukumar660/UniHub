@@ -69,7 +69,6 @@ router.get('/register' ,ensureNotAuthenticated, function(req, res, next) {
 		res.render('register', {
 			name: "",
 			email: "",
-			moto: "",
 			username: "",
 			password: "",
 			cnfpassword: "",
@@ -102,7 +101,6 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 //	console.log(req.body);
 	console.log(req.body);
 	var name = req.body.name;
-	var moto = req.body.moto;
 	var email = req.body.email;
 	var username = req.body.username;
 	var password = req.body.password;
@@ -127,11 +125,9 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 	var errors = req.validationErrors();
 	console.log(errors);
 	if (errors) {
-		console.log(moto);
 		res.render('register', {
 			errors: errors,
 			name: name,
-			moto: moto,
 			email: email,
 			username: username,
 			password: password,
@@ -141,7 +137,6 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 	} else {
 		var newUser = new User({
 			name: name,
-			moto: moto,
 			email: email,
 			username: username,
 			password: password,
@@ -161,7 +156,6 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 				res.render('register', {
 					validatorError: errorUnique,
 					name: name,
-					moto: moto,
 					email: existsorNotEmail,
 					username: existsorNotUsername,
 					password: password,

@@ -17,7 +17,6 @@ block content
 					
 		form(id="myForm" method='POST', action="/users/register" enctype="multipart/form-data")
 			input(id='name', type='text', placeholder="Your Name", name="name", value= '#{name}' style="text-transform:capitalize")
-			textarea#moto(rows='2', placeholder='What is your principle ?', name="moto" style="width:100%!important") #{moto}
 			.form-group.has-success.has-feedback#usernameFeild(style="margin-bottom:0px")
 				input(id='username', type='text', name='username', placeholder='Choose Username' value='#{username}')     
 				span.glyphicon.glyphicon-ok.form-control-feedback(style="margin-top:8px;color:#42b72a;display:none")
@@ -120,4 +119,3 @@ block content
 						//console.log("Ho");
 						$('#err').remove();
 					});
-

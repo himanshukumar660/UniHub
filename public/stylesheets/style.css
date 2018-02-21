@@ -51,16 +51,6 @@ input {
   background-color: white;
 }
 
-#moto{
-  color: black !important;
-	width: 97% !important;
-	border-radius: 1rem;
-  border: none;
-	padding: 10px 10px 10px 10px !important;
-	margin: 1.4% 1.4% 1.4% 1.4% !important;
-  background-color: white;
-}
-
 #submit:hover{
   background-color: #369a21 !important;
 }
@@ -158,6 +148,12 @@ a:hover {
   margin-right:10px;
   margin-bottom:5px
 }
+#openIssue{
+  border-radius: 10px;
+  margin-left: 5px;
+  margin-right: 10px;
+  transform: translateZ(0);
+}
 
 #pro_info{
   font-size: 20pt !important;
@@ -211,9 +207,10 @@ blockquote:before {
     margin-bottom: 1%;
 }
 li.issuePart{
-  border-radius: 3px;
+  border-radius: 10px;
   border:1px solid #d1d5da;
   margin: 10px;
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
 }
 .gridcontainer {
     width:100%;
@@ -300,6 +297,16 @@ li.issuePart{
   }
 
 @media only screen and (max-width: 500px) {
+  body{
+    font-size: 14px;
+    line-height: 20px;
+  }
+  #issueTopicText{
+    font-size: 16px;
+  }
+  #issueDesc{
+    font-size: 14px;
+  }
   nav{
     display: none!important;
   }
@@ -360,7 +367,7 @@ li.issuePart{
     }
 
     #issueDesc{
-      font-size: 11pt;
+      font-size: 14px;
     }
     .gridmenu {
         display:none;
@@ -502,6 +509,8 @@ textarea{
   padding:10px;
   padding-left:20px;
   border-bottom:1px solid #d4e8ff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .spamBtn{
@@ -657,8 +666,7 @@ li#iRD{
 
 .mega-octicon.octicon-issue-opened{
   font-size:16px;
-  background-color:#42b72a;
-  color:white;
+  color:#42b72a;
   padding:5px;
   border-radius:3px;
 }
@@ -671,8 +679,7 @@ li#iRD{
 
 .mega-octicon.octicon-issue-closed {
   font-size:16px;
-  background-color:red;
-  color:white;
+  color:red;
   padding:5px;
   border-radius:3px;
 }
