@@ -38,7 +38,8 @@ app.use(bodyParser.urlencoded({
 app.use(session({
     secret:'secret',
     saveUninitialized: false,
-    resave: true
+    resave: true,
+    cookie:true
 }));
 
 // passport

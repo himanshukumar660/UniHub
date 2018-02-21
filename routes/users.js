@@ -169,7 +169,7 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 					title: "Register",
 				});
 			} else {
-				req.flash('Account Created Successfully');
+				req.flash('msg', 'Account Created Successfully');
 				res.redirect('/users/login');
 			}
 		});
@@ -178,6 +178,7 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 
 router.get('/login', ensureNotAuthenticated, function(req, res, next) {
 	//if(typeof(req.session.passport)==='undefined')
+    //console.log(req.flash('msg'));
 		var error,query;
 		if(typeof(req.headers.referer)!='undefined')
 		{
@@ -189,9 +190,12 @@ router.get('/login', ensureNotAuthenticated, function(req, res, next) {
 				}
 			console.log(error);
 		}
+    var flashSuccessfulRegister = req.flash('msg');
+    console.log(flashSuccessfulRegister);
 
 		res.render('login', {
-			title: 'Login',
+      flashSuccessfulRegister : flashSuccessfulRegister,
+      title: 'Login',
 			username: "",
 			password: "",
 			error: error
