@@ -150,8 +150,6 @@ a:hover {
 }
 #openIssue{
   border-radius: 10px;
-  margin-left: 5px;
-  margin-right: 10px;
   transform: translateZ(0);
 }
 
@@ -306,6 +304,10 @@ li.issuePart{
   }
   #issueDesc{
     font-size: 14px;
+  }
+  #openIssue{
+    margin-left: 5px;
+    margin-right: 10px;
   }
   nav{
     display: none!important;
