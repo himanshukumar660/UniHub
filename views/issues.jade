@@ -322,10 +322,11 @@ block issues
           $(this).siblings('#descTrimmed2').toggle();
           $(this).siblings('#3dots').toggle();
       });
+      
       var i=0;
        $('#expandPost').click(function(){
          $('#nextBtn').slideToggle();
-         if(i==1)
+         if(i==0)
            setTimeout(function(){
              $('#fileUploadLogo').show();
            }, 450);
@@ -336,6 +337,7 @@ block issues
          $(this).toggleClass('glyphicon-plus glyphicon-minus');
          i=!i;
        });
+       
       $('#openBtn').click(function(){
         $('#openIssue').show();
         $('#announcements').hide();
