@@ -451,6 +451,10 @@ a{
   padding: 10px;
   border-radius: 3px;
 }
+#closeIssueOption, #openIssueOption, #delIssueOptionBtn, #reportIssueOption{
+  width: 100%;
+  text-align: left;
+}
 
 #issueDept, #orgName, #orgLink{
   border-radius: 3px;

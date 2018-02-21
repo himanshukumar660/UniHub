@@ -5,14 +5,14 @@ block issues
       if(userOrgs.length!=0)
         li.postIssuePart#adIs(style="transition:0.2s all ease-in-out")
           form(method='POST', id="postIssueForm", action="/post" enctype="multipart/form-data")   
-            .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
+            .issuePart1D(style="display:inline-block;width:100%;padding-left:13px;border-radius:0px")
               div(style="float:left")
                 h(style="font-weight:500;font-size:14pt") Add post
               div(style="float:right")
-                i(class="glyphicon glyphicon-minus" id="expandPost")           
+                i(class="glyphicon glyphicon-plus" id="expandPost")           
             
             .main.issueBlock
-              #nextBtn(style="transition: all .1s ease-in;")
+              #nextBtn(style="transition: all .1s ease-in;display:none")
                 div(style="margin-left:5px")
                     .custom-select(style='width:100%;max-height:100px')
                       select(name="orguserId" required)
@@ -167,7 +167,7 @@ block issues
 
 
                   div(id="feed_details")
-                    if((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1))  
+                    if(each.username==username||((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1)))  
                       div(style="display:inline-block;width:100%!important")
                         ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
                           li
@@ -184,11 +184,11 @@ block issues
                         if(each.supporters.indexOf(username)!=-1)
                           div(id="status" style="float:right")
                             i(class="fa fa-thumbs-up" title="You have Upvoted" style="font-size:28px;padding-right:17px")
-                        else
+                        else if(each.haters.indexOf(username)!=-1)
                           div(id="status" style="float:right")
                             i(class="fa fa-thumbs-down" title="You have Downvoted" style="font-size:28px;padding-right:17px")
 
-                    else 
+                    else if(each.username!=username)
                       .issueCommentPart
                         button(id="likeBtn" )
                           if (each.supporters.indexOf(username)==-1)
