@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator');
-var bcrypt = require('bcrypt');
+var mongoose = require("mongoose");
+var uniqueValidator = require("mongoose-unique-validator");
+var bcrypt = require("bcrypt");
 var SALT_WORK_FACTOR = 10;
 
 mongoose.connect("mongodb://127.0.0.1:27017/node");
@@ -47,7 +47,7 @@ var userSchema = new Schema({
 
 userSchema.plugin(uniqueValidator);
 
-var User = module.exports = mongoose.model('User', userSchema);
+var User = module.exports = mongoose.model("User", userSchema);
 
 module.exports.createUser = function(newUser, callback) {
     bcrypt.hash(newUser.password, SALT_WORK_FACTOR, function(err, hash) {

@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-//require('mongoose-type-url');
-// var uniqueValidator = require('mongoose-unique-validator');
-var randomstring = require('randomstring');
+var mongoose = require("mongoose");
+//require("mongoose-type-url");
+// var uniqueValidator = require("mongoose-unique-validator");
+var randomstring = require("randomstring");
 var SALT_WORK_FACTOR = 10;
 
 mongoose.connect("mongodb://127.0.0.1:27017/orgs");
@@ -61,24 +61,24 @@ var orgSchema = new Schema({
 	pendingRequest : [memberSchema],
 });
 
-orgSchema.index({'$**' : 'text'},{default_language : "none"});
+orgSchema.index({"$**" : "text"},{default_language : "none"});
 
-var Org = module.exports = mongoose.model('Org', orgSchema);
+var Org = module.exports = mongoose.model("Org", orgSchema);
 
 // Org.ensureIndexes(function (err) {
-//   console.log('ENSURE INDEX')
+//   console.log("ENSURE INDEX")
 //   if (err) console.log(err)
 // });
 
-Org.on('index', function(err) {
+Org.on("index", function(err) {
     if (err) {
-        console.error('Org index error: %s', err);
+        console.error("Org index error: %s", err);
     } else {
-        console.info('Org indexing complete');
+        console.info("Org indexing complete");
     }
 });
 
-//mongoose.set('debug', true);
+//mongoose.set("debug", true);
 module.exports.makeOrg = function(orgDetails, callback){
 	//INCOMPLETE
 	// if org name exists
@@ -153,7 +153,7 @@ module.exports.findInOrg = function(orgname, callback){
 	Org.find({$text : {
 			$search : orgname,
 			$caseSensitive : false}},
-			{ score : { $meta: "textScore" } }).sort({ score : { $meta : 'textScore' } })
+			{ score : { $meta: "textScore" } }).sort({ score : { $meta : "textScore" } })
     .exec(callback);
 }
 

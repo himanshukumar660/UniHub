@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-// var uniqueValidator = require('mongoose-unique-validator');
-var randomstring = require('randomstring');
+var mongoose = require("mongoose");
+// var uniqueValidator = require("mongoose-unique-validator");
+var randomstring = require("randomstring");
 var SALT_WORK_FACTOR = 10;
 
 mongoose.connect("mongodb://127.0.0.1:27017/issues");
@@ -88,7 +88,7 @@ var issueSchema = new Schema({
 });
 
 
-var Issue = module.exports = mongoose.model('Issue', issueSchema);
+var Issue = module.exports = mongoose.model("Issue", issueSchema);
 
 module.exports.createIssue = function(newIssue, callback) {
 	  console.log(newIssue.anonymity);
