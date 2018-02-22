@@ -23,8 +23,7 @@ body{
 	border: none ;
   color: white ;
 }
-.navbar-inverse .navbar-nav>li>
-{
+.navbar-inverse .navbar-nav>li{
     color: white ;
 }
 .navbar-inverse .navbar-toggle:hover {
