@@ -22,7 +22,7 @@ block content
 					p #{flashSuccessfulRegister}
 					p #{flashSuccessfulRegister[0]}
 				if flashSuccessfulRegister.length!=0
-					.alert.alert-success(style="color:green")
+					.alert.alert-success#regSucc(style="color:green")
 						b(style="text-transform: capitalize;") #{flashSuccessfulRegister[0]}
 						.glyphicon.glyphicon-remove(style="float:right" id="close_error")
 					

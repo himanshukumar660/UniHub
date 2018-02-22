@@ -27,7 +27,7 @@ var orgSchema = new Schema({
 		index: true,
 		required: true
 	},
-	
+
 	name: {
 		type: String,
 		index : true,
@@ -78,7 +78,7 @@ Org.on('index', function(err) {
     }
 });
 
-mongoose.set('debug', true);
+//mongoose.set('debug', true);
 module.exports.makeOrg = function(orgDetails, callback){
 	//INCOMPLETE
 	// if org name exists
@@ -98,7 +98,7 @@ module.exports.makeUserAdmin = function(orgUId, userObj, callback){
 }
 
 module.exports.enterOrg = function(orgUId,  userObj, callback){
-	// If the user already exists in the organisation 
+	// If the user already exists in the organisation
 	// 	do nothing
 	// else
 	// 	make him a member of the organisation
@@ -132,12 +132,12 @@ module.exports.exitOrgMember = function(orgUId, userObj, callback){
 }
 
 module.exports.deleteOrg = function(orgUId, userObj, callback){
-	//Search the entire org list that contails both the organisationID and admin contains the username Admin  
+	//Search the entire org list that contails both the organisationID and admin contains the username Admin
 	Org.remove({$and : [{userId: orgUId, admin: {$elemMatch : userObj}}]}, callback);
 }
 
 module.exports.deleteOrgEmptyMember = function(orgUId, callback){
-	//Search the entire org list that contails both the organisationID and admin contains the username Admin  
+	//Search the entire org list that contails both the organisationID and admin contains the username Admin
 	Org.remove({userId: orgUId}, callback);
 }
 
@@ -154,7 +154,7 @@ module.exports.findInOrg = function(orgname, callback){
 			$search : orgname,
 			$caseSensitive : false}},
 			{ score : { $meta: "textScore" } }).sort({ score : { $meta : 'textScore' } })
-    .exec(callback); 
+    .exec(callback);
 }
 
 module.exports.findOrgByUID = function(orguid, callback){

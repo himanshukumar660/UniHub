@@ -1,7 +1,7 @@
 html {
     position: relative;
     min-height: 100%;
-
+    overflow: -moz-scrollbars-none!important;
 }
 body{
   font-family: 'Quicksand' !important;
@@ -9,6 +9,7 @@ body{
   background-color: #e9ebee3d !important;
 	color: black !important;
   zoom: 0.9;
+  overflow: -moz-scrollbars-none!important;
 }
 #linkProfile{
   font-weight: 900!important;
@@ -216,19 +217,23 @@ li.issuePart{
     height:100%;
     position:absolute;
     top:60px;
+      overflow: -moz-scrollbars-none!important;
 }
 
 .gridwrapper {
     overflow: hidden;
+      overflow: -moz-scrollbars-none!important;
 }
 
 .gridbox {
     margin: 1%;
     float: left;
+      overflow: -moz-scrollbars-none!important;
 }
 .gridbox.gridmenu{
   margin-left:0%!important;
   padding-left: 20px;
+    overflow: -moz-scrollbars-none!important;
 }
 .gridmenu {
     width: 20.481781376518218623481781376518%;
@@ -238,6 +243,7 @@ li.issuePart{
     text-align: center;
     padding: 10px;
     margin-top: 20px;
+      overflow: -moz-scrollbars-none!important;
 }
 
 .gridmain {
@@ -246,6 +252,7 @@ li.issuePart{
     float: left;
     position: absolute;
     left: 18% !important;
+      overflow: -moz-scrollbars-none!important;
 }
 
 
@@ -257,6 +264,7 @@ li.issuePart{
   text-align: center;
   float: right;
   left: 79.08%;
+    overflow: -moz-scrollbars-none!important;
 }
 
 .right {
@@ -265,6 +273,7 @@ li.issuePart{
     padding:15px;
     width: 100%;
     margin-bottom: 1%;
+      overflow: -moz-scrollbars-none!important;
 }
 
 
@@ -373,10 +382,12 @@ li.issuePart{
     }
     .gridmenu {
         display:none;
+          overflow: -moz-scrollbars-none!important;
     }
 
     .gridright {
         display:none;
+          overflow: -moz-scrollbars-none!important;
     }
 
     .gridmain {
@@ -384,6 +395,7 @@ li.issuePart{
         float: center;
         left: 0% !important;
         padding: 0px;
+          overflow: -moz-scrollbars-none!important;
     }
 
     .main {
@@ -418,7 +430,7 @@ a{
   z-index:2000;
   height:100%;
   overflow:hidden;
-  background-color: #00000061 !important;
+  background-color: rgba(0, 0, 0, 0.71) !important;
 }
 
 .addIssueForm, .addLogoutAlert, .addOrgExitAlert, .addCancelPendingReq, .addDeleteAlert {
@@ -600,8 +612,12 @@ color:gray;
   height:64px;
   cursor:pointer;
 }
-
-
+#close_error{
+  cursor: pointer;
+}
+#err, #regSucc{
+  font-size: 13px;
+}
 #likeBtns button.iconsBtnLike{
   padding: 0px;
   background-color: unset;

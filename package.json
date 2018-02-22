@@ -19,20 +19,20 @@
     "mime": "^2.2.0",
     "mongodb": "*",
     "mongoose": "*",
+    "mongoose-type-url": "*",
     "mongoose-unique-validator": "*",
     "morgan": "~1.9.0",
     "multer": "^1.0.5",
     "passport": "*",
     "passport-http": "*",
     "passport-local": "*",
-    "serve-favicon": "~2.4.5",
     "randomstring": "*",
-    "short-mongo-id": "*",
     "request": "*",
+    "serve-favicon": "~2.4.5",
+    "short-mongo-id": "*",
     "socket.io": "*",
-    "xss-filters": "*",
     "validator": "*",
-    "mongoose-type-url": "*"
+    "xss-filters": "*"
   },
   "author": "Himanshu Kumar"
 }
