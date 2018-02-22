@@ -55,7 +55,7 @@ router.get("/", ensureAuthentication, function(req, res, next) {
 
   Issue.getIssuesLatest(function(err1, res1){
     if(err1)
-      console.log("Could'nt fetch the issues");
+      console.log("Could"nt fetch the issues");
     else
     {
       User.getUserByUsername(username, function(err2,res2){
@@ -102,7 +102,7 @@ router.get("/getIssues/:date", ensureAuthentication, function(req,res, next){
   console.log(date);
   Issue.getIssuesByDate(date, function(err, results){
     if(err)
-      console.log("Could'nt fetch the issues");
+      console.log("Could"nt fetch the issues");
     else
     {
       console.log(results);
@@ -241,7 +241,7 @@ router.get("/indpost/:id", ensureAuthentication, function(req,res, next){
 
   Issue.getIssueById(id, function(err, result){
     if(err)
-      console.log("Could'nt fetch post details");
+      console.log("Could"nt fetch post details");
     else
     {
       console.log(result);
@@ -343,7 +343,7 @@ router.get("/trending", ensureAuthentication, function(req, res, next) {
     //issueList = new Object();
     Issue.getIssueByLikes(function(err, results){
       if(err)
-        console.log("Could'nt fetch the issues");
+        console.log("Could"nt fetch the issues");
       else
       {
         User.getUserByUsername(req.user.username, function(req2,res2){
