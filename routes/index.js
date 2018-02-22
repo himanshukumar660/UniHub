@@ -1,50 +1,50 @@
-var express = require('express');
-var crypto = require('crypto');
-var mime = require('mime');
+var express = require("express");
+var crypto = require("crypto");
+var mime = require("mime");
 var router = express.Router();
-var path = require('path');
-var User = require('../models/user');
-var Issue = require('../models/issue');
-var Org = require('../models/org');
-var shortId = require('short-mongo-id');
-var xssFilters = require('xss-filters');
-var validator = require('validator');
+var path = require("path");
+var User = require("../models/user");
+var Issue = require("../models/issue");
+var Org = require("../models/org");
+var shortId = require("short-mongo-id");
+var xssFilters = require("xss-filters");
+var validator = require("validator");
 
 //Relating to the upload of org pics
-var multer = require('multer');
+var multer = require("multer");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads/')
+    cb(null, "./uploads/")
   },
   filename: function (req, file, cb) {
     crypto.pseudoRandomBytes(16, function (err, raw) {
-      cb(null, raw.toString('hex') + Date.now() + '.' + mime.getExtension(file.mimetype));
+      cb(null, raw.toString("hex") + Date.now() + "." + mime.getExtension(file.mimetype));
     });
   }
 });
 
-var algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
-var key = 'password';
+var algorithm = "aes256"; // or any other algorithm supported by OpenSSL
+var key = "password";
 
 var upload = multer({ storage: storage });
 
 // For encryption and decryption
 function encrypt(text){
   var cipher = crypto.createCipher(algorithm, key);
-  var encrypted = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
+  var encrypted = cipher.update(text, "utf8", "hex") + cipher.final("hex");
   return encrypted;
 }
 
 function decrypt(text){
   var decipher = crypto.createDecipher(algorithm, key);
-  var decrypted = decipher.update(text, 'hex', 'utf8') + decipher.final('utf8');
+  var decrypted = decipher.update(text, "hex", "utf8") + decipher.final("utf8");
   return decrypted;
 }
 //Following are related with the issues
 
 /* Get the home page*/
-router.get('/', ensureAuthentication, function(req, res, next) {
+router.get("/", ensureAuthentication, function(req, res, next) {
   console.log("Welcome to your homepage!");
   console.log(req.user);
   var username = req.user.username;
@@ -55,7 +55,7 @@ router.get('/', ensureAuthentication, function(req, res, next) {
 
   Issue.getIssuesLatest(function(err1, res1){
     if(err1)
-      console.log("Could'nt fetch the issues");
+      console.log("Could"nt fetch the issues");
     else
     {
       User.getUserByUsername(username, function(err2,res2){
@@ -75,8 +75,8 @@ router.get('/', ensureAuthentication, function(req, res, next) {
                   if(err5) throw err5;
                   else{
                     console.log(res5);
-                    res.render('issues',{
-                      title: 'Home',
+                    res.render("issues",{
+                      title: "Home",
                       username: req.user.username,
                       name: req.user.name,
                       memberctrlorgs: res4,
@@ -96,13 +96,13 @@ router.get('/', ensureAuthentication, function(req, res, next) {
 });
 
 //Asynchronously get the Issues and populate the issue division
-router.get('/getIssues/:date', ensureAuthentication, function(req,res, next){
+router.get("/getIssues/:date", ensureAuthentication, function(req,res, next){
   console.log("Fteching More Issues");
   var date = req.params.date;
   console.log(date);
   Issue.getIssuesByDate(date, function(err, results){
     if(err)
-      console.log("Could'nt fetch the issues");
+      console.log("Could"nt fetch the issues");
     else
     {
       console.log(results);
@@ -113,14 +113,14 @@ router.get('/getIssues/:date', ensureAuthentication, function(req,res, next){
 
 
 //When the user Likes any post
-router.post('/favour/', ensureAuthentication, function(req,res, next){
+router.post("/favour/", ensureAuthentication, function(req,res, next){
   console.log("Initiating to like the post");
   var userCh = req.body.userFv;
   var postId = req.body.id;
   var username = req.user.username;
   console.log(username);
   if(userCh=="like"){
-    console.log('like');
+    console.log("like");
     Issue.chkUserDislikedPost(username, postId, function(err3, res3){
       if(err3) throw err3;
       else{
@@ -175,7 +175,7 @@ router.post('/favour/', ensureAuthentication, function(req,res, next){
     })
   }
   else if(userCh=="dislike"){
-    console.log('dislike');
+    console.log("dislike");
     Issue.chkUserLikedPost(username, postId, function(err3, res3){
       if(err3) throw err3;
       else{
@@ -234,19 +234,19 @@ router.post('/favour/', ensureAuthentication, function(req,res, next){
 
 
 //When the user demands for a single post details
-router.get('/indpost/:id', ensureAuthentication, function(req,res, next){
+router.get("/indpost/:id", ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
   var id = req.params.id;
   console.log(id);
 
   Issue.getIssueById(id, function(err, result){
     if(err)
-      console.log("Could'nt fetch post details");
+      console.log("Could"nt fetch post details");
     else
     {
       console.log(result);
-      res.render('indPost', {
-        title: 'Post',
+      res.render("indPost", {
+        title: "Post",
         details: result
       });
     }
@@ -254,7 +254,7 @@ router.get('/indpost/:id', ensureAuthentication, function(req,res, next){
 });
 
 //The following function deals with the deletion of anonymous issues by admin
-router.post('/delpostA/:id', ensureAuthentication, function(req,res, next){
+router.post("/delpostA/:id", ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
   var postId = req.params.id;
   console.log(postId);
@@ -272,7 +272,7 @@ router.post('/delpostA/:id', ensureAuthentication, function(req,res, next){
 });
 
 
-router.post('/delpost/:id', ensureAuthentication, function(req,res, next){
+router.post("/delpost/:id", ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
   var postId = req.params.id;
   console.log(postId);
@@ -289,7 +289,7 @@ router.post('/delpost/:id', ensureAuthentication, function(req,res, next){
   })
 });
 
-router.post('/openIssue/:id', ensureAuthentication, function(req,res, next){
+router.post("/openIssue/:id", ensureAuthentication, function(req,res, next){
   var postId = req.params.id;
   var username = req.user.username;
 
@@ -303,7 +303,7 @@ router.post('/openIssue/:id', ensureAuthentication, function(req,res, next){
   })
 });
 
-router.post('/closeIssue/:id', ensureAuthentication, function(req,res, next){
+router.post("/closeIssue/:id", ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
   var postId = req.params.id;
   console.log(postId);
@@ -320,7 +320,7 @@ router.post('/closeIssue/:id', ensureAuthentication, function(req,res, next){
   })
 });
 
-router.post('/updateIssue/', ensureAuthentication, function(req,res, next){
+router.post("/updateIssue/", ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
   console.log(req.body);
   var username = req.user.username;
@@ -337,21 +337,21 @@ router.post('/updateIssue/', ensureAuthentication, function(req,res, next){
 
 
 //Trending Posts : Fetch the issues with maximum number of Likes
-router.get('/trending', ensureAuthentication, function(req, res, next) {
+router.get("/trending", ensureAuthentication, function(req, res, next) {
   console.log("Welcome to trending page!");
   console.log(req.user);
     //issueList = new Object();
     Issue.getIssueByLikes(function(err, results){
       if(err)
-        console.log("Could'nt fetch the issues");
+        console.log("Could"nt fetch the issues");
       else
       {
         User.getUserByUsername(req.user.username, function(req2,res2){
           if(err) throw err;
           else
           {
-            res.render('home', {
-              title: 'Home',
+            res.render("home", {
+              title: "Home",
               userDetails: res2,
               issues: results
             });
@@ -363,7 +363,7 @@ router.get('/trending', ensureAuthentication, function(req, res, next) {
 
 //Post the issue
 //Status : Checked
-router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(req, res, next) {
+router.post("/post", ensureAuthentication, upload.array("issueDocs"), function(req, res, next) {
   var docs ="";
   var files_array = [];
   if(req.files){
@@ -422,8 +422,8 @@ router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(r
                 if(err3) throw err3;
                       //console.log("Error Occured while uploading the post to the database");
                       else{
-                        console.log('Issue Posted..');
-                        res.redirect('/');
+                        console.log("Issue Posted..");
+                        res.redirect("/");
                       }
                     });
             }
@@ -438,7 +438,7 @@ router.post('/post', ensureAuthentication, upload.array('issueDocs'), function(r
 //Following deals with the user profiles
 
 
-router.get('/profile/:username', ensureAuthentication, function(req, res, next) {
+router.get("/profile/:username", ensureAuthentication, function(req, res, next) {
   console.log("Fetchgin the profile details");
   var username = req.params.username || req.user.username;
   console.log(username);
@@ -450,8 +450,8 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
         else{
           console.log(resultsUser);
           console.log(resultsIssue);
-          res.render('profile', {
-            title: 'Profile',
+          res.render("profile", {
+            title: "Profile",
             userDetails: resultsUser,
             issues: resultsIssue,
             username: req.user.username
@@ -465,7 +465,7 @@ router.get('/profile/:username', ensureAuthentication, function(req, res, next) 
 
 
 //The following method shows official page of the organisation
-router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
+router.get("/orgs/:orgUId", ensureAuthentication, function(req, res, next) {
   console.log("Fetchgin the organisation details");
   var orgUId = req.params.orgUId;
   var username = req.user.username;
@@ -495,7 +495,7 @@ router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
                           res4[each].userAvatarPath = decrypt(res4[each].userAvatarPath);
                         }
 
-                      res.render('indorgissues', {
+                      res.render("indorgissues", {
                         title: res1.name+" : ",
                         username: username,
                         orgDtl : res1,
@@ -521,7 +521,7 @@ router.get('/orgs/:orgUId', ensureAuthentication, function(req, res, next) {
 // Following deals with the APIs for accessing the organisation modiules.
 
 
-router.post('/joinOrg/:orgUId', ensureAuthentication, function(req, res, next) {
+router.post("/joinOrg/:orgUId", ensureAuthentication, function(req, res, next) {
   console.log("Fetchgin the organisation details");
   var orgUId = req.params.orgUId;
   var username = req.user.username;
@@ -534,14 +534,14 @@ router.post('/joinOrg/:orgUId', ensureAuthentication, function(req, res, next) {
     if(err2) throw err2;
     else
     {
-      console.log('Added to pending Queue!!');
-      console.log('Waiting for the adminstrator for accepting the request');
-      res.redirect('back');
+      console.log("Added to pending Queue!!");
+      console.log("Waiting for the adminstrator for accepting the request");
+      res.redirect("back");
     }
   })
 });
 
-router.post('/addmyorg', ensureAuthentication, upload.single('orgAvatar'), function(req, res, next) {
+router.post("/addmyorg", ensureAuthentication, upload.single("orgAvatar"), function(req, res, next) {
   console.log("Initiating to add the organisation");
   var name = req.body.orgName;
   var aboutUs = req.body.orgAbout;
@@ -571,12 +571,12 @@ router.post('/addmyorg', ensureAuthentication, upload.single('orgAvatar'), funct
   Org.makeOrg(orgDtl, function(err1, res1){
     if(err1) throw err1;
     else{
-      res.redirect('/myorg');
+      res.redirect("/myorg");
     }
   });
 });
 
-router.get('/pendingreq/:orguid', ensureAuthentication, function(req, res, next) {
+router.get("/pendingreq/:orguid", ensureAuthentication, function(req, res, next) {
   console.log("loading organisation add page");
   var orgUId = req.params.orguid;
   var username = req.user.username;
@@ -594,7 +594,7 @@ router.get('/pendingreq/:orguid', ensureAuthentication, function(req, res, next)
           Issue.getClosedIssueByOrgUserId(orgUId, function(err3, res3){
             if(err3) throw err3;
             else{
-              res.render('indorgpendingreq',{
+              res.render("indorgpendingreq",{
                 title: res1.name+" : ",
                 username: username,
                 orgDtl : res1,
@@ -609,7 +609,7 @@ router.get('/pendingreq/:orguid', ensureAuthentication, function(req, res, next)
   });
 });
 
-router.get('/members/:orguid', ensureAuthentication, function(req, res, next) {
+router.get("/members/:orguid", ensureAuthentication, function(req, res, next) {
   console.log("loading organisation member list");
   var orgUId = req.params.orguid;
   var username = req.user.username;
@@ -627,7 +627,7 @@ router.get('/members/:orguid', ensureAuthentication, function(req, res, next) {
           Issue.getClosedIssueByOrgUserId(orgUId, function(err3, res3){
             if(err3) throw err3;
             else{
-              res.render('indorgmembers',{
+              res.render("indorgmembers",{
                 title: res1.name+" : ",
                 username: username,
                 orgDtl : res1,
@@ -643,7 +643,7 @@ router.get('/members/:orguid', ensureAuthentication, function(req, res, next) {
 });
 
 
-router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
+router.post("/acceptReq/", ensureAuthentication, function(req, res, next){
   console.log("came here");
   console.log(typeof(req.body));
   console.log(typeof(req.body.orgDtl));
@@ -672,8 +672,8 @@ router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
   console.log(adminObj);
 
   var reqUserObj = {
-    name: JSON.stringify(req.body.reqUserName).replace(/"/g,''),
-    username: JSON.stringify(req.body.reqUserUsername).replace(/"/g,''),
+    name: JSON.stringify(req.body.reqUserName).replace(/"/g,""),
+    username: JSON.stringify(req.body.reqUserUsername).replace(/"/g,""),
   };
   console.log(reqUserObj);
   console.log("Hi am");
@@ -690,7 +690,7 @@ router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
       console.log("Going to enter next function");
       console.log(res1);
       if(res1.length==0){
-        res.send('Not Enough rights to perform this operation');
+        res.send("Not Enough rights to perform this operation");
         console.log("Not Enough rights to perform this operation");
       }
       else{
@@ -699,7 +699,7 @@ router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
           if(err2) throw err2;
           else{
             console.log(res2);
-            res.send('Member added to member Group');
+            res.send("Member added to member Group");
             console.log("Member added to member Group");
           }
         });
@@ -709,7 +709,7 @@ router.post('/acceptReq/', ensureAuthentication, function(req, res, next){
   });
 });
 
-router.post('/cancelPendingReq/:orgUserId', ensureAuthentication, function(req, res, next){
+router.post("/cancelPendingReq/:orgUserId", ensureAuthentication, function(req, res, next){
   var username = req.user.username;
   var name = req.user.name;
   var orgUserId = req.params.orgUserId;
@@ -724,13 +724,13 @@ router.post('/cancelPendingReq/:orgUserId', ensureAuthentication, function(req, 
     else{
       console.log(res1);
       console.log("Your request is cancelled");
-      res.send('Successfull');
+      res.send("Successfull");
     }
   });
 });
 
 
-router.post('/declineReq/', ensureAuthentication, function(req, res, next){
+router.post("/declineReq/", ensureAuthentication, function(req, res, next){
   console.log("came here");
   console.log(typeof(req.body));
   console.log(typeof(req.body.orgDtl));
@@ -760,8 +760,8 @@ router.post('/declineReq/', ensureAuthentication, function(req, res, next){
 
 
   var reqUserObj = {
-    name: JSON.stringify(req.body.reqUserName).replace(/"/g,''),
-    username: JSON.stringify(req.body.reqUserUsername).replace(/"/g,''),
+    name: JSON.stringify(req.body.reqUserName).replace(/"/g,""),
+    username: JSON.stringify(req.body.reqUserUsername).replace(/"/g,""),
   };
 
   console.log(reqUserObj);
@@ -780,7 +780,7 @@ router.post('/declineReq/', ensureAuthentication, function(req, res, next){
       console.log(res1);
       if(res1.length==0){
         console.log("Not Enough rights to perform this operation");
-        res.send('Not Enough rights to perform this operation');
+        res.send("Not Enough rights to perform this operation");
       }
       else{
         console.log("Performing accepting");
@@ -789,7 +789,7 @@ router.post('/declineReq/', ensureAuthentication, function(req, res, next){
           else{
             console.log(res2);
             console.log("Member request is declined");
-            res.send('Successfull');
+            res.send("Successfull");
           }
         });
       }
@@ -798,7 +798,7 @@ router.post('/declineReq/', ensureAuthentication, function(req, res, next){
   });
 });
 
-router.get('/myorg', ensureAuthentication, function(req, res, next) {
+router.get("/myorg", ensureAuthentication, function(req, res, next) {
   console.log("loading organisation add page");
   var username = req.user.username;
   var userObj = {
@@ -819,8 +819,8 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
                 else
                 {
                   console.log(res2);
-                  res.render('myorg',{
-                    title: 'My Organisations',
+                  res.render("myorg",{
+                    title: "My Organisations",
                     username: req.user.username,
                     pendingctrlorgs: res4,
                     adminctrlorgs: res3,
@@ -837,7 +837,7 @@ router.get('/myorg', ensureAuthentication, function(req, res, next) {
   })
 });
 
-router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next) {
+router.get("/searchorg/:orgname", ensureAuthentication, function(req, res, next) {
   console.log("loading organisation add page");
   var username = req.user.username;
   var userObj = {
@@ -852,8 +852,8 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
       if(orgname=="q")
       {
             //The abouve getUserByUsername is required because to render the search dash in laptop, we are showing the userdetais
-            res.render('joinorg', {
-              title: 'Explore Orgs',
+            res.render("joinorg", {
+              title: "Explore Orgs",
               username: req.user.username,
               orgsByName: [],
               userDetails: res2,
@@ -881,8 +881,8 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
                           if(err6) throw err6;
                           else{
                             console.log(res3);
-                            res.render('joinorg',{
-                              title: 'Explore Orgs',
+                            res.render("joinorg",{
+                              title: "Explore Orgs",
                               username: req.user.username,
                               userDetails: res2,
                               adminctrlorgs: res3,
@@ -904,7 +904,7 @@ router.get('/searchorg/:orgname', ensureAuthentication, function(req, res, next)
       });
 });
 
-router.post('/removeMem', ensureAuthentication, function(req, res, next){
+router.post("/removeMem", ensureAuthentication, function(req, res, next){
   console.log(req.body);
   var userObj = {
     name: req.body.name,
@@ -921,7 +921,7 @@ router.post('/removeMem', ensureAuthentication, function(req, res, next){
   })
 })
 
-router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
+router.post("/exitOrg/:orgUId", ensureAuthentication, function(req, res, next){
   var orgUId = req.params.orgUId;
   var username = req.user.username;
   var userObj = {
@@ -951,12 +951,12 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
                   if(err3) throw err3;
                   else
                   {
-                    console.log('Deletion of issues successfull');
+                    console.log("Deletion of issues successfull");
                     Org.deleteOrgEmptyMember(orgUId, function(err4, res4){
                       if(err4) throw err4;
                       else
                       {
-                        res.redirect('/myorg');
+                        res.redirect("/myorg");
                       }
                     })
                   }
@@ -969,21 +969,21 @@ router.post('/exitOrg/:orgUId', ensureAuthentication, function(req, res, next){
               Org.makeUserAdmin(orgUId, res1.members[1], function(err3, res3){
                 if(err3) throw err3;
                 else{
-                  res.redirect('/myorg');
+                  res.redirect("/myorg");
                 }
               });
             }
           }
           else{
             console.log("Done");
-            res.redirect('back');
+            res.redirect("back");
           }
         })
       }
     });
 });
 
-router.post('/makeAnnouncement', ensureAuthentication, upload.array('announcementDocs'), function(req, res, next){
+router.post("/makeAnnouncement", ensureAuthentication, upload.array("announcementDocs"), function(req, res, next){
   if(req.body){
     var orgUId = req.body.orgUId;
     var topic = req.body.announcementTopic;
@@ -1010,8 +1010,8 @@ router.post('/makeAnnouncement', ensureAuthentication, upload.array('announcemen
         Issue.createIssue(issue, function(err1, res1){
           if(err1)  throw err1;
           else{
-            console.log('Added');
-            res.redirect('/orgs/'+orgUId);
+            console.log("Added");
+            res.redirect("/orgs/"+orgUId);
           }
         })
       }
@@ -1020,7 +1020,7 @@ router.post('/makeAnnouncement', ensureAuthentication, upload.array('announcemen
 });
 
 // The following method deletes the organisation
-// router.post('/delorg/:orgUId', ensureAuthentication, function(req, res, next) {
+// router.post("/delorg/:orgUId", ensureAuthentication, function(req, res, next) {
 //     console.log("Initiating Deletion of Organisation");
 //     var orgUId = req.params.orgUId;
 //     console.log(orgUId);
@@ -1031,7 +1031,7 @@ router.post('/makeAnnouncement', ensureAuthentication, upload.array('announcemen
 //         Org.deleteOrg(orgUId, req.user.username, function(err2, res2){
 //           if(err2) throw err2;
 //               else{
-//                   res.redirect('/myorg');
+//                   res.redirect("/myorg");
 //                 }
 //           });
 //       }
@@ -1041,7 +1041,7 @@ router.post('/makeAnnouncement', ensureAuthentication, upload.array('announcemen
 function ensureAuthentication(req, res, next){
   if(req.isAuthenticated())
     return next();
-  res.redirect('/users/login');
+  res.redirect("/users/login");
 }
 
 
