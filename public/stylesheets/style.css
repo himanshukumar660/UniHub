@@ -1,74 +1,75 @@
 html {
     position: relative;
     min-height: 100%;
-    overflow: -moz-scrollbars-none;
+    overflow: -moz-scrollbars-none!important;
 }
 body{
-  font-family: 'Quicksand'!important ;
+  font-family: 'Quicksand' !important;
   font-size: 16px!important;
-  background-color: #e9ebee3d ;
-	color: black ;
+  background-color: #e9ebee3d !important;
+	color: black !important;
   zoom: 0.9;
-  overflow: -moz-scrollbars-none;
+  overflow: -moz-scrollbars-none!important;
 }
 #linkProfile{
-  font-weight: 900;
+  font-weight: 900!important;
 }
 
 .container{
 	align: center;
 }
 .container-fluid {
-	background-color: black ;
-	border: none ;
-  color: white ;
+	background-color: black !important;
+	border: none !important;
+  color: white !important;
 }
-.navbar-inverse .navbar-nav>li{
-    color: white ;
+.navbar-inverse .navbar-nav>li>
+{
+    color: white !important;
 }
 .navbar-inverse .navbar-toggle:hover {
-    background-color: transparent ;
+    background-color: transparent !important;
 }
 
 .n.navbar-collapse, .navbar-inverse .navbar-form, .navbar, .navbar-toggle, .navbar-brand, .navbar-collapse .collapse .in{
-    border: none ;
-		color: white ;
+    border: none !important;
+		color: white !important;
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
-    color: white ;
-    background-color: black ;
-    border:none ;
+    color: white !important;
+    background-color: black !important;
+    border:none !important;
 }
 
 input {
-	color: black ;
-	width: 100% ;
+	color: black !important;
+	width: 100% !important;
 	border-radius: 1rem;
   border: none;
-	padding: 10px 10px 10px 10px ;
-	margin: 1.4% 1.4% 1.4% 1.4% ;
+	padding: 10px 10px 10px 10px !important;
+	margin: 1.4% 1.4% 1.4% 1.4% !important;
   background-color: white;
 }
 
 #submit:hover{
-  background-color: #369a21 ;
+  background-color: #369a21 !important;
 }
 
 .card{
       padding: 2rem;
-      padding-bottom: 0px ;
-      padding-top: 0px ;
-      background-color: #e9ebee ;
+      padding-bottom: 0px !important;
+      padding-top: 0px !important;
+      background-color: #e9ebee !important;
       border-radius: 2rem;
       width: 33rem;
       margin:20px auto;
-      box-shadow: 0 15px 60px 0 rgba(27,42,53,.25) ;
-      transition: all 0.2s ease-in-out ;
+      box-shadow: 0 15px 60px 0 rgba(27,42,53,.25) !important;
+      transition: all 0.2s ease-in-out !important;
 }
 
 .card:hover {
-  box-shadow: 0 20px 100px 0 rgba(27,42,53,.25) ;
+  box-shadow: 0 20px 100px 0 rgba(27,42,53,.25) !important;
   transform: translateY(-2%);
 }
 .form-header {
@@ -91,7 +92,7 @@ footer {
 	height: auto;
 	min-height: 30px;
 	padding: 1%;
-	margin-top: 5% ;
+	margin-top: 5% !important;
 	overflow: hidden;
 }
 
@@ -100,7 +101,7 @@ a:hover{
 }
 
 #submit{
-  text-align: center ;
+  text-align: center !important;
   width: auto;
   margin: 0px auto;
 }
@@ -112,7 +113,7 @@ a:hover {
 @media (min-width: 992px)
 {
   #myNavbar{
-    display: flex ;
+    display: flex !important;
     width: auto;
   }
 }
@@ -123,11 +124,11 @@ a:hover {
 }
 
 .my-lg-0 {
-    margin-top: 0 ;
-    margin-bottom: 0 ;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 .mr-auto {
-    margin-right: auto ;
+    margin-right: auto !important;
 }
 .form-inline {
     display: -webkit-box;
@@ -154,8 +155,8 @@ a:hover {
 }
 
 #pro_info{
-  font-size: 20pt ;
-  font-weight: bold;
+  font-size: 20pt !important;
+  font-weight: bold!important;
 }
 blockquote {
   background: #f9f9f9;
@@ -175,8 +176,8 @@ blockquote:before {
 }
 
 .fa-facebook {
-  background: #3B5998 ;
-  color: white ;
+  background: #3B5998 !important;
+  color: white !important;
 }
 .fa-twitter {
   background: #55ACEE;
@@ -216,23 +217,23 @@ li.issuePart{
     height:100%;
     position:absolute;
     top:60px;
-      overflow: -moz-scrollbars-none;
+      overflow: -moz-scrollbars-none!important;
 }
 
 .gridwrapper {
     overflow: hidden;
-      overflow: -moz-scrollbars-none;
+      overflow: -moz-scrollbars-none!important;
 }
 
 .gridbox {
     margin: 1%;
     float: left;
-      overflow: -moz-scrollbars-none;
+      overflow: -moz-scrollbars-none!important;
 }
 .gridbox.gridmenu{
-  margin-left:0%;
+  margin-left:0%!important;
   padding-left: 20px;
-    overflow: -moz-scrollbars-none;
+    overflow: -moz-scrollbars-none!important;
 }
 .gridmenu {
     width: 20.481781376518218623481781376518%;
@@ -242,7 +243,7 @@ li.issuePart{
     text-align: center;
     padding: 10px;
     margin-top: 20px;
-      overflow: -moz-scrollbars-none;
+      overflow: -moz-scrollbars-none!important;
 }
 
 .gridmain {
@@ -250,8 +251,8 @@ li.issuePart{
     overflow: scroll;
     float: left;
     position: absolute;
-    left: 18% ;
-      overflow: -moz-scrollbars-none;
+    left: 18% !important;
+      overflow: -moz-scrollbars-none!important;
 }
 
 
@@ -263,7 +264,7 @@ li.issuePart{
   text-align: center;
   float: right;
   left: 79.08%;
-    overflow: -moz-scrollbars-none;
+    overflow: -moz-scrollbars-none!important;
 }
 
 .right {
@@ -272,7 +273,7 @@ li.issuePart{
     padding:15px;
     width: 100%;
     margin-bottom: 1%;
-      overflow: -moz-scrollbars-none;
+      overflow: -moz-scrollbars-none!important;
 }
 
 
@@ -292,7 +293,7 @@ li.issuePart{
   #orgquery{
     background-color: #3f4448;
     border-color: #3f4448;
-    color: white;
+    color: white!important;
     font-weight:500;
   }
   nav{
@@ -318,27 +319,27 @@ li.issuePart{
     margin-right: 10px;
   }
   nav{
-    display: none;
+    display: none!important;
   }
   #issues{
     margin:0px;
     padding: 0px;
   }
   .issuePart{
-    margin-left: 0px;
-    margin-right: 0px ;
+    margin-left: 0px!important;
+    margin-right: 0px !important;
   }
   .tabBtns{
-    border-radius: 2rem;
+    border-radius: 2rem!important;
   }
   .tabCnts{
-   border-radius: 2rem;
+   border-radius: 2rem!important;
   }
   #openBtn, #member{
-    border-bottom-left-radius: 2rem ;
+    border-bottom-left-radius: 2rem !important;
   }
   #announcementBtn, #pending{
-    border-bottom-right-radius: 2rem ;
+    border-bottom-right-radius: 2rem !important;
   }
   .mobileNav{
     display: block;
@@ -381,20 +382,20 @@ li.issuePart{
     }
     .gridmenu {
         display:none;
-          overflow: -moz-scrollbars-none;
+          overflow: -moz-scrollbars-none!important;
     }
 
     .gridright {
         display:none;
-          overflow: -moz-scrollbars-none;
+          overflow: -moz-scrollbars-none!important;
     }
 
     .gridmain {
         width: 100%;
         float: center;
-        left: 0% ;
+        left: 0% !important;
         padding: 0px;
-          overflow: -moz-scrollbars-none;
+          overflow: -moz-scrollbars-none!important;
     }
 
     .main {
@@ -413,13 +414,13 @@ li.issuePart{
         padding: 1.0121457489878542510121457489879%;
     }
     .addIssueForm{
-      margin:70px auto ;
+      margin:70px auto !important;
     }
 
 }
 
 a{
-  text-decoration: none ;
+  text-decoration: none !important;
 }
 
 .addIssueFormbackground, .addLogoutAlertbackground, .addOrgExitAlertbackground, .addCancelPendingReqBackground, .addDeleteAlertbackground {
@@ -429,13 +430,13 @@ a{
   z-index:2000;
   height:100%;
   overflow:hidden;
-  background-color: rgba(0, 0, 0, 0.71) ;
+  background-color: rgba(0, 0, 0, 0.71) !important;
 }
 
 .addIssueForm, .addLogoutAlert, .addOrgExitAlert, .addCancelPendingReq, .addDeleteAlert {
   border-radius: 2rem;
   background-color: white;
-  opacity: 1;
+  opacity: 1!important;
   width: 42%;
   min-width: 30rem;
   padding: 20px;
@@ -487,24 +488,24 @@ textarea{
 }
 
 #issueDept, #orgName, #issueDescriptionTopic, #orgAlert, #orgUserId, #orgLink{
-  margin-left:0px ;
-  margin-right:0px ;
+  margin-left:0px !important;
+  margin-right:0px !important;
 }
 #anonymity{
-  width:15px;
+  width:15px!important;
 }
 
 #issuePost, #orgSubmit{
   background-color:#42b72a;
   border:none;
-  color:white;
+  color:white!important;
   font-size:20px;
-  padding: 5px ;
-  padding-left:15px ;
-  padding-right:15px ;
+  padding: 5px !important;
+  padding-left:15px !important;
+  padding-right:15px !important;
   border:1px solid #e8f3ff;
   border-radius: 5px;
-  box-shadow: 0 2px 4px 0 #e8f3ff,0 2px 10px 0 #e8f3ff;
+  box-shadow: 0 2px 4px 0 #e8f3ff,0 2px 10px 0 #e8f3ff!important;
 }
 
 #issuePost:hover, #orgSubmit:hover{
@@ -582,7 +583,7 @@ color:gray;
 #issueTopic{
   font-size: 20px;
   font-weight:500;
-  width:100%;
+  width:100%!important;
 }
 
 #issueDesc{
@@ -593,12 +594,12 @@ color:gray;
 }
 
 .gridbox.gridright .right{
-  background-color:white;
+  background-color:white!important;
 }
 
 #notifications{
   padding:10px;
-  background-color:#c4d4ea91;
+  background-color:#c4d4ea91!important;
   margin-bottom:5px;
   font-size:12px;
 }
@@ -629,11 +630,11 @@ color:gray;
 
 
 .fa-thumbs-up{
-  color: #42b72a ;
+  color: #42b72a !important;
 }
 
 .fa-thumbs-down{
-  color: red ;
+  color: red !important;
 }
 
 a#issueTopic{
@@ -693,7 +694,7 @@ li#iRD{
 }
 .mega-octicon.octicon-issue-opened span{
   font-weight:500;
-  font-family:Quicksand;
+  font-family:Quicksand!important;
   font-size:13pt;
 
 }
@@ -706,13 +707,13 @@ li#iRD{
 }
 .mega-octicon.octicon-issue-closed span{
   font-weight:500;
-  font-family:Quicksand;
+  font-family:Quicksand!important;
   font-size:13pt;
 
 }
 
 a#linkProfile:hover {
-  text-decoration: underline;
+  text-decoration: underline!important;
   color:#3479b7;
 }
 
@@ -725,7 +726,7 @@ a#linkProfile:hover {
   padding-left: 10px;
   padding-right: 10px;
   border-radius:3px;
-  width: 97.5% ;
+  width: 97.5% !important;
 }
 #issueDept, #orgName, #orgUserId, #orgLink{
   border:1px solid #e8f3ff;
@@ -757,7 +758,7 @@ a#linkProfile:hover {
 }
 
 .navbar{
-  margin-bottom: 0px ;
+  margin-bottom: 0px !important;
 }
 
 
@@ -822,7 +823,7 @@ a#linkProfile:hover {
   cursor: pointer;
 }
 #searchorg{
-  background-color:#3f4447;
+  background-color:#3f4447!important;
   color: lightgray;
 }
 
@@ -836,7 +837,7 @@ a#linkProfile:hover {
   border: 1px solid #d1d5da;
   margin:5px;
   background-color: white;
-  box-shadow: 0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff;
+  box-shadow: 0 2px 4px 0 #d4e8ff,0 2px 10px 0 #d4e8ff!important;
 }
 #manageOrg, #joinOrg, #exitOrg, #myissues, #logoutYes, #logoutNo {
   transition: all 0.4s ease;
@@ -870,13 +871,13 @@ html {
 }
 
 .dropdown-menu{
-    left: -620% ;
-    top:120%;
+    left: -620% !important;
+    top:120%!important;
 }
 
 
 .select-items {
     max-height: 200px;
     overflow-x: auto;
-        box-shadow: 0 2px 4px 0 lightgray,0 20px 40px 0 lightgray;
+        box-shadow: 0 2px 4px 0 lightgray,0 20px 40px 0 lightgray!important;
 }
