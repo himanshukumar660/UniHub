@@ -111,13 +111,14 @@ block issues
                           i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
                         a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
-                      div#issueAttach(style="padding:10px;")
-                        if each.docsUpload.length!=0
-                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
-                          for all in each.docsUpload 
-                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                            a(href="/uploads/"+all.filename ) #{all.originalName}
-                            br
+                      if each.docsUpload.length!=0
+                        div#issueAttach(style="padding:10px;")
+                          if each.docsUpload.length!=0
+                            p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                            for all in each.docsUpload 
+                              i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                              a(href="/uploads/"+all.filename ) #{all.originalName}
+                              br
 
                   div(id="feed_details")
                       div(style="display:inline-block;width:100%!important")
@@ -182,53 +183,29 @@ block issues
                           i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
                         a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
-                      div#issueAttach(style="padding:10px;")
-                        if each.docsUpload.length!=0
-                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
-                          for all in each.docsUpload 
-                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                            a(href="/uploads/"+all.filename ) #{all.originalName}
-                            br
+                      if each.docsUpload.length!=0
+                        div#issueAttach(style="padding:10px;")
+                          if each.docsUpload.length!=0
+                            p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                            for all in each.docsUpload 
+                              i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                              a(href="/uploads/"+all.filename ) #{all.originalName}
+                              br
 
                   div(id="feed_details")
-                    if((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1))  
-                      div(style="display:inline-block;width:100%!important")
-                        ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
-                          li
-                            a(href="#" ) 
-                              span(id="num_of_likes") #{each.supporters.length}
-                              |  Upvotes
-                          li
-                            h(style="margin-right:5px;margin-left:5px") -
-                          li
-                            a(href="#")
-                              span(id="num_of_dislikes") #{each.haters.length}
-                              |  Downvotes
-                        
-                        if(each.supporters.indexOf(username)!=-1)
-                          div(id="status" style="float:right")
-                            i(class="fa fa-thumbs-up" title="You have Upvoted" style="font-size:28px;padding-right:17px")
-                        else
-                          div(id="status" style="float:right")
-                            i(class="fa fa-thumbs-down" title="You have Downvoted" style="font-size:28px;padding-right:17px")
+                    div(style="display:inline-block;width:100%!important")
+                      ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
+                        li
+                          a(href="#" ) 
+                            span(id="num_of_likes") #{each.supporters.length}
+                            |  Upvotes
+                        li
+                          h(style="margin-right:5px;margin-left:5px") -
+                        li
+                          a(href="#")
+                            span(id="num_of_dislikes") #{each.haters.length}
+                            |  Downvotes
 
-                    else 
-                      .issueCommentPart
-                        button(id="likeBtn" )
-                          if (each.supporters.indexOf(username)==-1)
-                            i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                            |  Upvote
-                          else
-                            i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                            |  Upvote
-
-                        button(id="dislikeBtn" )                        
-                          if (each.haters.indexOf(username)==-1)
-                            i(class="fa fa-thumbs-o-down" style="font-size:18px;" id="dislikeBtnLogo")
-                            |  Downvote
-                          else
-                            i(class="fa fa-thumbs-down" style="font-size:18px" id="dislikeBtnLogo")
-                            |  Downvote
             else
               div(style="text-align:center!important;padding-top:100px")
                 i(class="fa fa-user-secret" style="background-color:unset!important;color:lightgray;font-size:100px;")
@@ -274,53 +251,29 @@ block issues
                           i.glyphicon.glyphicon-fire(style="color:red;margin:5px" aria-hidden='true')
                         a(href="/indpost/"+each._id style="color:black") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
-                      div#issueAttach(style="padding:10px;")
-                        if each.docsUpload.length!=0
-                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
-                          for all in each.docsUpload 
-                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                            a(href="/uploads/"+all.filename ) #{all.originalName}
-                            br
+                      if each.docsUpload.length!=0
+                        div#issueAttach(style="padding:10px;")
+                          if each.docsUpload.length!=0
+                            p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                            for all in each.docsUpload 
+                              i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                              a(href="/uploads/"+all.filename ) #{all.originalName}
+                              br
 
                   div(id="feed_details")
-                    if((each.haters.indexOf(username)!=-1)||(each.supporters.indexOf(username)!=-1))  
-                      div(style="display:inline-block;width:100%!important")
-                        ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
-                          li
-                            a(href="#" ) 
-                              span(id="num_of_likes") #{each.supporters.length}
-                              |  Upvotes
-                          li
-                            h(style="margin-right:5px;margin-left:5px") -
-                          li
-                            a(href="#")
-                              span(id="num_of_dislikes") #{each.haters.length}
-                              |  Downvotes
-                        
-                        if(each.supporters.indexOf(username)!=-1)
-                          div(id="status" style="float:right")
-                            i(class="fa fa-thumbs-up" title="You have Upvoted" style="font-size:28px;padding-right:17px")
-                        else
-                          div(id="status" style="float:right")
-                            i(class="fa fa-thumbs-down" title="You have Downvoted" style="font-size:28px;padding-right:17px")
+                    div(style="display:inline-block;width:100%!important")
+                      ul(id="feed_numbers" style="padding-left:15px;list-style:none;display:inline-flex;font-size:10pt;float:left;")
+                        li
+                          a(href="#" ) 
+                            span(id="num_of_likes") #{each.supporters.length}
+                            |  Upvotes
+                        li
+                          h(style="margin-right:5px;margin-left:5px") -
+                        li
+                          a(href="#")
+                            span(id="num_of_dislikes") #{each.haters.length}
+                            |  Downvotes
 
-                    else 
-                      .issueCommentPart
-                        button(id="likeBtn" )
-                          if (each.supporters.indexOf(username)==-1)
-                            i(class="fa fa-thumbs-o-up" style="font-size:18px;" id="likeBtnLogo")
-                            |  Upvote
-                          else
-                            i(class="fa fa-thumbs-up" style="font-size:18px" id="likeBtnLogo")
-                            |  Upvote
-
-                        button(id="dislikeBtn" )                        
-                          if (each.haters.indexOf(username)==-1)
-                            i(class="fa fa-thumbs-o-down" style="font-size:18px;" id="dislikeBtnLogo")
-                            |  Downvote
-                          else
-                            i(class="fa fa-thumbs-down" style="font-size:18px" id="dislikeBtnLogo")
-                            |  Downvote
           else
             div(style="text-align:center!important;padding-top:100px")
               i(class="mega-octicon octicon-issue-closed" style="background-color:unset!important;color:lightgray;font-size:100px;")
@@ -361,20 +314,14 @@ block issues
                   #nextBtn
                     div#issueTopic(style="margin-left:10px;width:auto!important") #{each.issueTopic}
                     div#issueDesc #{each.issueDesc}
-                    div#issueAttach(style="padding:10px;")
-                        if each.docsUpload.length!=0
-                          p(style="font-weight:500") #{each.docsUpload.length} Attachments :
-                          for all in each.docsUpload 
-                            i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                            a(href="/uploads/"+all.filename ) #{all.originalName}
-                            br
-
-            else
-              div(style="text-align:center!important;padding-top:100px")
-                i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:lightgray;font-size:100px;")
-                br
-                br
-                h(style="font-weight:500; font-size:25pt; color:grey") No notices yet
+                    if each.docsUpload.length!=0
+                      div#issueAttach(style="padding:10px;")
+                          if each.docsUpload.length!=0
+                            p(style="font-weight:500") #{each.docsUpload.length} Attachments :
+                            for all in each.docsUpload 
+                              i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                              a(href="/uploads/"+all.filename ) #{all.originalName}
+                              br
 
           else
             div(style="text-align:center!important;padding-top:100px")

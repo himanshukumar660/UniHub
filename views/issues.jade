@@ -72,14 +72,15 @@ block issues
                     #nextBtn
                       div#issueTopic(style="margin-left:10px;width:auto!important") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
-                      div#issueAttach(style="padding:10px;")
-                        p#attachmentBtn(style="font-weight:500") Show #{each.docsUpload.length} Attachments :
-                          div#attachmentsList(style="display:none")
-                            if each.docsUpload.length!=0
-                              for all in each.docsUpload 
-                                i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
-                                a(href="/uploads/"+all.filename filetype="#{all.mimetype}") #{all.originalName}
-                                br
+                      if each.docsUpload.length!=0
+                        div#issueAttach(style="padding:10px;")
+                          p#attachmentBtn(style="font-weight:500;cursor:pointer") Show #{each.docsUpload.length} Attachments :
+                            div#attachmentsList(style="display:none")
+                              if each.docsUpload.length!=0
+                                for all in each.docsUpload 
+                                  i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
+                                  a(href="/uploads/"+all.filename filetype="#{all.mimetype}") #{all.originalName}
+                                  br
 
           else
             div(style="text-align:center!important;padding-top:100px")
@@ -154,7 +155,7 @@ block issues
                         a(href="/indpost/"+each._id style="color:black;" id="issueTopicText") #{each.issueTopic}
                       div#issueDesc #{each.issueDesc}
                       if each.docsUpload.length!=0
-                        div#issueAttach(style="padding:10px;")
+                        div#ach(style="padding:10px;")
                           p#attachmentBtn(style="font-weight:500;cursor:pointer") Show #{each.docsUpload.length} Attachments :
                             //i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px") 
                             div#attachmentsList(style="display:none")
