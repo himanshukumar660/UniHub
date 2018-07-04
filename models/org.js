@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var randomstring = require("randomstring");
 var SALT_WORK_FACTOR = 10;
 
-mongoose.connect("mongodb://127.0.0.1:27017/orgs");
+mongoose.connect("mongodb://127.0.0.1:27017/org");
 
 var db = mongoose.connection;
 

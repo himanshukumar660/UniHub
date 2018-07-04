@@ -40,6 +40,7 @@ passport.use(new LocalStrategy(
         User.getUserByUsername(username, function(err, user){
             if(err) throw err;
             if(!user){
+            	console.log(user);
                 console.log("Unknown User");
                 return done(null, false, {message: "Unknown User"});
             }

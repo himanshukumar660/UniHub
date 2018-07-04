@@ -30,7 +30,8 @@
     "short-mongo-id": "*",
     "socket.io": "*",
     "validator": "*",
-    "xss-filters": "*"
+    "xss-filters": "*",
+    "nodemon": "*"
   },
   "author": "Himanshu Kumar"
 }
