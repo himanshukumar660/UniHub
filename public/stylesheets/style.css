@@ -318,6 +318,19 @@ li.issuePart{
     margin-left: 5px;
     margin-right: 10px;
   }
+  #announcements{
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+  #aIssues{
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+  #closedIssues{
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+  
   nav{
     display: none!important;
   }

@@ -3,7 +3,7 @@ var uniqueValidator = require("mongoose-unique-validator");
 var bcrypt = require("bcrypt");
 var SALT_WORK_FACTOR = 10;
 
-mongoose.connect("mongodb://127.0.0.1:27017/user");
+mongoose.connect("mongodb://127.0.0.1:27017/unihub");
 
 var db = mongoose.connection;
 

@@ -724,7 +724,7 @@ router.post("/cancelPendingReq/:orgUserId", ensureAuthentication, function(req, 
     else{
       console.log(res1);
       console.log("Your request is cancelled");
-      res.send("Successfull");
+      res.redirect(req.header("Referer"));
     }
   });
 });

@@ -23,13 +23,13 @@ block content
 					p #{flashSuccessfulRegister[0]}
 				if flashSuccessfulRegister.length!=0
 					.alert.alert-success#regSucc(style="color:green")
-						b(style="text-transform: capitalize;") #{flashSuccessfulRegister[0]}
-						.glyphicon.glyphicon-remove(style="float:right" id="close_error")
+						b(style="text-transform: capitalize;font-size: 12pt") #{flashSuccessfulRegister[0]}
+						.glyphicon.glyphicon-remove(style="float:right;padding-top:5px" id="close_error")
 					
 				if error
 					.alert.alert-danger#err
-						b(style="text-transform: capitalize;") #{error}
-						.glyphicon.glyphicon-remove(style="float:right" id="close_error")
+						b(style="text-transform: capitalize;font-size: 12pt") #{error}
+						.glyphicon.glyphicon-remove(style="float:right;padding-top:5px" id="close_error")
 							
 							
 				form(method='POST', action="/users/login" style="margin-top:20px !important")
