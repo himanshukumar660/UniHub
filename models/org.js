@@ -4,7 +4,14 @@ var mongoose = require("mongoose");
 var randomstring = require("randomstring");
 var SALT_WORK_FACTOR = 10;
 
-mongoose.connect("mongodb://127.0.0.1:27017/unihub");
+const uri = "mongodb://himanshu:himanshu103@ds243812.mlab.com:43812/unihub"
+mongoose.connect(uri, function(err, client) {
+   if(err) {
+        console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
+   }
+   console.log('Connected...');
+   // perform actions on the collection object
+});
 
 var db = mongoose.connection;
 
@@ -61,8 +68,6 @@ var orgSchema = new Schema({
 	pendingRequest : [memberSchema],
 });
 
-orgSchema.index({"$**" : "text"},{default_language : "none"});
-
 var Org = module.exports = mongoose.model("Org", orgSchema);
 
 // Org.ensureIndexes(function (err) {
@@ -70,13 +75,6 @@ var Org = module.exports = mongoose.model("Org", orgSchema);
 //   if (err) console.log(err)
 // });
 
-Org.on("index", function(err) {
-    if (err) {
-        console.error("Org index error: %s", err);
-    } else {
-        console.info("Org indexing complete");
-    }
-});
 
 //mongoose.set("debug", true);
 module.exports.makeOrg = function(orgDetails, callback){
@@ -149,12 +147,24 @@ module.exports.chkMember = function(orgUId, userObj, callback){
 	Org.findOne({$and : [{userId:orgUId, members : {$elemMatch : userObj}}]}, callback);
 }
 
-module.exports.findInOrg = function(orgname, callback){
-	Org.find({$text : {
-			$search : orgname,
-			$caseSensitive : false}},
-			{ score : { $meta: "textScore" } }).sort({ score : { $meta : "textScore" } })
-    .exec(callback);
+module.exports.findInOrg = function(pattern, callback){
+	pattern = new RegExp(pattern, 'i');
+	Org.find({
+					$or : [
+						{
+							'name' : pattern
+						},
+						{
+							'userId' : pattern
+						},
+						{
+							'aboutUs' : pattern
+						},
+						{
+							'orgLink' : pattern
+						}
+					]
+	}).exec(callback);
 }
 
 module.exports.findOrgByUID = function(orguid, callback){

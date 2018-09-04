@@ -3,7 +3,16 @@ var mongoose = require("mongoose");
 var randomstring = require("randomstring");
 var SALT_WORK_FACTOR = 10;
 
-mongoose.connect("mongodb://127.0.0.1:27017/unihub");
+const uri = "mongodb://himanshu:himanshu103@ds243812.mlab.com:43812/unihub"
+mongoose.connect(uri, function(err, client) {
+   if(err) {
+        console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
+   }
+   console.log('Connected...');
+   // perform actions on the collection object
+   //client.close();
+});
+
 
 var db = mongoose.connection;
 

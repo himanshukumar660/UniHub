@@ -51,7 +51,7 @@ router.get("/", ensureAuthentication, function(req, res, next) {
   var userObj = {
     name: req.user.name,
     username : req.user.username
-  };
+};
 
   Issue.getIssuesLatest(function(err1, res1){
     if(err1)
