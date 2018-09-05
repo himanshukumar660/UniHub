@@ -14,10 +14,11 @@ block issues
                     div(style="cursor:not-allowed;margin-right:5px;background-color:red;padding:5px;border-radius:3px;opacity:0.7")
                       span(style="color:white")  Admin
               else
-                div(style="float:right;display:inline-flex" id="choiceJoinBtn")  
-                    div(style="cursor:pointer;margin-right:5px;background-color:red;padding:5px;border-radius:3px" id="choiceDeclineBtn")
-                      i(class="ionicons ion-android-delete" style="color:white")
-                      span(style="color:white")  Remove
+                  div(style="float:right;display:inline-flex" id="choiceJoinBtn")  
+                    if(search(username, orgDtl.admin))
+                      div(style="cursor:pointer;margin-right:5px;background-color:red;padding:5px;border-radius:3px" id="choiceDeclineBtn")
+                        i(class="ionicons ion-android-delete" style="color:white")
+                        span(style="color:white")  Remove
                 
       else
         div(style="text-align:center!important;padding-top:100px")
