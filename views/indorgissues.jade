@@ -51,7 +51,7 @@ block issues
             div(style="width:25.0%;padding:10px;border-left:1px solid lightgray;cursor:pointer" id="announcementBtn")
               button(style="background-color:unset;font-size:14pt;border:none")
                 i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:red!important;font-size:14pt;color:black;padding-right:5px")
-                | #{announcements.length}
+                span(id="_aQty") #{announcements.length}
                 |  Notices
           else
             div(style="width:33.33%;padding:10px;border-right:1px solid lightgray;border-bottom:2px solid #42b72a;cursor:pointer" id="openBtn")
@@ -284,7 +284,7 @@ block issues
         div#announcements(style="display:none;")  
           if(announcements.length!=0)
             for each in announcements
-              li.issuePart(style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
+              li.issuePart(id=each._id style="box-shadow: 0 2px 4px 0 #d1d5da78,0 2px 10px 0 #d1d5da78!important;border-color:#d1d5da78")
                 .issuePart1D(style="display:inline-block;width:100%;padding-left:13px")
                   div(style="float:left;display:inline-flex")
                     div(style="float:left")
@@ -312,7 +312,7 @@ block issues
   
                 .main.issueBlock
                   #nextBtn
-                    div#issueTopic(style="margin-left:10px;width:auto!important") #{each.issueTopic}
+                    div#issueTopic(style="margin-left:10px;width:auto!important" ) #{each.issueTopic}
                     div#issueDesc #{each.issueDesc}
                     if each.docsUpload.length!=0
                       div#issueAttach(style="padding:10px;")
@@ -322,7 +322,9 @@ block issues
                               i(class="glyphicon glyphicon-paperclip" style="font-size:10pt;margin-right:5px")
                               a(href="/uploads/"+all.filename ) #{all.originalName}
                               br
-
+                                
+                div(id="feed_details")
+                  
           else
             div(style="text-align:center!important;padding-top:100px")
               i(class="ionicons ion-android-notifications" style="background-color:unset!important;color:lightgray;font-size:100px;")
@@ -336,6 +338,16 @@ block issues
             br
             br
             h(style="font-weight:500; font-size:25pt; color:grey") You'r not a member yet
+  
+  .jumbotron.text-center.addDeleteAlertbackground(style="top:40px")
+      .addLogoutAlert(style="margin:200px auto;padding:20px;max-width:400px")
+        div
+         p Confirm to Delete Post?
+        div(style="display:inline-flex;text-align:center;width:100%;border-top:1px solid lightgray;padding:10px")
+          div(style="width:50%;float:left;border-right:1px solid lightgray"  id="delYes")
+            p(id="delIssueOption" style="margin-bottom:0px;cursor:pointer;margin-bottom:0px;border:none;background-color:unset;color:red") Yes
+          div(style="width:50%;float:right" id="delNo")
+              p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:#337ab7;cursor:pointer") No
 
   script.
      var i=0;
@@ -440,4 +452,142 @@ block issues
         $('#aBtn').css({
           'border-bottom' : '2px solid white'
         })
+      });
+      
+      $('button#editIssueOption').click(function(){
+        var editIssueOption = $(this);
+        
+        $(this).prop('disabled',true);
+        
+        $(this).css({
+          'opacity':'0.5'
+        });
+        
+        var issueTopic = $(this).closest('li.issuePart').find('#issueTopic');
+        
+        var issueDesc = $(issueTopic).siblings('#issueDesc');
+        
+        var issueTopicText = $(issueTopic).html();
+        
+        var issueDescriptionText = $(issueDesc).html();
+
+        var feed_details = $(this).closest('li.issuePart').find('#feed_details');
+        
+        var feed_details_issueCommentPart = $(feed_details).html();
+        
+        var issueId = $(this).closest('.dropdown.open').siblings('i.issueStatus').attr('id');
+        
+        issueTopic.html('<input type="text" id="issueDescriptionTopic" name="issueDescriptionTopic" value="'+issueTopic.text()+'" placeholder="Issue Topic" required maxlength="60"/>');
+        
+        $(issueDesc).css({
+          "margin" : "0px",
+          'padding':'0px',
+          'padding-left': '10px'
+        });
+        
+        issueDesc.html('<textarea style="width:100%;min-height:100px" id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required>'+issueDesc.text()+'</textarea>');
+        
+        $(feed_details).find('ul#feed_numbers').hide();
+        
+        $(feed_details).html('\
+        <div style="display:inline-flex;width:100%;text-align:center!important">\
+        <button id="cancelEditBtn" style="width:100%;float:left">\
+        <i style="font-size:18px;" id="likeBtnLogo" class="ionicons ion-android-cancel"></i> Cancel\
+        </button>\
+        <button id="updateEditBtn">\
+        <i style="font-size:18px" class="ionicons ion-android-done">\
+        </i> Update</button>\
+        </div>');
+
+        $('#cancelEditBtn').click(function(){
+          $(editIssueOption).prop('disabled',false);
+          $(editIssueOption).css({
+            'opacity':'1'
+          });
+          
+          $(issueDesc).css({
+            "margin" : "5px",
+            'padding':'10px',
+            'padding-left': '5px'
+          });
+          console.log(feed_details_issueCommentPart);
+          $(issueTopic).html(issueTopicText);
+          $(issueDesc).html(issueDescriptionText);
+          $(feed_details).find('ul#feed_numbers').show();
+          $(feed_details).html(feed_details_issueCommentPart);
+        });
+
+        $('#updateEditBtn').click(function(){
+                
+          $(editIssueOption).prop('disabled',false);
+          
+          $(editIssueOption).css({
+            'opacity':'1'
+          });
+          
+          $(issueDesc).css({
+            'margin' : '5px',
+            'padding':'10px',
+            'padding-left': '5px'
+          });
+          
+          var issueId  = $(this).closest('li').attr('id');
+          console.log(issueId);
+          
+          $.ajax({
+            method: 'POST',
+            data:{
+              issueId: issueId,
+              issueTopic : $(issueTopic).find('input#issueDescriptionTopic').val(),
+              issueDesc : $(issueDesc).find('textarea#issueDescriptionText').val()
+            },
+            url: '/updateIssue/',
+            success: function(data){
+              console.log(data);
+              if(data=="1"){
+                $(editIssueOption).closest('div.issuePart1D').find('p#date').html(("Edited on "+new Date()).substring(0,31));
+                $(issueTopic).html($(issueTopic).find('input#issueDescriptionTopic').val());
+                $(issueDesc).html($(issueDesc).find('textarea#issueDescriptionText').val());
+                $(feed_details).find('ul#feed_numbers').show();
+                $(feed_details).html(feed_details_issueCommentPart);   
+              }
+              else{
+                console.log("Some Error Occured!");
+                $(issueTopic).html(issueTopicText);
+                $(issueDesc).html(issueDescriptionText);
+                $(feed_details).find('ul#feed_numbers').show();
+                $(feed_details).html(feed_details_issueCommentPart);
+              }
+            }
+          });
+          
+        });
+      });
+      
+      $('button#delIssueOptionBtn').click(function(){
+        console.log('clicked');
+        var delIssueOptionBtn = $(this);
+        $('.addDeleteAlertbackground').show();
+        $('.addDeleteAlertbackground').find('p#delIssueOption').click(function(){
+          var id = $(delIssueOptionBtn).closest('li.issuePart').attr('id');
+          var delPost = $(delIssueOptionBtn);
+          $.ajax({
+            method : 'POST',
+            data :{
+              id : id
+            },
+            url : '/delnotice/',
+            success: function(data){
+              if(data=="1")
+                {
+                  delPost.closest('li.issuePart').remove();
+                  $('#announcementBtn button span#_aQty').text((Number($('#announcementBtn button span#_aQty').text())-1));
+                }
+            }
+          });
+          $('.addDeleteAlertbackground').hide();
+        });
+        $('#delNo').click(function(){
+          $('.addDeleteAlertbackground').hide()
+        });
       });

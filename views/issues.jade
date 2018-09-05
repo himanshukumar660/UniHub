@@ -233,7 +233,7 @@ block issues
               p(style="margin-bottom:0px;margin-bottom:0px;border:none;background-color:unset;color:#337ab7;cursor:pointer") No
   
   script.
-    //- ////////////////////////// Coded from W3schools for options /////////////////////////////////////////////////
+      //- ////////////////////////// Coded from W3schools for options /////////////////////////////////////////////////
       var x, i, j, selElmnt, a, b, c;
       /*look for any elements with the class "custom-select":*/
       x = document.getElementsByClassName("custom-select");
@@ -302,7 +302,6 @@ block issues
       then close all select boxes:*/
       document.addEventListener("click", closeAllSelect);
 
-      //- //////////////////////////////////////////////////////////////////////////////////////////
       $('.main.issueBlock #issueDesc').each(function(){
         var descLength = $(this).text().length;
         var descTrimmed1 = (descLength>250)?("<span id='descTrimmed1'>"+$(this).text().substring(0,250)+"</span><span id='3dots'>...</span>"):($(this).text());
@@ -382,101 +381,101 @@ block issues
         });
       });
 
-      //- $('button#editIssueOption').click(function(){
-      //-   var editIssueOption = $(this);
-      //-   $(this).prop('disabled',true);
-      //-   $(this).css({
-      //-     'opacity':'0.5'
-      //-   });
-      //-   var issueTopic = $(this).closest('li.issuePart').find('#issueTopic');
-      //-   var issueDesc = $(issueTopic).siblings('#issueDesc');
+      $('button#editIssueOption').click(function(){
+        var editIssueOption = $(this);
+        $(this).prop('disabled',true);
+        $(this).css({
+          'opacity':'0.5'
+        });
+        var issueTopic = $(this).closest('li.issuePart').find('#issueTopic');
+        var issueDesc = $(issueTopic).siblings('#issueDesc');
         
-      //-   var issueTopicText = $(issueTopic).html();
-      //-   var issueDescriptionText = $(issueDesc).html();
+        var issueTopicText = $(issueTopic).html();
+        var issueDescriptionText = $(issueDesc).html();
 
-      //-   var feed_details = $(this).closest('li.issuePart').find('#feed_details');
-      //-   var feed_details_issueCommentPart = $(feed_details).html();
+        var feed_details = $(this).closest('li.issuePart').find('#feed_details');
+        var feed_details_issueCommentPart = $(feed_details).html();
         
-      //-   var issueId = $(this).closest('.dropdown.open').siblings('i.issueStatus').attr('id');
-      //-   console.log(issueId);
+        var issueId = $(this).closest('.dropdown.open').siblings('i.issueStatus').attr('id');
+        console.log(issueId);
         
-      //-   issueTopic.html('<input type="text" id="issueDescriptionTopic" name="issueDescriptionTopic" value="'+issueTopic.text()+'" placeholder="Issue Topic" required maxlength="60"/>');
-      //-   $(issueDesc).css({
-      //-     "margin" : "0px",
-      //-     'padding':'0px',
-      //-     'padding-left': '10px'
-      //-   });
-      //-   issueDesc.html('<textarea style="width:100%;min-height:100px" id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required>'+issueDesc.text()+'</textarea>');
-      //-   $(feed_details).find('ul#feed_numbers').hide();
+        issueTopic.html('<input type="text" id="issueDescriptionTopic" name="issueDescriptionTopic" value="'+issueTopic.text()+'" placeholder="Issue Topic" required maxlength="60"/>');
+        $(issueDesc).css({
+          "margin" : "0px",
+          'padding':'0px',
+          'padding-left': '10px'
+        });
+        issueDesc.html('<textarea style="width:100%;min-height:100px" id="issueDescriptionText" name="issueDescriptionText" placeholder="Write detailed description" required>'+issueDesc.text()+'</textarea>');
+        $(feed_details).find('ul#feed_numbers').hide();
         
-      //-   $(feed_details).html('\
-      //-   <div style="display:inline-flex;width:100%;text-align:center!important">\
-      //-   <button id="cancelEditBtn" style="width:100%;float:left">\
-      //-   <i style="font-size:18px;" id="likeBtnLogo" class="ionicons ion-android-cancel"></i> Cancel\
-      //-   </button>\
-      //-   <button id="updateEditBtn">\
-      //-   <i style="font-size:18px" class="ionicons ion-android-done">\
-      //-   </i> Update</button>\
-      //-   </div>');
+        $(feed_details).html('\
+        <div style="display:inline-flex;width:100%;text-align:center!important">\
+        <button id="cancelEditBtn" style="width:100%;float:left">\
+        <i style="font-size:18px;" id="likeBtnLogo" class="ionicons ion-android-cancel"></i> Cancel\
+        </button>\
+        <button id="updateEditBtn">\
+        <i style="font-size:18px" class="ionicons ion-android-done">\
+        </i> Update</button>\
+        </div>');
 
-      //-   $('#cancelEditBtn').click(function(){
-      //-     $(editIssueOption).prop('disabled',false);
-      //-     $(editIssueOption).css({
-      //-       'opacity':'1'
-      //-     });
+        $('#cancelEditBtn').click(function(){
+          $(editIssueOption).prop('disabled',false);
+          $(editIssueOption).css({
+            'opacity':'1'
+          });
           
-      //-     $(issueDesc).css({
-      //-       "margin" : "5px",
-      //-       'padding':'10px',
-      //-       'padding-left': '5px'
-      //-     });
-      //-     console.log(feed_details_issueCommentPart);
-      //-     $(issueTopic).html(issueTopicText);
-      //-     $(issueDesc).html(issueDescriptionText);
-      //-     $(feed_details).find('ul#feed_numbers').show();
-      //-     $(feed_details).html(feed_details_issueCommentPart);
-      //-   });
+          $(issueDesc).css({
+            "margin" : "5px",
+            'padding':'10px',
+            'padding-left': '5px'
+          });
+          console.log(feed_details_issueCommentPart);
+          $(issueTopic).html(issueTopicText);
+          $(issueDesc).html(issueDescriptionText);
+          $(feed_details).find('ul#feed_numbers').show();
+          $(feed_details).html(feed_details_issueCommentPart);
+        });
 
-      //-   $('#updateEditBtn').click(function(){
+        $('#updateEditBtn').click(function(){
                 
-      //-     $(editIssueOption).prop('disabled',false);
-      //-     $(editIssueOption).css({
-      //-       'opacity':'1'
-      //-     });
-      //-     $(issueDesc).css({
-      //-       "margin" : "5px",
-      //-       'padding':'10px',
-      //-       'padding-left': '5px'
-      //-     });
+          $(editIssueOption).prop('disabled',false);
+          $(editIssueOption).css({
+            'opacity':'1'
+          });
+          $(issueDesc).css({
+            "margin" : "5px",
+            'padding':'10px',
+            'padding-left': '5px'
+          });
           
-      //-     $.ajax({
-      //-       method: 'POST',
-      //-       data:{
-      //-         issueId: issueId,
-      //-         //orgUserId: ,
-      //-         issueTopic : $(issueTopic).find('input#issueDescriptionTopic').val(),
-      //-         issueDesc : $(issueDesc).find('textarea#issueDescriptionText').val()
-      //-       },
-      //-       url: '/updateIssue/',
-      //-       success: function(data){
-      //-         if(data=="1"){
-      //-           $(editIssueOption).closest('div.issuePart1D').find('p#date').html(("Edited on "+new Date()).substring(0,31));
-      //-           $(issueTopic).html($(issueTopic).find('input#issueDescriptionTopic').val());
-      //-           $(issueDesc).html($(issueDesc).find('textarea#issueDescriptionText').val());
-      //-           $(feed_details).find('ul#feed_numbers').show();
-      //-           $(feed_details).html(feed_details_issueCommentPart);   
-      //-         }
-      //-         else{
-      //-           console.log("Some Error Occured!");
-      //-           $(issueTopic).html(issueTopicText);
-      //-           $(issueDesc).html(issueDescriptionText);
-      //-           $(feed_details).find('ul#feed_numbers').show();
-      //-           $(feed_details).html(feed_details_issueCommentPart);
-      //-         }
-      //-       }
-      //-     })
-      //-   });
-      //- });
+        $.ajax({
+          method: 'POST',
+          data:{
+            issueId: issueId,
+            //orgUserId: ,
+            issueTopic : $(issueTopic).find('input#issueDescriptionTopic').val(),
+            issueDesc : $(issueDesc).find('textarea#issueDescriptionText').val()
+          },
+          url: '/updateIssue/',
+          success: function(data){
+            if(data=="1"){
+              $(editIssueOption).closest('div.issuePart1D').find('p#date').html(("Edited on "+new Date()).substring(0,31));
+              $(issueTopic).html($(issueTopic).find('input#issueDescriptionTopic').val());
+              $(issueDesc).html($(issueDesc).find('textarea#issueDescriptionText').val());
+              $(feed_details).find('ul#feed_numbers').show();
+              $(feed_details).html(feed_details_issueCommentPart);   
+            }
+            else{
+              console.log("Some Error Occured!");
+              $(issueTopic).html(issueTopicText);
+              $(issueDesc).html(issueDescriptionText);
+              $(feed_details).find('ul#feed_numbers').show();
+              $(feed_details).html(feed_details_issueCommentPart);
+            }
+          }
+        })
+        });
+      });
 
 
       $('button#closeIssueOption').click(function(){
@@ -596,67 +595,67 @@ block issues
               })
       })
     
-    $('button#likeBtn').click(function(e){
-
-            //- if( $(this).find('i#likeBtnLogo').hasClass("fa-thumbs-up") )
-            //-   { 
-            //-    console.log("Executed 1");
-            //-     $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])-1);
-            //-   }
-            
-            //- else if( $(this).find('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
-            //-   {
-            //-    console.log("Executed 2");
-            //-     $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])+1);
-            //-   }
-
-              e.preventDefault();
-              $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
-              if($(this).parents('.issueCommentPart').find('#dislikeBtn i.fa').hasClass('fa-thumbs-down')){
-                  $(this).parents('.issueCommentPart').find('#dislikeBtn i.fa').removeClass('fa-thumbs-down')
-                  $(this).parents('.issueCommentPart').find('#dislikeBtn i.fa').addClass('fa-thumbs-o-down');
-              }
-              //$(this).parents('.issueCommentPart').find('button#dislikeBtn i.fa.fa-thumbs-o-down').removeClass('fa-thumbs-down');
-              //- $(this).siblings('i.fa.fa-thumbs-down').removeClass('fa-thumbs-down');
-              //- $(this).siblings('i.fa').addClass('i.fa.fa-thumbs-o-down');
-          
-              var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
-              console.log(id);
-              $.ajax({
-                url : '/favour/',
-                data: {
-                  userFv : "like",
-                  id: id
-                },
-                method: 'POST'
-              });
-          });
-    $('button#dislikeBtn').click(function(e){
-
-        //- if( $(this).find('i#dislikeBtnLogo').hasClass("fa-thumbs-down") )
-        //-   { 
-        //-    console.log("Executed dislike");
-        //-     $(this).parents('#feed_details').find('#num_of_dislikes').html(parseInt($(this).parents('#feed_details').find('#num_of_dislikes').text()[0])-1);
-        //-   }
+      $('button#likeBtn').click(function(e){
+         if( $(this).find('i#likeBtnLogo').hasClass("fa-thumbs-up") )
+           { 
+            console.log("Executed 1");
+             $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])-1);
+           }
         
-        //- else if( $(this).find('i#dislikeBtnLogo').hasClass('fa-thumbs-o-down') )
-        //-   {
-        //-    console.log("Executed dislike 2");
-        //-     $(this).parents('#feed_details').find('#num_of_dislikes').html(parseInt($(this).parents('#feed_details').find('#num_of_dislikes').text()[0])+1);
-        //-   }
+         else if( $(this).find('i#likeBtnLogo').hasClass('fa-thumbs-o-up') )
+           {
+            console.log("Executed 2");
+             $(this).parents('#feed_details').find('#num_of_likes').html(parseInt($(this).parents('#feed_details').find('#num_of_likes').text()[0])+1);
+           }
 
-        //-   e.preventDefault();
+          e.preventDefault();
+          $(this).find('i.fa').toggleClass('fa-thumbs-o-up fa-thumbs-up');
+          if($(this).parents('.issueCommentPart').find('#dislikeBtn i.fa').hasClass('fa-thumbs-down')){
+              $(this).parents('.issueCommentPart').find('#dislikeBtn i.fa').removeClass('fa-thumbs-down')
+              $(this).parents('.issueCommentPart').find('#dislikeBtn i.fa').addClass('fa-thumbs-o-down');
+          }
+          $(this).parents('.issueCommentPart').find('button#dislikeBtn i.fa.fa-thumbs-o-down').removeClass('fa-thumbs-down');
+           $(this).siblings('i.fa.fa-thumbs-down').removeClass('fa-thumbs-down');
+           $(this).siblings('i.fa').addClass('i.fa.fa-thumbs-o-down');
+      
+          var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
+          console.log(id);
+          $.ajax({
+            url : '/favour/',
+            data: {
+              userFv : "like",
+              id: id
+            },
+            method: 'POST'
+          });
+      });
+            
+      $('button#dislikeBtn').click(function(e){
+         if( $(this).find('i#dislikeBtnLogo').hasClass("fa-thumbs-down") )
+          { 
+           console.log("Executed dislike");
+            $(this).parents('#feed_details').find('#num_of_dislikes').html(parseInt($(this).parents('#feed_details').find('#num_of_dislikes').text()[0])-1);
+           }
+        
+        else if( $(this).find('i#dislikeBtnLogo').hasClass('fa-thumbs-o-down') )
+          {
+           console.log("Executed dislike 2");
+
+        $(this).parents('#feed_details').find('#num_of_dislikes').html(parseInt($(this).parents('#feed_details').find('#num_of_dislikes').text()[0])+1);
+           }
+        
+           e.preventDefault();
           $(this).find('i.fa').toggleClass('fa-thumbs-o-down fa-thumbs-down');
             if($(this).parents('.issueCommentPart').find('#likeBtn i.fa').addClass('fa-thumbs-o-up')){
                 $(this).parents('.issueCommentPart').find('#likeBtn i.fa').removeClass('fa-thumbs-up')
                 $(this).parents('.issueCommentPart').find('#likeBtn i.fa').addClass('fa-thumbs-o-up');
           }
-          //$(this).parents('.issueCommentPart').find('button#likeBtn i.fa').addClass('fa-thumbs-o-up');
-          //$(this).parents('.issueCommentPart').find('button#likeBtn i.fa').removeClass('fa-thumbs-up');
-          
-          //- $(this).siblings('i.fa.fa-thumbs-up').removeClass('fa-thumbs-up');
-          //- $(this).siblings('i.fa').addClass('i.fa.fa-thumbs-o-up');
-
+          $(this).parents('.issueCommentPart').find('button#likeBtn i.fa').addClass('fa-thumbs-o-up');
+          $(this).parents('.issueCommentPart').find('button#likeBtn i.fa').removeClass('fa-thumbs-up');
+        
+          $(this).siblings('i.fa.fa-thumbs-up').removeClass('fa-thumbs-up');
+          $(this).siblings('i.fa').addClass('i.fa.fa-thumbs-o-up');
+        
           var id = $(this).parents('li.issuePart').find('i.issueStatus').attr('id');
           console.log(id);
           $.ajax({

@@ -156,8 +156,8 @@ module.exports.closeIssueById = function(id, username, callback){
 	Issue.findOneAndUpdate({$and: [{_id:id}, {username:username}]},{status: "closed"}, callback);
 };
 
-module.exports.updateIssueById = function(username, updatedIssue,  callback){
-	Issue.findOneAndUpdate({$and: [{_id:updatedIssue.issueId}, {username:username}]},{issueTopic: updatedIssue.issueTopic, issueDesc: updatedIssue.issueDesc, datePosted: new Date, edited : true}, callback);
+module.exports.updateIssueById = function(updatedIssue,  callback){
+	Issue.findOneAndUpdate({$and: [{_id:updatedIssue.issueId}, {status : "Notice"}]},{issueTopic: updatedIssue.issueTopic, issueDesc: updatedIssue.issueDesc, datePosted: new Date, edited : true}, callback);
 };
 
 module.exports.chkWholeIssuesForLiked = function(username, callback){
@@ -202,6 +202,7 @@ module.exports.getOpenIssueByOrgUserId = function(orguid, callback){
 module.exports.getAnnouncementIssues = function(callback){
 	Issue.find({status : "Notice"}, callback);
 };
+
 module.exports.getAnnouncementIssuesByOrgUserId = function(orgUserId, callback){
 	Issue.find({$and : [{status : "Notice"},{orgUserId : orgUserId}]}, callback);
 };
@@ -217,6 +218,13 @@ module.exports.getAnonymousIssueByOrgUserId = function(orguid, callback){
 module.exports.deleteIssueByOrgUserId = function(orguid, callback){
 	var query = {
 		orgUserId : orguid
+	}
+	Issue.remove(query, callback);
+};
+
+module.exports.delNoticeById = function(postId, callback){
+	var query = {
+		_id : postId
 	}
 	Issue.remove(query, callback);
 };

@@ -271,6 +271,18 @@ router.post("/delpostA/:id", ensureAuthentication, function(req,res, next){
   })
 });
 
+router.post("/delnotice/", ensureAuthentication, function(req,res, next){
+  var postId = req.body.id;
+  
+  Issue.delNoticeById(postId, function(err, result){
+    if(err) throw err
+    else
+    {
+      console.log(result);
+      res.send("1");
+    }
+  })
+});
 
 router.post("/delpost/:id", ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
@@ -323,9 +335,8 @@ router.post("/closeIssue/:id", ensureAuthentication, function(req,res, next){
 router.post("/updateIssue/", ensureAuthentication, function(req,res, next){
   console.log("Fteching the post details");
   console.log(req.body);
-  var username = req.user.username;
   var updatedIssue = req.body;
-  Issue.updateIssueById(username, updatedIssue, function(err, result){
+  Issue.updateIssueById(updatedIssue, function(err, result){
     if(err) throw err
     else
     {
