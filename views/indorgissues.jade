@@ -294,6 +294,7 @@ block issues
                       p(id="date") Posted on #{each.datePosted}
                     
                   div(style="float:right")
+                    if(search(username, orgDtl.admin))    
                       if(each.username===orgDtl.userId)
                         .dropdown(style="width:auto!important;float:right")
                           button#menu1.dropdown-toggle(type='button', data-toggle='dropdown' style="border:none;background-color:unset")
