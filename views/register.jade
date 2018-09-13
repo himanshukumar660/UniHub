@@ -5,7 +5,7 @@ block content
 		.form-header
 			h3
 				i(class="ionicons ion-ios-contact" style="font-size:20pt!important;")
-				|  Register
+				|  Sign Up
 		// Body
 		if validatorError
 			for ech in validatorError
@@ -119,3 +119,20 @@ block content
 						//console.log("Ho");
 						$('#err').remove();
 					});
+	footer#icon-footer(style="background-color:#e9ebee")
+			ul.icons(style="display: inline-flex;justify-content: space-around;text-align: center;width: 100%;list-style:none")
+				li
+					a(href='https://www.github.com/himanshukumar660', title='Github', data-toggle='tooltip', data-placement='bottom')
+						i.mega-octicon.octicon-mark-github(style="font-size:30px")
+				
+				li
+					a(href='https://www.facebook.com/himanshueight', title='Facebook', data-toggle='tooltip', data-placement='bottom')
+						i.fa.fa-facebook-square(style="font-size:30px")
+					
+				li
+					a(href='https://www.linkedin.com/in/himanshu-kumar-883648118/', title='LinkedIn', data-toggle='tooltip', data-placement='bottom')
+						i.fa.fa-linkedin-square(style="font-size:30px")
+					
+				li
+					a(href='http://himanshukumar660.github.io', title='Portfolio', data-toggle='tooltip', data-placement='bottom')
+						i.mega-octicon.octicon-home(style="font-size:30px")
